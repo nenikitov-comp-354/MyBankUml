@@ -14,6 +14,9 @@ This project demonstrates the use of Object-Oriented Programming (OOP) principle
 - **Test Coverage**: Includes basic unit tests for key operations like `pay()` and `receipt()`.
 
 ---
+**Uml**
+([url](https://github.com/shayanaminaei/BankUml/blob/main/BankUml%20-%20Uml.jpg))
+---
 
 ## 🚀 How to Run
 
