@@ -1,6 +1,8 @@
 {
     "features": {
-    "ghcr.io/devcontainers/features/java:1": {}
+    "ghcr.io/devcontainers/features/java:1": {
+        "installMaven": true
+    }
     },
     "customizations": {
         "vscode": {
