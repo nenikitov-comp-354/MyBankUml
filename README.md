@@ -19,7 +19,7 @@ This project demonstrates the use of Object-Oriented Programming (OOP) principle
 Make sure you have the following installed:
 
 - Java
-- Maven (if required)
+- Maven (if Lombok is missing or not working correctly)
 
 1. Clone the repository:
 ```bash
