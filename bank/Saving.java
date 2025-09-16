@@ -11,11 +11,11 @@ public class Saving extends Account {
     @Override
     public void pay() {
         title();
-        System.out.println("\tPayment From saving account For: " + customer.getName());
+        System.out.println("Payment From saving account For: " + customer.getName());
     }
 
     @Override
     public void receipt() {
-        System.out.println("\tPayment receipt from saving account for: " + customer.getName());
+        System.out.println("Payment receipt from saving account for: " + customer.getName());
     }
 }

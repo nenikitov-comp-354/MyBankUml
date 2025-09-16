@@ -22,7 +22,7 @@ public class Bank {
     public void printBankInfo() {
         System.out.println("Bank: " + name);
         for (Branch branch : branches) {
-            System.out.println("    Branch: " + branch.getAddress());
+            System.out.println("Branch: " + branch.getAddress());
         }
     }
 }
