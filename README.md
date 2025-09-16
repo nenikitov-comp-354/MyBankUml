@@ -22,17 +22,20 @@ Make sure you have the following installed:
 - Maven (if Lombok is missing or not working correctly)
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/M-PERSIC/BankUml.git
 cd BankUml
 ```
 
 2. Compile the code:
+
 ```bash
 javac -cp "libs/*" bank/*.java 
 ```
 
 3. Run the program:
+
 ```bash
 # Linux/MAC
 java -cp ".:libs/*" bank.Main
@@ -40,7 +43,8 @@ java -cp ".:libs/*" bank.Main
 java -cp ".;libs/*" bank.Main
 ```
 
-If Lombok is missing or is not working correctly:
+To redownload the Lombok jar:
+
 ```bash
 mvn dependency:copy-dependencies -DoutputDirectory=./libs
 ```
