@@ -31,16 +31,13 @@ cd BankUml
 2. Compile the code:
 
 ```bash
-javac -cp "libs/*" bank/*.java 
+mvn package
 ```
 
 3. Run the program:
 
 ```bash
-# Linux/MAC
-java -cp ".:libs/*" bank.Main
-# Windows
-java -cp ".;libs/*" bank.Main
+java -jar target/BankUml-1.0.jar
 ```
 
 To redownload the Lombok jar:
