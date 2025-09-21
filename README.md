@@ -37,7 +37,7 @@ mvn package
 3. Run the program:
 
 ```bash
-java -jar target/BankUml-1.0.jar
+java -jar target/BankUml-1.0-full.jar
 ```
 
 To redownload the Lombok jar:
