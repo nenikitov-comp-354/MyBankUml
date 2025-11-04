@@ -11,6 +11,10 @@
     <version>1.0</version>
     <packaging>jar</packaging>
 
+    <properties>
+        <maven.compiler.proc>full</maven.compiler.proc>
+    </properties>
+
     <build>
         <sourceDirectory>src</sourceDirectory>
         <plugins>
