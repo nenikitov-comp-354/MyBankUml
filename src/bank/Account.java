@@ -20,6 +20,6 @@ public abstract class Account {
     }
 
     public abstract void pay();
+
     public abstract void receipt();
 }
-
