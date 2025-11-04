@@ -9,6 +9,7 @@
     <groupId>BankUml</groupId>
     <artifactId>BankUml</artifactId>
     <version>1.0</version>
+    <packaging>jar</packaging>
 
     <build>
         <sourceDirectory>src</sourceDirectory>
@@ -45,7 +46,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
+            <version>1.18.42</version>
         </dependency>
     </dependencies>
 </project>
