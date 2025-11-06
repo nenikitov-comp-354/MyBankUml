@@ -16,8 +16,7 @@ public class Customer {
 
     // Display customers info
     public void printCustomerInfo() {
-        System.out.println("Customer's info: " );
-        System.out.println("name: "+ name);
+        System.out.println("Customer's info: ");
+        System.out.println("name: " + name);
     }
 }
-

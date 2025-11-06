@@ -4,7 +4,8 @@ public class Saving extends Account {
     public Saving(Customer customer) {
         super(customer);
     }
-    public void title(){
+
+    public void title() {
         System.out.println("**Payments**");
     };
 

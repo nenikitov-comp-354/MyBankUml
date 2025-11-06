@@ -15,4 +15,3 @@ public class Card extends Account {
         System.out.println("Card receipt for: " + customer.getName());
     }
 }
-
