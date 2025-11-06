@@ -1,4 +1,4 @@
-package bank;
+package bank.db;
 
 import java.sql.*;
 import java.util.*;
