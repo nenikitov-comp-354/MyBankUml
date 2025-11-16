@@ -1,11 +1,13 @@
+create domain non_empty_text as text check(value ~ '^\S(?:.*\S)?$');
+
 create table bank(
     id integer primary key generated always as identity,
-    name varchar(128) not null
+    name non_empty_text not null
 );
 
 create table branch(
     id serial primary key,
-    address varchar(128) not null,
+    address non_empty_text not null,
     bank_id integer references bank(id) not null
 );
 
@@ -15,8 +17,8 @@ create domain email as varchar(256) check(value ~ '^.*@.*$');
 
 create table customer(
     id integer primary key generated always as identity,
-    first_name varchar(64) not null,
-    last_name varchar(64) not null,
+    first_name non_empty_text not null,
+    last_name non_empty_text not null,
     date_of_birth date not null,
     social_insurance_number social_insurance_number not null unique,
     phone phone,
@@ -25,7 +27,7 @@ create table customer(
 
 create table account(
     id integer primary key generated always as identity,
-    name varchar(64) not null,
+    name non_empty_text not null,
     is_locked boolean not null default false,
     customer_id integer references customer(id) not null
 );
