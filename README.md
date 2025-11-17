@@ -1,6 +1,6 @@
 # 🏦 BankUml: Banking System Simulation
 
-Welcome to **BankUml**, a Java-based banking application designed to simulate core banking operations such as account management, transactions, and receipts.  
+Welcome to **BankUml**, a Java-based banking application designed to simulate core banking operations such as account management, transactions, and receipts.
 
 This project demonstrates the use of Object-Oriented Programming (OOP) principles, including **Inheritance**, **Encapsulation**, **Abstraction**, and **Polymorphism**, strictly following the provided UML diagram.
 
@@ -10,43 +10,37 @@ This project demonstrates the use of Object-Oriented Programming (OOP) principle
 - **Transaction Handling**: Simulate payments and generate receipts.
 - **UML-Driven Design**: Class structure directly follows the given UML diagram.
 
+<!--
+TODO: Insert a finished diagram here
 ## 📊 Diagram
-
-![BankUml Hierarchical Diagram](./BankUml_Hierarchical_Diagram.drawio.svg)
-
-This diagram demonstrates the classes within the BankUml project template. Inheritance relationships are shown with solid line arrows, whilst implied relationships are shown with dashed line arrows. This is only a reference for the template, and you are free to change the application architecture as you see fit!
+-->
 
 ## 🚀 How to Run
 
 Make sure you have the following installed:
 
 - Java
-- Maven (if Lombok is missing or not working correctly)
+- Maven
+- Docker with docker compose
 
 1. Clone the repository:
-
-```bash
-git clone https://github.com/M-PERSIC/BankUml.git
-cd BankUml
-```
-
+    ```sh
+    git clone https://github.com/M-PERSIC/BankUml.git
+    cd BankUml
+    ```
 2. Compile the code:
-
-```bash
-mvn package
-```
-
-3. Run the program:
-
-```bash
-java -jar target/BankUml-1.0-full.jar
-```
-
-To redownload the Lombok jar:
-
-```bash
-mvn dependency:copy-dependencies -DoutputDirectory=./libs
-```
+    ```sh
+    mvn package
+    ```
+3. Reset the database (optional)
+    ```sh
+    docker compose down -v
+    ```
+4. Run the program:
+    ```sh
+    docker compose up
+    java -jar target/BankUml-1.0-full.jar
+    ```
 
 ---
 
