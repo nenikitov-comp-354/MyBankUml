@@ -1,4 +1,5 @@
 create domain non_empty_text as text check(value ~ '^\S(?:.*\S)?$');
+create domain positive_money as numeric(12, 2) check(value >= 0);
 
 create table bank(
     id integer primary key generated always as identity,
@@ -6,14 +7,14 @@ create table bank(
 );
 
 create table branch(
-    id serial primary key,
+    id integer primary key generated always as identity,
     address non_empty_text not null,
     bank_id integer references bank(id) not null
 );
 
 create domain social_insurance_number as char(11) check(value ~ '^\d{3}-\d{3}-\d{3}$');
 create domain phone as varchar(15) check(value ~ '^\+[1-9]\d{1,14}$');
-create domain email as varchar(256) check(value ~ '^.*@.*$');
+create domain email as varchar(256) check(value ~ '^.+@.+$');
 
 create table customer(
     id integer primary key generated always as identity,
@@ -32,10 +33,25 @@ create table account(
     customer_id integer references customer(id) not null
 );
 
+create table account_checking(
+    monthly_fee positive_money not null default 0
+) inherits(account);
+
+create table account_savings(
+    interest_rate numeric(7, 4) not null check(interest_rate >= 0)
+) inherits(account);
+
+create table account_credit(
+    credit_limit positive_money not null,
+    grace_days integer not null default 21 check(grace_days >= 0)
+) inherits(account);
+
 create table transaction(
     id integer primary key generated always as identity,
     account_id_source integer references account(id) not null,
     account_id_destination integer references account(id) not null,
-    amount money not null check (amount > 0::money),
-    time timestamp without time zone not null
+    amount positive_money not null check(amount > 0),
+    time timestamp without time zone not null,
+
+    constraint ck_source_is_not_destination check(account_id_source <> account_id_destination)
 );
