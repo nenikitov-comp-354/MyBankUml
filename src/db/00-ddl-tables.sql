@@ -43,7 +43,7 @@ create table account_savings(
 
 create table account_credit(
     credit_limit positive_money not null,
-    grace_days integer not null default 21 check(grace_days >= 0)
+    payment_grace_days integer not null default 21 check(payment_grace_days >= 0)
 ) inherits(account);
 
 create table transaction(
