@@ -26,6 +26,11 @@ create table customer(
     email email not null
 );
 
+create table customer_login (
+    customer_id integer primary key references customer(id) on delete cascade,
+    password text not null
+);
+
 create table account(
     id integer primary key generated always as identity,
     name non_empty_text not null,
