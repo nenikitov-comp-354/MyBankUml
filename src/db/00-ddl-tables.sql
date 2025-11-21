@@ -23,7 +23,8 @@ create table customer(
     date_of_birth date not null,
     social_insurance_number social_insurance_number not null unique,
     phone phone,
-    email email not null
+    email email not null,
+    branch_id integer references branch(id)
 );
 
 create table customer_login (
