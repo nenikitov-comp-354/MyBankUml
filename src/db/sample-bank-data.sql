@@ -1,11 +1,11 @@
--- Insert a sample bank
+-- Sample bank
 INSERT INTO bank (name) VALUES ('Team 4 Bank');
 
--- Insert a sample branch linked to the bank
+-- Sample branch linked to the bank
 INSERT INTO branch (address, bank_id)
 VALUES ('123 Main Street, Montreal, QC', 1);
 
--- Insert customers with branch_id = 1
+-- Sample customers with branch_id = 1
 INSERT INTO customer (
     first_name, last_name, date_of_birth, social_insurance_number, phone, email, branch_id
 ) VALUES
@@ -16,6 +16,8 @@ INSERT INTO customer (
 ('Tate',   'McRae',      DATE '2003-07-01', '567-890-123', '+15875551212', 'tate.mcrae@example.com', 1),
 ('Sidney', 'Crosby',     DATE '1987-08-07', '678-901-234', '+19025550123', 'sidney.crosby@example.com', 1),
 ('Connor', 'McDavid',    DATE '1997-01-13', '901-234-567', '+17805551234', 'connor.mcdavid@example.com', 1);
+
+-- Inserting sample accounts for each customer
 
 -- HARRY STYLES (Customer ID 1)
 WITH acc AS (
@@ -191,6 +193,8 @@ WITH acc AS (
 )
 INSERT INTO account_credit (id, name, is_locked, customer_id, credit_limit, payment_grace_days)
 SELECT id, name, is_locked, customer_id, 6000.00, 18 FROM acc;
+
+-- Sample transactions between accounts
 
 -- Harry sends $200 to Sabrina
 INSERT INTO transaction (account_id_source, account_id_destination, amount, time)
