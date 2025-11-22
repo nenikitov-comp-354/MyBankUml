@@ -18,181 +18,54 @@ INSERT INTO customer (
 ('Connor', 'McDavid',    DATE '1997-01-13', '901-234-567', '+17805551234', 'connor.mcdavid@example.com', 1);
 
 -- Inserting sample accounts for each customer
+CREATE OR REPLACE FUNCTION create_customer_accounts(
+    customer_id INTEGER,
+    base_name TEXT,
+    checking_fee NUMERIC,
+    savings_rate NUMERIC,
+    credit_limit NUMERIC,
+    grace_days INTEGER
+) RETURNS VOID AS $$
+BEGIN
+  -- Checking
+  WITH acc AS (
+    INSERT INTO account (name, is_locked, customer_id)
+    VALUES (base_name || ' Checking', false, customer_id)
+    RETURNING id, name, is_locked
+  )
+  INSERT INTO account_checking (id, name, is_locked, customer_id, monthly_fee)
+  SELECT acc.id, acc.name, acc.is_locked, c.customer_id, checking_fee
+  FROM acc CROSS JOIN (SELECT customer_id) AS c;
 
--- HARRY STYLES (Customer ID 1)
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Harry Checking', false, 1)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_checking (id, name, is_locked, customer_id, monthly_fee)
-SELECT id, name, is_locked, customer_id, 4.99 FROM acc;
+  -- Savings
+  WITH acc AS (
+    INSERT INTO account (name, is_locked, customer_id)
+    VALUES (base_name || ' Savings', false, customer_id)
+    RETURNING id, name, is_locked
+  )
+  INSERT INTO account_savings (id, name, is_locked, customer_id, interest_rate)
+  SELECT acc.id, acc.name, acc.is_locked, c.customer_id, savings_rate
+  FROM acc CROSS JOIN (SELECT customer_id) AS c;
 
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Harry Savings', false, 1)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_savings (id, name, is_locked, customer_id, interest_rate)
-SELECT id, name, is_locked, customer_id, 1.25 FROM acc;
+  -- Credit
+  WITH acc AS (
+    INSERT INTO account (name, is_locked, customer_id)
+    VALUES (base_name || ' Credit', false, customer_id)
+    RETURNING id, name, is_locked
+  )
+  INSERT INTO account_credit (id, name, is_locked, customer_id, credit_limit, payment_grace_days)
+  SELECT acc.id, acc.name, acc.is_locked, c.customer_id, credit_limit, grace_days
+  FROM acc CROSS JOIN (SELECT customer_id) AS c;
+END;
+$$ LANGUAGE plpgsql;
 
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Harry Credit', false, 1)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_credit (id, name, is_locked, customer_id, credit_limit, payment_grace_days)
-SELECT id, name, is_locked, customer_id, 5000.00, 21 FROM acc;
-
--- SABRINA CARPENTER (Customer ID 2)
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Sabrina Checking', false, 2)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_checking (id, name, is_locked, customer_id, monthly_fee)
-SELECT id, name, is_locked, customer_id, 3.50 FROM acc;
-
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Sabrina Savings', false, 2)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_savings (id, name, is_locked, customer_id, interest_rate)
-SELECT id, name, is_locked, customer_id, 1.50 FROM acc;
-
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Sabrina Credit', false, 2)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_credit (id, name, is_locked, customer_id, credit_limit, payment_grace_days)
-SELECT id, name, is_locked, customer_id, 3000.00, 25 FROM acc;
-
--- CAREY PRICE (Customer ID 3)
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Carey Checking', false, 3)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_checking (id, name, is_locked, customer_id, monthly_fee)
-SELECT id, name, is_locked, customer_id, 5.00 FROM acc;
-
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Carey Savings', false, 3)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_savings (id, name, is_locked, customer_id, interest_rate)
-SELECT id, name, is_locked, customer_id, 1.75 FROM acc;
-
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Carey Credit', false, 3)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_credit (id, name, is_locked, customer_id, credit_limit, payment_grace_days)
-SELECT id, name, is_locked, customer_id, 7000.00, 20 FROM acc;
-
--- ZARA LARSSON (Customer ID 4)
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Zara Checking', false, 4)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_checking (id, name, is_locked, customer_id, monthly_fee)
-SELECT id, name, is_locked, customer_id, 2.75 FROM acc;
-
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Zara Savings', false, 4)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_savings (id, name, is_locked, customer_id, interest_rate)
-SELECT id, name, is_locked, customer_id, 1.20 FROM acc;
-
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Zara Credit', false, 4)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_credit (id, name, is_locked, customer_id, credit_limit, payment_grace_days)
-SELECT id, name, is_locked, customer_id, 4000.00, 22 FROM acc;
-
--- TATE MCRAE (Customer ID 5)
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Tate Checking', false, 5)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_checking (id, name, is_locked, customer_id, monthly_fee)
-SELECT id, name, is_locked, customer_id, 3.99 FROM acc;
-
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Tate Savings', false, 5)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_savings (id, name, is_locked, customer_id, interest_rate)
-SELECT id, name, is_locked, customer_id, 1.80 FROM acc;
-
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Tate Credit', false, 5)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_credit (id, name, is_locked, customer_id, credit_limit, payment_grace_days)
-SELECT id, name, is_locked, customer_id, 2500.00, 21 FROM acc;
-
--- SIDNEY CROSBY (Customer ID 6)
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Sidney Checking', false, 6)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_checking (id, name, is_locked, customer_id, monthly_fee)
-SELECT id, name, is_locked, customer_id, 4.25 FROM acc;
-
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Sidney Savings', false, 6)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_savings (id, name, is_locked, customer_id, interest_rate)
-SELECT id, name, is_locked, customer_id, 1.60 FROM acc;
-
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Sidney Credit', false, 6)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_credit (id, name, is_locked, customer_id, credit_limit, payment_grace_days)
-SELECT id, name, is_locked, customer_id, 8000.00, 30 FROM acc;
-
--- CONNOR MCDAVID (Customer ID 7)
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Connor Checking', false, 7)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_checking (id, name, is_locked, customer_id, monthly_fee)
-SELECT id, name, is_locked, customer_id, 3.00 FROM acc;
-
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Connor Savings', false, 7)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_savings (id, name, is_locked, customer_id, interest_rate)
-SELECT id, name, is_locked, customer_id, 1.30 FROM acc;
-
-WITH acc AS (
-  INSERT INTO account (name, is_locked, customer_id)
-  VALUES ('Connor Credit', false, 7)
-  RETURNING id, name, is_locked, customer_id
-)
-INSERT INTO account_credit (id, name, is_locked, customer_id, credit_limit, payment_grace_days)
-SELECT id, name, is_locked, customer_id, 6000.00, 18 FROM acc;
+SELECT create_customer_accounts(1, 'Harry',   4.99, 1.25, 5000.00, 21);
+SELECT create_customer_accounts(2, 'Sabrina', 3.50, 1.50, 3000.00, 25);
+SELECT create_customer_accounts(3, 'Carey',   5.00, 1.75, 7000.00, 20);
+SELECT create_customer_accounts(4, 'Zara',    2.75, 1.20, 4000.00, 22);
+SELECT create_customer_accounts(5, 'Tate',    3.99, 1.80, 2500.00, 21);
+SELECT create_customer_accounts(6, 'Sidney',  4.25, 1.60, 8000.00, 30);
+SELECT create_customer_accounts(7, 'Connor',  3.00, 1.30, 6000.00, 18);
 
 -- Sample transactions between accounts
 
