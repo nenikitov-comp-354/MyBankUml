@@ -1,8 +1,7 @@
 package bank.db;
 
-import java.util.*;
-
 import bank.util.TypeValidator;
+import java.util.*;
 import lombok.Getter;
 
 public class Branch {
@@ -37,17 +36,20 @@ public class Branch {
     protected void addCustomer(Customer customer) {
         TypeValidator.validateNotNull("Customer", customer);
         if (!this.equals(customer.getBranch())) {
-            throw new IllegalArgumentException("Customer " + customer + " does not belong to this branch " + this);
+            throw new IllegalArgumentException(
+                "Customer " +
+                customer +
+                " does not belong to this branch " +
+                this
+            );
         }
         this.customers.add(customer);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!(obj instanceof Branch))
-            return false;
+        if (this == obj) return true;
+        if (!(obj instanceof Branch)) return false;
 
         Branch other = (Branch) obj;
         return this.id == other.id;
@@ -55,6 +57,8 @@ public class Branch {
 
     @Override
     public String toString() {
-        return "Branch(id=" + id + ", address=" + address + ", bank=" + bank + ")";
+        return (
+            "Branch(id=" + id + ", address=" + address + ", bank=" + bank + ")"
+        );
     }
 }

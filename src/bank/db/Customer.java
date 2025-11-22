@@ -1,11 +1,8 @@
 package bank.db;
 
-import java.util.*;
-
 import bank.util.TypeValidator;
-
 import java.time.LocalDate;
-
+import java.util.*;
 import lombok.*;
 
 public class Customer {
@@ -35,8 +32,16 @@ public class Customer {
 
     private List<Account> accounts;
 
-    public Customer(int id, String firstName, String lastName, LocalDate dateOfBirth, String socialInsuranceNumber,
-            String phone, String email, Branch branch) {
+    public Customer(
+        int id,
+        String firstName,
+        String lastName,
+        LocalDate dateOfBirth,
+        String socialInsuranceNumber,
+        String phone,
+        String email,
+        Branch branch
+    ) {
         TypeValidator.validateId("Id", id);
         this.id = id;
 
@@ -49,7 +54,10 @@ public class Customer {
         TypeValidator.validateNotNull("Date of birth", dateOfBirth);
         this.dateOfBirth = dateOfBirth;
 
-        TypeValidator.validateSocialInsuranceNumber("Social insurance number", socialInsuranceNumber);
+        TypeValidator.validateSocialInsuranceNumber(
+            "Social insurance number",
+            socialInsuranceNumber
+        );
         this.socialInsuranceNumber = socialInsuranceNumber;
 
         TypeValidator.validatePhone("Phone", phone);
@@ -71,17 +79,20 @@ public class Customer {
     protected void addAccount(Account account) {
         TypeValidator.validateNotNull("Account", account);
         if (!this.equals(account.getCustomer())) {
-            throw new IllegalArgumentException("Account " + account + " does not belong to this customer " + this);
+            throw new IllegalArgumentException(
+                "Account " +
+                account +
+                " does not belong to this customer " +
+                this
+            );
         }
         this.accounts.add(account);
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!(obj instanceof Customer))
-            return false;
+        if (this == obj) return true;
+        if (!(obj instanceof Customer)) return false;
 
         Customer other = (Customer) obj;
         return this.id == other.id;
@@ -89,8 +100,24 @@ public class Customer {
 
     @Override
     public String toString() {
-        return "Customer(id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth="
-                + dateOfBirth + ", socialInsuranceNumber=" + socialInsuranceNumber + ", phone=" + phone + ", email="
-                + email + ", branch=" + branch + ")";
+        return (
+            "Customer(id=" +
+            id +
+            ", firstName=" +
+            firstName +
+            ", lastName=" +
+            lastName +
+            ", dateOfBirth=" +
+            dateOfBirth +
+            ", socialInsuranceNumber=" +
+            socialInsuranceNumber +
+            ", phone=" +
+            phone +
+            ", email=" +
+            email +
+            ", branch=" +
+            branch +
+            ")"
+        );
     }
 }

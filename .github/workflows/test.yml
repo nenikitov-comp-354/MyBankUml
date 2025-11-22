@@ -14,5 +14,5 @@ jobs:
         java-version: '25'
         distribution: 'microsoft'
         cache: maven
-    - name: format
-      run: mvn prettier:check
+    - name: test
+      run: mvn test
