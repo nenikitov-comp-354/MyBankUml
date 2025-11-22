@@ -1,19 +1,18 @@
 package bank.db.DAO;
 
-import java.sql.*;
-
 import bank.db.Customer;
+import java.sql.*;
+import java.util.Optional;
 
 /**
  * Data Access Object for customer login / authentication.
  */
 public class CustomerLoginDAO {
-
     private final Connection connection;
     private final CustomerDAO customerDAO;
 
     /**
-     * Constructor 
+     * Constructor
      * @param connection
      * @param customerDao
      */
@@ -28,8 +27,10 @@ public class CustomerLoginDAO {
      * @param password
      * @throws SQLException
      */
-    public void createLogin(int customerId, String password) throws SQLException {
-        String sql = "INSERT INTO customer_login (customer_id, password) VALUES (?, ?)";
+    public void createLogin(int customerId, String password)
+        throws SQLException {
+        String sql =
+            "INSERT INTO customer_login (customer_id, password) VALUES (?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, customerId);
@@ -44,8 +45,10 @@ public class CustomerLoginDAO {
      * @param newPassword
      * @throws SQLException
      */
-    public void updatePassword(int customerId, String newPassword) throws SQLException {
-        String sql = "UPDATE customer_login SET password = ? WHERE customer_id = ?";
+    public void updatePassword(int customerId, String newPassword)
+        throws SQLException {
+        String sql =
+            "UPDATE customer_login SET password = ? WHERE customer_id = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, newPassword);
@@ -61,8 +64,9 @@ public class CustomerLoginDAO {
      * @return Customer if credentials are valid, null otherwise
      * @throws SQLException
      */
-    public Customer authenticate(String email, String password) throws SQLException {
-        String sql = 
+    public Optional<Customer> authenticate(String email, String password)
+        throws SQLException {
+        String sql =
             "SELECT c.id " +
             "FROM customer c " +
             "JOIN customer_login cl ON c.id = cl.customer_id " +
@@ -73,9 +77,8 @@ public class CustomerLoginDAO {
             stmt.setString(2, password);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) {
-                    return null; // invalid credentials
-                }
+                // invalid credentials
+                if (!rs.next()) return Optional.empty();
 
                 int customerId = rs.getInt("id");
                 return customerDAO.findById(customerId);
