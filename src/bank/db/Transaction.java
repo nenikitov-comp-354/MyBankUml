@@ -20,10 +20,8 @@ public class Transaction {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!(obj instanceof Transaction))
-            return false;
+        if (this == obj) return true;
+        if (!(obj instanceof Transaction)) return false;
 
         Transaction other = (Transaction) obj;
         return this.id == other.id;
