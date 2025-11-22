@@ -120,7 +120,7 @@ public class CustomerDAO {
         ArrayList<Integer> ids = new ArrayList<>();
 
         ResultSet rs = stmt.executeQuery();
-        while (!rs.next()) {
+        while (rs.next()) {
             ids.add(rs.getInt("id"));
         }
 
