@@ -1,8 +1,7 @@
 package bank.db;
 
-import java.util.*;
-
 import bank.util.TypeValidator;
+import java.util.*;
 import lombok.Getter;
 
 public abstract class Account {
@@ -43,7 +42,11 @@ public abstract class Account {
         TypeValidator.validateNotNull("Transaction", transaction);
         if (!this.equals(transaction.getInfo().getSource())) {
             throw new IllegalArgumentException(
-                    "Transaction " + transaction + " does not belong to this account " + this);
+                "Transaction " +
+                transaction +
+                " does not belong to this account " +
+                this
+            );
         }
 
         this.transactions.add(transaction);
@@ -51,10 +54,8 @@ public abstract class Account {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!(obj instanceof Account))
-            return false;
+        if (this == obj) return true;
+        if (!(obj instanceof Account)) return false;
 
         Account other = (Account) obj;
         return this.id == other.id;
@@ -62,6 +63,16 @@ public abstract class Account {
 
     @Override
     public String toString() {
-        return "Account(id=" + id + ", name=" + name + ", isLocked=" + isLocked + ", customer=" + customer + ")";
+        return (
+            "Account(id=" +
+            id +
+            ", name=" +
+            name +
+            ", isLocked=" +
+            isLocked +
+            ", customer=" +
+            customer +
+            ")"
+        );
     }
 }
