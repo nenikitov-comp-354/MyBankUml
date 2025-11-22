@@ -1,18 +1,20 @@
 package bank.db.DAO;
 
+import bank.db.Branch;
+import bank.db.Customer;
 import java.sql.*;
 import java.time.LocalDate;
-import bank.db.Customer;
-import bank.db.Branch;
+import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * Data Access Object for Customer table.
  */
 
 public class CustomerDAO {
-
     private final Connection connection;
     private final BranchDAO branchDao;
+    private final HashMap<Integer, Customer> cache;
 
     /**
      * constructor
@@ -22,10 +24,11 @@ public class CustomerDAO {
     public CustomerDAO(Connection connection, BranchDAO branchDao) {
         this.connection = connection;
         this.branchDao = branchDao;
+        this.cache = new HashMap<>();
     }
 
     /**
-     * returns a customer object with corresponding attributes after finding 
+     * returns a customer object with corresponding attributes after finding
      * corresponding customer via the SQL query used in the find functions
      * @param rs
      * @return Customer object
@@ -41,12 +44,27 @@ public class CustomerDAO {
         String email = rs.getString("email");
         int branchId = rs.getInt("branch_id");
 
-        Branch branch = branchDao.findById(branchId);
-        if (branch == null){
-            throw new SQLException("Customer points to non-existent branch: " + branchId);
+        Optional<Branch> branch = branchDao.findById(branchId);
+        if (!branch.isPresent()) {
+            throw new SQLException(
+                "Customer points to non-existent branch: " + branchId
+            );
         }
 
-        return new Customer(id, firstName, lastName, dob, sin, phone, email, branch);
+        Customer customer = new Customer(
+            id,
+            firstName,
+            lastName,
+            dob,
+            sin,
+            phone,
+            email,
+            branch.get()
+        );
+        branch.get().addCustomer(customer);
+
+        cache.put(id, customer);
+        return customer;
     }
 
     /**
@@ -73,14 +91,20 @@ public class CustomerDAO {
      * @return
      * @throws SQLException
      */
-    public Customer findById(int id) throws SQLException {
+    public Optional<Customer> findById(int id) throws SQLException {
+        Customer customer = cache.get(id);
+
+        if (customer != null) return Optional.of(customer);
+
         String sql = "SELECT * FROM customer WHERE id = ?";
+
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (!rs.next()) return null;
-                return mapRow(rs);
+
+                return Optional.of(mapRow(rs));
             }
         }
     }

@@ -1,16 +1,18 @@
 package bank.db.DAO;
-import java.sql.*;
 
 import bank.db.Bank;
 import bank.db.Branch;
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Optional;
 
 /**
  * Data Access Object for Branch Table.
  */
 public class BranchDAO {
-    
     private final Connection connection;
     private final BankDAO bankDao;
+    private final HashMap<Integer, Branch> cache;
 
     /**
      * constructor
@@ -20,6 +22,7 @@ public class BranchDAO {
     public BranchDAO(Connection connection, BankDAO bankDao) {
         this.connection = connection;
         this.bankDao = bankDao;
+        this.cache = new HashMap<>();
     }
 
     /**
@@ -28,24 +31,32 @@ public class BranchDAO {
      * @return branch object
      * @throws SQLException
      */
-    public Branch findById(int id) throws SQLException {
+    public Optional<Branch> findById(int id) throws SQLException {
+        Branch branch = cache.get(id);
+
+        if (branch != null) return Optional.of(branch);
+
         String sql = "SELECT * FROM branch WHERE id = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, id);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) return null;
+                if (!rs.next()) return Optional.empty();
 
-                int branchId = rs.getInt("id");
                 String address = rs.getString("address");
                 int bankId = rs.getInt("bank_id");
 
-                Bank bank = bankDao.findById(bankId);
-                if (bank == null)
-                    throw new SQLException("Branch " + id + " refers to missing bank " + bankId);
+                Optional<Bank> bank = bankDao.findById(bankId);
+                if (!bank.isPresent()) throw new SQLException(
+                    "Branch " + id + " refers to missing bank " + bankId
+                );
 
-                return new Branch(branchId, address, bank);
+                branch = new Branch(id, address, bank.get());
+                bank.get().addBranch(branch);
+
+                cache.put(id, branch);
+                return Optional.of(branch);
             }
         }
     }
