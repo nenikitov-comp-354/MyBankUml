@@ -6,7 +6,9 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -76,14 +78,14 @@ public class CustomerDAO {
      * @return
      * @throws SQLException
      */
-    public Customer findByEmail(String email) throws SQLException {
-        String sql = "SELECT * FROM customer WHERE email = ?";
+    public Optional<Customer> findByEmail(String email) throws SQLException {
+        String sql = "SELECT id FROM customer WHERE email = ?";
         PreparedStatement stmt = connection.prepareStatement(sql);
         stmt.setString(1, email);
 
         ResultSet rs = stmt.executeQuery();
-        if (!rs.next()) return null;
-        return mapRow(rs);
+        if (!rs.next()) return Optional.empty();
+        return findById(rs.getInt("id"));
     }
 
     /**
