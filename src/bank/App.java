@@ -1,19 +1,39 @@
 package bank;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Optional;
 
+import bank.db.BankDb;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 // HACK: The only way to make Maven correctly package a JavaFX application
 // is to have a separate class for application and call it from the main.
 // [Solution](https://stackoverflow.com/a/70809214)
+
 public class App extends Application {
+
+    private BankDb db;
+
+    @FXML
+    private Button loginButton;
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private PasswordField passwordField;
+    @FXML
+    private Text errorText;
+
 
     public static void main(String[] args) {
         App.launch(args);
@@ -47,10 +67,33 @@ public class App extends Application {
         //
         // System.out.println(transaction);;
 
-        System.out.println(getClass().getClassLoader().getResource("fxml/LogInPage.fxml"));
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/LogInPage.fxml"));
+        Parent root = FXMLLoader.load(
+            getClass().getResource("/fxml/LogInPage.fxml")
+        );
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    private void connectToDB(ActionEvent event) {
+        try {
+            String username = usernameField.getText();
+            String password = passwordField.getText();
+            db = new BankDb("localhost", Optional.empty(), "bank", username, Optional.of(password));
+
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/UserPage.fxml"));
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (SQLException e) {
+            if (usernameField.getText() == "" || passwordField.getText() == "") {
+                errorText.setText("No username or password was provided");
+            }
+            else {
+                errorText.setText("Log in failed. Username or password is incorrect");
+            }
+        } catch (IOException e) {
+            System.err.println("UserPage.fxml was not found");
+        }
     }
 }
