@@ -4,8 +4,11 @@ import bank.db.Branch;
 import bank.db.Customer;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Data Access Object for Customer table.
@@ -75,14 +78,12 @@ public class CustomerDAO {
      */
     public Customer findByEmail(String email) throws SQLException {
         String sql = "SELECT * FROM customer WHERE email = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, email);
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, email);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) return null;
-                return mapRow(rs);
-            }
-        }
+        ResultSet rs = stmt.executeQuery();
+        if (!rs.next()) return null;
+        return mapRow(rs);
     }
 
     /**
@@ -98,14 +99,35 @@ public class CustomerDAO {
 
         String sql = "SELECT * FROM customer WHERE id = ?";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, id);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) return null;
+        ResultSet rs = stmt.executeQuery();
+        if (!rs.next()) return null;
 
-                return Optional.of(mapRow(rs));
-            }
+        return Optional.of(mapRow(rs));
+    }
+
+    public List<Customer> findWithQuery(String[] queries) throws SQLException {
+        String sql = "SELECT * FROM search_for_customer_ids(?)";
+
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        Array queriesArray = connection.createArrayOf("TEXT", queries);
+        stmt.setArray(1, queriesArray);
+
+        ArrayList<Integer> ids = new ArrayList<>();
+
+        ResultSet rs = stmt.executeQuery();
+        while (!rs.next()) {
+            ids.add(rs.getInt("id"));
         }
+
+        ArrayList<Customer> customers = new ArrayList<>();
+        for (Integer id : ids) {
+            customers.add(findById(id).get());
+        }
+
+        queriesArray.free();
+        return customers;
     }
 }
