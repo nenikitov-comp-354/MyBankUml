@@ -9,13 +9,13 @@ VALUES ('123 Main Street, Montreal, QC', 1);
 INSERT INTO customer (
     first_name, last_name, date_of_birth, social_insurance_number, phone, email, branch_id
 ) VALUES
-('Harry',  'Styles',     DATE '1994-02-01', '123-456-789', '+14165551234', 'harry.styles@example.com', 1),
-('Sabrina','Carpenter',  DATE '1999-05-11', '234-567-890', '+16045557890', 'sabrina.carpenter@example.com', 1),
-('Carey',  'Price',      DATE '1987-08-16', '345-678-901', '+12045553456', 'carey.price@example.com', 1),
-('Zara',   'Larsson',    DATE '1997-12-16', '456-789-012', '+17785559876', 'zara.larsson@example.com', 1),
-('Tate',   'McRae',      DATE '2003-07-01', '567-890-123', '+15875551212', 'tate.mcrae@example.com', 1),
-('Sidney', 'Crosby',     DATE '1987-08-07', '678-901-234', '+19025550123', 'sidney.crosby@example.com', 1),
-('Connor', 'McDavid',    DATE '1997-01-13', '901-234-567', '+17805551234', 'connor.mcdavid@example.com', 1);
+('Harry',  'Styles',     DATE '1994-02-01', '123-456-789', '+14165551234', 'harry.styles@email.com', 1),
+('Sabrina','Carpenter',  DATE '1999-05-11', '234-567-890', '+16045557890', 'sabrina.carpenter@email.com', 1),
+('Carey',  'Price',      DATE '1987-08-16', '345-678-901', '+12045553456', 'carey.price@email.com', 1),
+('Zara',   'Larsson',    DATE '1997-12-16', '456-789-012', '+17785559876', 'zara.larsson@email.com', 1),
+('Tate',   'McRae',      DATE '2003-07-01', '567-890-123', '+15875551212', 'tate.mcrae@email.com', 1),
+('Sidney', 'Crosby',     DATE '1987-08-07', '678-901-234', '+19025550123', 'sidney.crosby@email.com', 1),
+('Connor', 'McDavid',    DATE '1997-01-13', '901-234-567', '+17805551234', 'connor.mcdavid@email.com', 1);
 
 -- Inserting sample accounts for each customer
 CREATE OR REPLACE FUNCTION create_customer_accounts(
