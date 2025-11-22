@@ -37,8 +37,7 @@ public class App extends Application {
         // Account account2 = new AccountSavings(2, "John's savings", false, customer, new BigDecimal("1.12"));
         // customer.addAccount(account2);
         //
-        // TransactionInfo transactionInfo = new TransactionInfo(account1, account2, new BigDecimal("12.77"),
-        // LocalDateTime.of(2025, 11, 18, 18, 59));
+        // TransactionInfo transactionInfo = new TransactionInfo(account1, account2, new BigDecimal("12.77"), LocalDateTime.of(2025, 11, 18, 18, 59));
         // Transaction transaction = new Transaction(1, transactionInfo);
         // account1.addTransaction(transaction);
         //
