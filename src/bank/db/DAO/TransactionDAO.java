@@ -5,7 +5,7 @@ import bank.db.Branch;
 import java.sql.*;
 
 /**
- * Data Access Object for Branch Table.
+ * Data Access Object for Transaction Table.
  */
 public class BranchDAO {
     private final Connection connection;

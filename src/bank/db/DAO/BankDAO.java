@@ -1,7 +1,7 @@
 package bank.db.DAO;
-import java.sql.*;
 
 import bank.db.Bank;
+import java.sql.*;
 
 /**
  * Data Access Object for Bank Table.

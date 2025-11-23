@@ -1,16 +1,15 @@
 package bank.db.DAO;
 
+import bank.db.Branch;
+import bank.db.Customer;
 import java.sql.*;
 import java.time.LocalDate;
-import bank.db.Customer;
-import bank.db.Branch;
 
 /**
  * Data Access Object for Customer table.
  */
 
 public class CustomerDAO {
-
     private final Connection connection;
     private final BranchDAO branchDao;
 
@@ -25,7 +24,7 @@ public class CustomerDAO {
     }
 
     /**
-     * returns a customer object with corresponding attributes after finding 
+     * returns a customer object with corresponding attributes after finding
      * corresponding customer via the SQL query used in the find functions
      * @param rs
      * @return Customer object
@@ -42,11 +41,22 @@ public class CustomerDAO {
         int branchId = rs.getInt("branch_id");
 
         Branch branch = branchDao.findById(branchId);
-        if (branch == null){
-            throw new SQLException("Customer points to non-existent branch: " + branchId);
+        if (branch == null) {
+            throw new SQLException(
+                "Customer points to non-existent branch: " + branchId
+            );
         }
 
-        return new Customer(id, firstName, lastName, dob, sin, phone, email, branch);
+        return new Customer(
+            id,
+            firstName,
+            lastName,
+            dob,
+            sin,
+            phone,
+            email,
+            branch
+        );
     }
 
     /**
