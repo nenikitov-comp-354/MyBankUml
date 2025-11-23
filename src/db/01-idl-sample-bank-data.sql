@@ -17,6 +17,18 @@ INSERT INTO customer (
 ('Sidney', 'Crosby',     DATE '1987-08-07', '678-901-234', '+19025550123', 'sidney.crosby@email.com', 1),
 ('Connor', 'McDavid',    DATE '1997-01-13', '901-234-567', '+17805551234', 'connor.mcdavid@email.com', 1);
 
+-- Sample logins
+INSERT INTO customer_login (
+    customer_id, password
+) VALUES
+(1, 'harry'),
+(2, 'my'),
+(3, 'strong'),
+(4, 'password'),
+(5, 'qwerty1234'),
+(6, 'hello'),
+(7, 'world');
+
 -- Inserting sample accounts for each customer
 CREATE OR REPLACE FUNCTION create_customer_accounts(
     customer_id INTEGER,
