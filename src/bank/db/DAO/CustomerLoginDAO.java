@@ -2,6 +2,7 @@ package bank.db.DAO;
 
 import bank.db.Customer;
 import java.sql.*;
+import java.util.Optional;
 
 /**
  * Data Access Object for customer login / authentication.
@@ -63,7 +64,7 @@ public class CustomerLoginDAO {
      * @return Customer if credentials are valid, null otherwise
      * @throws SQLException
      */
-    public Customer authenticate(String email, String password)
+    public Optional<Customer> authenticate(String email, String password)
         throws SQLException {
         String sql =
             "SELECT c.id " +
@@ -76,9 +77,8 @@ public class CustomerLoginDAO {
             stmt.setString(2, password);
 
             try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) {
-                    return null; // invalid credentials
-                }
+                // invalid credentials
+                if (!rs.next()) return Optional.empty();
 
                 int customerId = rs.getInt("id");
                 return customerDAO.findById(customerId);

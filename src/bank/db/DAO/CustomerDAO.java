@@ -4,6 +4,13 @@ import bank.db.Branch;
 import bank.db.Customer;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Data Access Object for Customer table.
@@ -12,6 +19,7 @@ import java.time.LocalDate;
 public class CustomerDAO {
     private final Connection connection;
     private final BranchDAO branchDao;
+    private final HashMap<Integer, Customer> cache;
 
     /**
      * constructor
@@ -21,6 +29,7 @@ public class CustomerDAO {
     public CustomerDAO(Connection connection, BranchDAO branchDao) {
         this.connection = connection;
         this.branchDao = branchDao;
+        this.cache = new HashMap<>();
     }
 
     /**
@@ -40,14 +49,14 @@ public class CustomerDAO {
         String email = rs.getString("email");
         int branchId = rs.getInt("branch_id");
 
-        Branch branch = branchDao.findById(branchId);
-        if (branch == null) {
+        Optional<Branch> branch = branchDao.findById(branchId);
+        if (!branch.isPresent()) {
             throw new SQLException(
                 "Customer points to non-existent branch: " + branchId
             );
         }
 
-        return new Customer(
+        Customer customer = new Customer(
             id,
             firstName,
             lastName,
@@ -55,8 +64,12 @@ public class CustomerDAO {
             sin,
             phone,
             email,
-            branch
+            branch.get()
         );
+        branch.get().addCustomer(customer);
+
+        cache.put(id, customer);
+        return customer;
     }
 
     /**
@@ -65,16 +78,14 @@ public class CustomerDAO {
      * @return
      * @throws SQLException
      */
-    public Customer findByEmail(String email) throws SQLException {
-        String sql = "SELECT * FROM customer WHERE email = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, email);
+    public Optional<Customer> findByEmail(String email) throws SQLException {
+        String sql = "SELECT id FROM customer WHERE email = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, email);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) return null;
-                return mapRow(rs);
-            }
-        }
+        ResultSet rs = stmt.executeQuery();
+        if (!rs.next()) return Optional.empty();
+        return findById(rs.getInt("id"));
     }
 
     /**
@@ -83,15 +94,42 @@ public class CustomerDAO {
      * @return
      * @throws SQLException
      */
-    public Customer findById(int id) throws SQLException {
-        String sql = "SELECT * FROM customer WHERE id = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+    public Optional<Customer> findById(int id) throws SQLException {
+        Customer customer = cache.get(id);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) return null;
-                return mapRow(rs);
-            }
+        if (customer != null) return Optional.of(customer);
+
+        String sql = "SELECT * FROM customer WHERE id = ?";
+
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, id);
+
+        ResultSet rs = stmt.executeQuery();
+        if (!rs.next()) return null;
+
+        return Optional.of(mapRow(rs));
+    }
+
+    public List<Customer> findWithQuery(String[] queries) throws SQLException {
+        String sql = "SELECT * FROM search_for_customer_ids(?)";
+
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        Array queriesArray = connection.createArrayOf("TEXT", queries);
+        stmt.setArray(1, queriesArray);
+
+        ArrayList<Integer> ids = new ArrayList<>();
+
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            ids.add(rs.getInt("id"));
         }
+
+        ArrayList<Customer> customers = new ArrayList<>();
+        for (Integer id : ids) {
+            customers.add(findById(id).get());
+        }
+
+        queriesArray.free();
+        return customers;
     }
 }
