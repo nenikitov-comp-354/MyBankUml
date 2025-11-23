@@ -76,7 +76,7 @@ public class Customer {
         return Collections.unmodifiableList(this.accounts);
     }
 
-    protected void addAccount(Account account) {
+    public void addAccount(Account account) {
         TypeValidator.validateNotNull("Account", account);
         if (!this.equals(account.getCustomer())) {
             throw new IllegalArgumentException(
