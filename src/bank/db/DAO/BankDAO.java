@@ -34,15 +34,17 @@ public class BankDAO {
 
         String sql = "SELECT * FROM bank WHERE id = ?";
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setInt(1, id);
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
 
-        ResultSet rs = stmt.executeQuery();
-        if (!rs.next()) return Optional.empty();
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (!rs.next()) return Optional.empty();
 
-        bank = new Bank(id, rs.getString("name"));
+                bank = new Bank(id, rs.getString("name"));
 
-        cache.put(id, bank);
-        return Optional.of(bank);
+                cache.put(id, bank);
+                return Optional.of(bank);
+            }
+        }
     }
 }

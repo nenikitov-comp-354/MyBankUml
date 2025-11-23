@@ -52,6 +52,10 @@ public abstract class Account {
         this.transactions.add(transaction);
     }
 
+    public void setLocked(boolean isLocked) {
+        this.isLocked = isLocked;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
