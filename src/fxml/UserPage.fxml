@@ -40,7 +40,7 @@
                   <Insets bottom="30.0" left="15.0" />
                </GridPane.margin>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="XX.XX">
+            <Text fx:id="chequingAmount" strokeType="OUTSIDE" strokeWidth="0.0" text="XX.XX">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -56,7 +56,7 @@
                   <Insets left="15.0" />
                </GridPane.margin>
             </Text>
-            <Button mnemonicParsing="false" stylesheets="@../stylesheets/userPage.css" text="Send Money" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button fx:id="sendMoneyButton" mnemonicParsing="false" stylesheets="@../stylesheets/userPage.css" text="Send Money" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
@@ -64,7 +64,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Lock Card" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button fx:id="lockCardButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Lock Card" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="115.0" />
                </GridPane.margin>
@@ -93,7 +93,7 @@
                   <Insets bottom="30.0" left="15.0" />
                </GridPane.margin>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="XX.XX">
+            <Text fx:id="savingsAmount" strokeType="OUTSIDE" strokeWidth="0.0" text="XX.XX">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -109,7 +109,7 @@
                   <Insets left="15.0" />
                </GridPane.margin>
             </Text>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" stylesheets="@../stylesheets/userPage.css" text="Add Money" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button fx:id="addMoneyButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" stylesheets="@../stylesheets/userPage.css" text="Add Money" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
@@ -117,7 +117,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefWidth="87.0" text="Move Funds" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button fx:id="moveFundsButton" mnemonicParsing="false" prefWidth="87.0" text="Move Funds" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="115.0" />
                </GridPane.margin>
@@ -146,7 +146,7 @@
                   <Insets bottom="30.0" left="15.0" />
                </GridPane.margin>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="XX.XX">
+            <Text fx:id="creditAmount" strokeType="OUTSIDE" strokeWidth="0.0" text="XX.XX">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -162,7 +162,7 @@
                   <Insets left="15.0" />
                </GridPane.margin>
             </Text>
-            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" stylesheets="@../stylesheets/userPage.css" text="Pay Card" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button fx:id="payCardButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" stylesheets="@../stylesheets/userPage.css" text="Pay Card" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin>
@@ -170,7 +170,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" prefWidth="87.0" text="Lock Card" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button fx:id="lockCardButton" mnemonicParsing="false" prefWidth="87.0" text="Lock Card" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="115.0" />
                </GridPane.margin>

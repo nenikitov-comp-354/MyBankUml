@@ -10,20 +10,20 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="600.0" stylesheets="@../stylesheets/login.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextField layoutX="225.0" layoutY="71.0" prefWidth="155.0" promptText="First Name" styleClass="input" />
-      <PasswordField layoutX="225.0" layoutY="344.0" prefWidth="155.0" promptText="Password" styleClass="input" />
-      <PasswordField layoutX="225.0" layoutY="383.0" prefWidth="155.0" promptText="Confirm Password" styleClass="input" />
-      <Button layoutX="225.0" layoutY="445.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="155.0" text="SIGN UP" />
+      <TextField fx:id="firstNameField" layoutX="225.0" layoutY="71.0" prefWidth="155.0" promptText="First Name" styleClass="input" />
+      <PasswordField fx:id="passwordField" layoutX="225.0" layoutY="344.0" prefWidth="155.0" promptText="Password" styleClass="input" />
+      <PasswordField fx:id="confirmPasswordField" layoutX="225.0" layoutY="383.0" prefWidth="155.0" promptText="Confirm Password" styleClass="input" />
+      <Button fx:id="signUpButton" layoutX="225.0" layoutY="445.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="155.0" text="SIGN UP" />
       <Text layoutX="148.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create an Account" textAlignment="CENTER" underline="true">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
-      <TextField layoutX="225.0" layoutY="110.0" promptText="Last Name" styleClass="input" />
-      <TextField layoutX="225.0" layoutY="149.0" prefWidth="155.0" promptText="YYYY/MM/DD" styleClass="input" />
-      <PasswordField layoutX="225.0" layoutY="188.0" promptText="SIN" styleClass="input" />
-      <TextField layoutX="225.0" layoutY="227.0" promptText="Phone Number" styleClass="input" />
-      <TextField layoutX="225.0" layoutY="305.0" promptText="Email" styleClass="input" />
-      <TextField layoutX="225.0" layoutY="266.0" promptText="Branch Name" styleClass="input" />
+      <TextField fx:id="lastNameField" layoutX="225.0" layoutY="110.0" promptText="Last Name" styleClass="input" />
+      <TextField fx:id="dobField" layoutX="225.0" layoutY="149.0" prefWidth="155.0" promptText="YYYY/MM/DD" styleClass="input" />
+      <PasswordField fx:id="sinField" layoutX="225.0" layoutY="188.0" promptText="SIN" styleClass="input" />
+      <TextField fx:id="phoneNumberField" layoutX="225.0" layoutY="227.0" promptText="Phone Number" styleClass="input" />
+      <TextField fx:id="emailField" layoutX="225.0" layoutY="305.0" promptText="Email" styleClass="input" />
+      <TextField fx:id="branchNameField" layoutX="225.0" layoutY="266.0" promptText="Branch Name" styleClass="input" />
    </children>
 </AnchorPane>
