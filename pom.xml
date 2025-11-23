@@ -39,7 +39,7 @@
                 <version>3.5.4</version>
                 <configuration>
                     <includes>
-                        <include>**/_Test*.java</include>
+                        <include>bank_unit/**/Test*.java</include>
                     </includes>
                 </configuration>
             </plugin>

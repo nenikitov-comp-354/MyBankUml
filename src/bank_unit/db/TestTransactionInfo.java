@@ -1,8 +1,9 @@
-package bank.db;
+package bank_unit.db;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import bank.db.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-final class _TestTransactionInfo {
+final class TestTransactionInfo {
 
     @ParameterizedTest
     @CsvSource(

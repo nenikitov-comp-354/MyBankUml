@@ -1,8 +1,9 @@
-package bank.db;
+package bank_unit.db;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import bank.db.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,21 +12,23 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-final class _TestAccountSavings {
+final class TestAccount {
+
+    class AccountSimple extends Account {
+
+        public AccountSimple(
+            int id,
+            String name,
+            boolean isLocked,
+            Customer customer
+        ) {
+            super(id, name, isLocked, customer);
+        }
+    }
 
     @ParameterizedTest
-    @CsvSource(
-        {
-            "1, 'John`s Savings', false, '10.17'",
-            "2, 'John`s Wallet',  true,  '1.12'",
-        }
-    )
-    void testConstructorValid(
-        int id,
-        String name,
-        Boolean isLocked,
-        String interestRate
-    ) {
+    @CsvSource({ "1, 'John`s Simple', false", "2, 'John`s Wallet', true" })
+    void testConstructorValid(int id, String name, Boolean isLocked) {
         Bank bank = new Bank(1, "My bank");
         Branch branch = new Branch(1, "Address", bank);
         Customer customer = new Customer(
@@ -39,31 +42,22 @@ final class _TestAccountSavings {
             branch
         );
 
-        AccountSavings account = new AccountSavings(
-            id,
-            name,
-            isLocked,
-            customer,
-            new BigDecimal(interestRate)
-        );
+        Account account = new AccountSimple(id, name, isLocked, customer);
 
         assertEquals(id, account.getId());
         assertEquals(name, account.getName());
         assertEquals(isLocked, account.isLocked());
         assertEquals(customer, account.getCustomer());
-        assertEquals(new BigDecimal(interestRate), account.getInterestRate());
         assertEquals(new ArrayList<>(), account.getTransactions());
     }
 
     @ParameterizedTest
     @CsvSource(
         value = {
-            "-3, 'John`s Savings', true,  '10.17',  'Id `-3` is not a valid SQL id (must be > 0)'",
-            "1,  NULL,             true,  '10.17',  'Name is null'",
-            "1,  '   ',            true,  '10.17',  'Name `   ` is blank or starts and ends with trailing spaces'",
-            "1,  'John`s Savings', false, '10.17',  'Customer is null'",
-            "1,  'John`s Savings', true,  'NULL',   'Interest rate is null'",
-            "1,  'John`s Savings', true,  '-10.17', 'Interest rate `-10.17` is not positive or zero'",
+            "-3, 'John`s Simple', true,  'Id `-3` is not a valid SQL id (must be > 0)'",
+            "1,  NULL,            true,  'Name is null'",
+            "1,  '   ',           true,  'Name `   ` is blank or starts and ends with trailing spaces'",
+            "1,  'John`s Simple', false, 'Customer is null'",
         },
         nullValues = "NULL"
     )
@@ -71,7 +65,6 @@ final class _TestAccountSavings {
         int id,
         String name,
         boolean customerNotNull,
-        String interestRate,
         String error
     ) {
         Bank bank = new Bank(1, "My bank");
@@ -90,12 +83,11 @@ final class _TestAccountSavings {
         Exception e = assertThrows(
             IllegalArgumentException.class,
             () -> {
-                new AccountSavings(
+                new AccountSimple(
                     id,
                     name,
                     false,
-                    customerNotNull ? customer : null,
-                    interestRate != null ? new BigDecimal(interestRate) : null
+                    customerNotNull ? customer : null
                 );
             }
         );
@@ -116,20 +108,8 @@ final class _TestAccountSavings {
             "big-john@email.com",
             branch
         );
-        AccountSavings account1 = new AccountSavings(
-            1,
-            "My savings 1",
-            false,
-            customer,
-            new BigDecimal("0.00")
-        );
-        AccountSavings account2 = new AccountSavings(
-            2,
-            "My savings 2",
-            false,
-            customer,
-            new BigDecimal("1.00")
-        );
+        Account account1 = new AccountSimple(1, "My simple 1", false, customer);
+        Account account2 = new AccountSimple(2, "My simple 2", false, customer);
         Transaction transaction = new Transaction(
             1,
             new TransactionInfo(
@@ -145,7 +125,7 @@ final class _TestAccountSavings {
     @ParameterizedTest
     @CsvSource(
         {
-            "true,  'Transaction Transaction(id=1, info=TransactionInfo(source=AccountSavings(SUPER=Account(id=1, name=My savings 1, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), interestRate=0.00), destination=AccountSavings(SUPER=Account(id=2, name=My savings 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), interestRate=1.00), amount=17.79, time=2025-11-18T18:59)) does not belong to this account AccountSavings(SUPER=Account(id=2, name=My savings 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), interestRate=1.00)'",
+            "true,  'Transaction Transaction(id=1, info=TransactionInfo(source=Account(id=1, name=My simple 1, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), destination=Account(id=2, name=My simple 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), amount=17.79, time=2025-11-18T18:59)) does not belong to this account Account(id=2, name=My simple 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank))))'",
             "false, 'Transaction is null'",
         }
     )
@@ -162,20 +142,8 @@ final class _TestAccountSavings {
             "big-john@email.com",
             branch
         );
-        Account account1 = new AccountSavings(
-            1,
-            "My savings 1",
-            false,
-            customer,
-            new BigDecimal("0.00")
-        );
-        Account account2 = new AccountSavings(
-            2,
-            "My savings 2",
-            false,
-            customer,
-            new BigDecimal("1.00")
-        );
+        Account account1 = new AccountSimple(1, "My simple 1", false, customer);
+        Account account2 = new AccountSimple(2, "My simple 2", false, customer);
         Transaction transaction = new Transaction(
             1,
             new TransactionInfo(
