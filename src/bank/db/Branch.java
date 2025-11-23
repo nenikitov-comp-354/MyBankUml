@@ -33,7 +33,7 @@ public class Branch {
         return Collections.unmodifiableList(this.customers);
     }
 
-    protected void addCustomer(Customer customer) {
+    public void addCustomer(Customer customer) {
         TypeValidator.validateNotNull("Customer", customer);
         if (!this.equals(customer.getBranch())) {
             throw new IllegalArgumentException(

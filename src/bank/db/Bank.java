@@ -27,7 +27,7 @@ public class Bank {
         return Collections.unmodifiableList(this.branches);
     }
 
-    protected void addBranch(Branch branch) {
+    public void addBranch(Branch branch) {
         TypeValidator.validateNotNull("Branch", branch);
         if (!this.equals(branch.getBank())) {
             throw new IllegalArgumentException(
