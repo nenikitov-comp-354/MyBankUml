@@ -20,7 +20,7 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
-      <Button fx:id="signUpButton" layoutX="120.0" layoutY="261.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="159.0" stylesheets="@../stylesheets/login.css" text="SIGN UP" textAlignment="CENTER">
+      <Button fx:id="signUpButton" onAction="#loadSignUp" layoutX="120.0" layoutY="261.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="159.0" stylesheets="@../stylesheets/login.css" text="SIGN UP" textAlignment="CENTER">
          <font>
             <Font size="36.0" />
          </font>

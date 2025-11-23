@@ -28,6 +28,10 @@ public class App extends Application {
     @FXML
     private Button loginButton;
     @FXML
+    private Button signUpButton;
+    @FXML
+    private Button signUpConfirmButton;
+    @FXML
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
@@ -80,6 +84,7 @@ public class App extends Application {
         try {
             String username = usernameField.getText();
             String password = passwordField.getText();
+            // TODO: Use dao's when they're done. This isn't what we need to do
             db = new BankDb("localhost", Optional.empty(), "bank", username, Optional.of(password));
 
             Parent root = FXMLLoader.load(getClass().getResource("/fxml/UserPage.fxml"));
@@ -90,10 +95,37 @@ public class App extends Application {
                 errorText.setText("No username or password was provided");
             }
             else {
-                errorText.setText("Log in failed. Username or password is incorrect");
+                errorText.setText("Login failed. Username or password is incorrect");
             }
         } catch (IOException e) {
             System.err.println("UserPage.fxml was not found");
+            System.exit(1);
+        }
+    }
+
+    @FXML
+    private void loadSignUp(ActionEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/SignUpPage.fxml"));
+            Stage stage = (Stage) signUpButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            System.err.println("SignUpPage.fxml was not found");
+            System.exit(1);
+        }
+    }
+
+    @FXML
+    private void signUpUser(ActionEvent event) {
+        try {
+            // TODO: Add logic that will add the user to the database
+
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/LogInPage.fxml"));
+            Stage stage = (Stage) signUpConfirmButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
+        } catch (IOException e) {
+            System.err.println("LogInPage.fxml was not found");
+            System.exit(1);
         }
     }
 }
