@@ -38,7 +38,7 @@ public abstract class Account {
         return Collections.unmodifiableList(this.transactions);
     }
 
-    protected void addTransaction(Transaction transaction) {
+    public void addTransaction(Transaction transaction) {
         TypeValidator.validateNotNull("Transaction", transaction);
         if (!this.equals(transaction.getInfo().getSource())) {
             throw new IllegalArgumentException(
