@@ -1,15 +1,16 @@
-package bank.db;
+package bank_unit.db;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import bank.db.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-final class _TestBranch {
+final class TestBranch {
 
     @ParameterizedTest
     @CsvSource({ "1, 'First World Branch'", "2, 'The Big Branch'" })
