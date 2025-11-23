@@ -5,6 +5,7 @@ import java.util.List;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
@@ -18,7 +19,7 @@ public class SignUpController {
     private TextField lastNameField;
 
     @FXML
-    private TextField dobField;
+    private DatePicker dobField;
 
     @FXML
     private PasswordField sinField;
@@ -51,7 +52,6 @@ public class SignUpController {
         List<TextInputControl> fields = List.of(
             firstNameField,
             lastNameField,
-            dobField,
             sinField,
             phoneNumberField,
             branchNameField,
@@ -61,7 +61,7 @@ public class SignUpController {
         );
         boolean anyEmpty = fields.stream().anyMatch(f -> f.getText().isEmpty());
 
-        if (anyEmpty) {
+        if (anyEmpty || dobField.getValue() == null) {
             errorText.setText("One or more fields are empty");
         } else if (
             !passwordField.getText().equals(confirmPasswordField.getText())
