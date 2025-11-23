@@ -1,7 +1,6 @@
 package bank.util;
 
 import java.io.IOException;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -17,7 +16,9 @@ public class SceneManager {
     /**
      * Returns the shared SceneManager instance
      */
-    public static SceneManager getInstance() { return instance; }
+    public static SceneManager getInstance() {
+        return instance;
+    }
 
     private SceneManager() {}
 

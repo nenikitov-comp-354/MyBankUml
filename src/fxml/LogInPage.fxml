@@ -20,7 +20,7 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
-      <Button fx:id="signUpButton" onAction="#loadSignUp" layoutX="120.0" layoutY="261.0" mnemonicParsing="false" prefHeight="81.0" prefWidth="159.0" stylesheets="@../stylesheets/login.css" text="SIGN UP" textAlignment="CENTER">
+      <Button fx:id="signUpButton" layoutX="120.0" layoutY="261.0" mnemonicParsing="false" onAction="#loadSignUp" prefHeight="81.0" prefWidth="159.0" stylesheets="@../stylesheets/login.css" text="SIGN UP" textAlignment="CENTER">
          <font>
             <Font size="36.0" />
          </font>
@@ -37,6 +37,6 @@
          </font>
       </Hyperlink>
       <TextField fx:id="usernameField" layoutX="52.0" layoutY="153.0" prefHeight="26.0" prefWidth="496.0" promptText="User name" styleClass="input" stylesheets="@../stylesheets/login.css" />
-      <Text fx:id="errorText" fill="RED" layoutX="296.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="errorText" fill="RED" layoutX="296.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" />
    </children>
 </AnchorPane>

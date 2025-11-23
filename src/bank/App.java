@@ -1,8 +1,7 @@
 package bank;
 
-import java.io.IOException;
-
 import bank.db.BankDb;
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,7 +13,6 @@ import javafx.stage.Stage;
 // [Solution](https://stackoverflow.com/a/70809214)
 
 public class App extends Application {
-
     private BankDb db;
 
     public static void main(String[] args) {
