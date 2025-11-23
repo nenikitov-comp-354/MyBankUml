@@ -35,7 +35,7 @@
 }
 
 .date-picker > .arrow-button {
-    -fx-background-image: url("/icons/date.png");
+    -fx-background-image: url("../icons/date.png");
     -fx-background-size: 70% 70%;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
