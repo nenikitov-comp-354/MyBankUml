@@ -38,26 +38,24 @@ public class BranchDAO {
 
         String sql = "SELECT * FROM branch WHERE id = ?";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, id);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) return Optional.empty();
+        ResultSet rs = stmt.executeQuery();
+        if (!rs.next()) return Optional.empty();
 
-                String address = rs.getString("address");
-                int bankId = rs.getInt("bank_id");
+        String address = rs.getString("address");
+        int bankId = rs.getInt("bank_id");
 
-                Optional<Bank> bank = bankDao.findById(bankId);
-                if (!bank.isPresent()) throw new SQLException(
-                    "Branch " + id + " refers to missing bank " + bankId
-                );
+        Optional<Bank> bank = bankDao.findById(bankId);
+        if (!bank.isPresent()) throw new SQLException(
+            "Branch " + id + " refers to missing bank " + bankId
+        );
 
-                branch = new Branch(id, address, bank.get());
-                bank.get().addBranch(branch);
+        branch = new Branch(id, address, bank.get());
+        bank.get().addBranch(branch);
 
-                cache.put(id, branch);
-                return Optional.of(branch);
-            }
-        }
+        cache.put(id, branch);
+        return Optional.of(branch);
     }
 }
