@@ -26,6 +26,6 @@
       <Button fx:id="signUpConfirmButton" layoutX="225.0" layoutY="445.0" mnemonicParsing="false" onAction="#signUpUser" prefHeight="51.0" prefWidth="155.0" text="SIGN UP" />
 
       <Text fx:id="errorText" fill="RED" layoutX="287.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" />
-      <DatePicker fx:id="dobField" layoutX="148.0" layoutY="153.0" prefHeight="25.0" prefWidth="310.0" styleClass="date-picker" />
+      <DatePicker fx:id="dobField" layoutX="148.0" layoutY="153.0" prefHeight="25.0" prefWidth="310.0" promptText="Date of Birth" styleClass="date-picker" />
    </children>
 </AnchorPane>

@@ -28,5 +28,22 @@
     -fx-pref-height: 30px;
     -fx-background-color: transparent;
 
+
+}
+.date-picker .text-field {
+    -fx-padding: 0 0 0 20px;
+}
+
+.date-picker > .arrow-button {
+    -fx-background-image: url("../icons/date.png");
+    -fx-background-size: 70% 70%;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-background-insets: 1;
+    -fx-padding: 0 10px 0 10px;
+}
+
+.date-picker .arrow-button .arrow {
+    -fx-background-color: transparent;
 }
 
