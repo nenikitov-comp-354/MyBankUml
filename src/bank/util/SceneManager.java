@@ -1,5 +1,6 @@
 package bank.util;
 
+import bank.db.BankDb;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,7 +12,16 @@ import javafx.stage.Stage;
  * Utility singleton for loading an FXML file and replacing the current scene on the given node's stage
  */
 public class SceneManager {
+    private BankDb db;
     private static final SceneManager instance = new SceneManager();
+
+    public void setDb(BankDb db) {
+        this.db = db;
+    }
+
+    public BankDb getDb() {
+        return db;
+    }
 
     /**
      * Returns the shared SceneManager instance

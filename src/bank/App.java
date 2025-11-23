@@ -1,7 +1,11 @@
 package bank;
 
 import bank.db.BankDb;
+import bank.util.SceneManager;
+
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Optional;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,16 +17,20 @@ import javafx.stage.Stage;
 // [Solution](https://stackoverflow.com/a/70809214)
 
 public class App extends Application {
-    private BankDb db;
-
     public static void main(String[] args) {
         App.launch(args);
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
-        // TODO: Use the DB connection
-        // BankDb db = new BankDb("localhost", Optional.empty(), "bank", "admin", Optional.of("admin"));
+    public void start(Stage stage) throws IOException, SQLException {
+        BankDb db = new BankDb(
+            "localhost",
+            Optional.empty(),
+            "bank",
+            "admin",
+            Optional.of("admin")
+        );
+        SceneManager.getInstance().setDb(db);
 
         // TODO: Remove this example when not needed
         // This is how BankDb will initialize all classes. The order is important to avoid interdependence.
