@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class TestBankDb {
 
     static class TestingBankDb extends BankDb {
-        // In-memory fake data
+        // In-memory mock data
         Map<Integer, Bank> testBanks = new HashMap<>();
         Map<Integer, Branch> testBranches = new HashMap<>();
         Map<Integer, Customer> testCustomers = new HashMap<>();
@@ -61,7 +61,7 @@ public class TestBankDb {
             return testTransactions;
         }
 
-        // Helper methods to populate fake data
+        // Helper methods to populate mock data
         void addBank(Bank bank) {
             testBanks.put(bank.getId(), bank);
         }
