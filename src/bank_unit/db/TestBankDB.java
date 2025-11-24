@@ -12,11 +12,6 @@ import org.junit.jupiter.api.Test;
 
 public class TestBankDb {
 
-    /**
-     * A test double replacing all DB access.
-     * We override fetchBanks(), fetchBranches(), etc.
-     * The real constructor still runs but connection is unused.
-     */
     static class TestingBankDb extends BankDb {
         // In-memory fake data
         Map<Integer, Bank> testBanks = new HashMap<>();
@@ -100,24 +95,24 @@ public class TestBankDb {
         Bank bank = new Bank(1, "TestBank");
         db.addBank(bank);
 
-        Branch branch = new Branch(10, "Addr", bank);
+        Branch branch = new Branch(10, "Address", bank);
         db.addBranch(branch);
 
         Customer cust = new Customer(
             100,
-            "Alice",
-            "Smith",
-            LocalDate.of(1990, 1, 1),
-            "111-111-111",
-            "+15550000001",
-            "alice@test.com",
+            "Harry",
+            "Styles",
+            LocalDate.of(1994, 2, 1),
+            "123-456-789",
+            "+14165551234",
+            "harry.styles@email.com",
             branch
         );
         db.addCustomer(cust);
 
         AccountChecking acc = new AccountChecking(
             200,
-            "Alice Checking",
+            "Harry Checking",
             false,
             cust,
             BigDecimal.valueOf(5.00)
@@ -127,7 +122,7 @@ public class TestBankDb {
         // create a second account to use as transaction destination
         AccountSavings accDestination = new AccountSavings(
             201,
-            "Alice Savings",
+            "Harry Savings",
             false,
             cust,
             BigDecimal.valueOf(0.01)
@@ -137,7 +132,7 @@ public class TestBankDb {
             300,
             new TransactionInfo(
                 acc,
-                accDestination, // use separate destination account
+                accDestination,
                 BigDecimal.valueOf(50),
                 LocalDateTime.now()
             )
@@ -155,9 +150,9 @@ public class TestBankDb {
         assertEquals(1, db.getTransactions().size());
 
         assertEquals("TestBank", db.getBanks().get(1).getName());
-        assertEquals("Addr", db.getBranches().get(10).getAddress());
-        assertEquals("Alice", db.getCustomers().get(100).getFirstName());
-        assertEquals("Alice Checking", db.getAccounts().get(200).getName());
+        assertEquals("Address", db.getBranches().get(10).getAddress());
+        assertEquals("Harry", db.getCustomers().get(100).getFirstName());
+        assertEquals("Harry Checking", db.getAccounts().get(200).getName());
     }
 
     @Test
@@ -169,12 +164,12 @@ public class TestBankDb {
         Branch branch = new Branch(10, "A", bank);
         Customer cust = new Customer(
             99,
-            "John",
-            "Doe",
-            LocalDate.of(1995, 5, 5),
-            "111-111-111",
-            "+15550000002",
-            "john@x.com",
+            "Sabrina",
+            "Carpenter",
+            LocalDate.of(1999, 5, 11),
+            "234-567-890",
+            "+16045557890",
+            "sabrina.carpenter@email.com",
             branch
         );
 
@@ -183,21 +178,28 @@ public class TestBankDb {
         db.addCustomer(cust);
 
         // customerLogin executes SQL, so override it here:
-        db = new TestingBankDb() {
+        db =
+            new TestingBankDb() {
 
                 @Override
                 public Optional<Customer> customerLogin(
                     String email,
                     String pwd
                 ) {
-                    if (email.equals("john@x.com") && pwd.equals("secret")) {
+                    if (
+                        email.equals("sabrina.carpenter@email.com") &&
+                        pwd.equals("secret")
+                    ) {
                         return Optional.of(cust);
                     }
                     return Optional.empty();
                 }
             };
 
-        Optional<Customer> result = db.customerLogin("john@x.com", "secret");
+        Optional<Customer> result = db.customerLogin(
+            "sabrina.carpenter@email.com",
+            "secret"
+        );
 
         assertTrue(result.isPresent());
         assertEquals(cust, result.get());
@@ -207,28 +209,28 @@ public class TestBankDb {
     void testCustomerSearch() throws Exception {
         TestingBankDb db = new TestingBankDb();
 
-        // Fake customers
+        // Mock customers
         Bank bank = new Bank(1, "B");
         Branch branch = new Branch(10, "A", bank);
 
         Customer c1 = new Customer(
             1,
-            "Alice",
-            "A",
-            LocalDate.of(1990, 1, 1),
-            "111-111-111",
-            "+15550000003",
-            "alice@test.com",
+            "Harry",
+            "Styles",
+            LocalDate.of(1994, 2, 1),
+            "123-456-789",
+            "+14165551234",
+            "harry.styles@email.com",
             branch
         );
         Customer c2 = new Customer(
             2,
-            "Bob",
-            "B",
-            LocalDate.of(1980, 1, 1),
-            "222-222-222",
-            "+15550000004",
-            "bob@test.com",
+            "Sabrina",
+            "Carpenter",
+            LocalDate.of(1999, 5, 11),
+            "234-567-890",
+            "+16045557890",
+            "sabrina.carpenter@email.com",
             branch
         );
 
@@ -238,7 +240,8 @@ public class TestBankDb {
         db.addCustomer(c2);
 
         // Override SQL-based search:
-        db = new TestingBankDb() {
+        db =
+            new TestingBankDb() {
 
                 @Override
                 public List<Customer> getCustomersSearch(String[] query) {
@@ -257,7 +260,7 @@ public class TestBankDb {
                 }
             };
 
-        List<Customer> found = db.getCustomersSearch(new String[] { "ali" });
+        List<Customer> found = db.getCustomersSearch(new String[] { "har" });
         assertEquals(1, found.size());
         assertEquals(c1, found.get(0));
     }
