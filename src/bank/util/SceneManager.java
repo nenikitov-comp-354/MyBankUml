@@ -1,6 +1,8 @@
 package bank.util;
 
 import bank.db.BankDb;
+import bank.db.Customer;
+
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -13,6 +15,7 @@ import javafx.stage.Stage;
  */
 public class SceneManager {
     private BankDb db;
+    private Customer c;
     private static final SceneManager instance = new SceneManager();
 
     public void setDb(BankDb db) {
@@ -21,6 +24,14 @@ public class SceneManager {
 
     public BankDb getDb() {
         return db;
+    }
+
+    public void setCustomer(Customer c) {
+        this.c = c;
+    }
+
+    public Customer getCustomer() {
+        return c;
     }
 
     /**
@@ -45,6 +56,7 @@ public class SceneManager {
             stage.setScene(new Scene(root));
         } catch (IOException e) {
             System.err.println(fxml + " was not found");
+            e.printStackTrace();
         }
     }
 }

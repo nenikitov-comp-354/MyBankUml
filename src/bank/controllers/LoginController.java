@@ -42,7 +42,7 @@ public class LoginController {
 
             if (customerOpt.isPresent()) {
                 Customer customer = customerOpt.get();
-                System.out.println(customer);
+                sceneManager.setCustomer(customer);
                 sceneManager.switchScene("/fxml/UserPage.fxml", loginButton);
             } else {
                 if (
