@@ -2,7 +2,7 @@ package bank.db.DAO;
 
 import bank.db.Customer;
 import java.sql.*;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Data Access Object for customer login / authentication.

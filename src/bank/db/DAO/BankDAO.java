@@ -2,47 +2,80 @@ package bank.db.DAO;
 
 import bank.db.Bank;
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.*;
 
-/**
- * Data Access Object for Bank Table.
- */
 public class BankDAO {
     private final Connection connection;
-    private final HashMap<Integer, Bank> cache;
 
-    /**
-     * constructor
-     * @param connection
-     */
     public BankDAO(Connection connection) {
         this.connection = connection;
-        this.cache = new HashMap<>();
     }
 
-    /**
-     * finds the bank object by ID within the DB using SQL
-     * @param id
-     * @return bank object
-     * @throws SQLException
-     */
+    public List<Bank> findAll() throws SQLException {
+        String sql = "SELECT * FROM bank ORDER BY id";
+        List<Bank> result = new ArrayList<>();
+
+        try (
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)
+        ) {
+            while (rs.next()) {
+                result.add(new Bank(rs.getInt("id"), rs.getString("name")));
+            }
+        }
+
+        return result;
+    }
+
     public Optional<Bank> findById(int id) throws SQLException {
-        Bank bank = cache.get(id);
-
-        if (bank != null) return Optional.of(bank);
-
         String sql = "SELECT * FROM bank WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (!rs.next()) return Optional.empty();
+                return Optional.of(
+                    new Bank(rs.getInt("id"), rs.getString("name"))
+                );
+            }
+        }
+    }
 
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        stmt.setInt(1, id);
+    public Bank insert(Bank bank) throws SQLException {
+        String sql = "INSERT INTO bank(name) VALUES (?)";
+        try (
+            PreparedStatement stmt = connection.prepareStatement(
+                sql,
+                Statement.RETURN_GENERATED_KEYS
+            )
+        ) {
+            stmt.setString(1, bank.getName());
+            stmt.executeUpdate();
+            try (ResultSet keys = stmt.getGeneratedKeys()) {
+                if (keys.next()) {
+                    int id = keys.getInt(1);
+                    // construct a Bank with the generated id instead of calling setId()
+                    return new Bank(id, bank.getName());
+                }
+            }
+        }
+        // return original (may be id==0)
+        return bank;
+    }
 
-        ResultSet rs = stmt.executeQuery();
-        if (!rs.next()) return Optional.empty();
+    public boolean update(Bank bank) throws SQLException {
+        String sql = "UPDATE bank SET name=? WHERE id=?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, bank.getName());
+            stmt.setInt(2, bank.getId());
+            return stmt.executeUpdate() > 0;
+        }
+    }
 
-        bank = new Bank(id, rs.getString("name"));
-
-        cache.put(id, bank);
-        return Optional.of(bank);
+    public boolean delete(int id) throws SQLException {
+        String sql = "DELETE FROM bank WHERE id=?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() > 0;
+        }
     }
 }

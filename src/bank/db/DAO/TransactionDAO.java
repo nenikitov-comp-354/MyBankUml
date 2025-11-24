@@ -1,52 +1,69 @@
 package bank.db.DAO;
 
-import bank.db.Bank;
-import bank.db.Branch;
+import bank.db.Account;
+import bank.db.Transaction;
+import bank.db.TransactionInfo;
+import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.util.*;
 
-/**
- * Data Access Object for Transaction Table.
- */
-public class BranchDAO {
+public class TransactionDAO {
     private final Connection connection;
-    private final BankDAO bankDao;
+    private final AccountDAO accountDao;
 
-    /**
-     * constructor
-     * @param connection
-     * @param bankDao
-     */
-    public BranchDAO(Connection connection, BankDAO bankDao) {
+    public TransactionDAO(Connection connection, AccountDAO accountDao) {
         this.connection = connection;
-        this.bankDao = bankDao;
+        this.accountDao = accountDao;
     }
 
-    /**
-     * finds the Branch object by ID within the DB using SQL
-     * @param id
-     * @return branch object
-     * @throws SQLException
-     */
-    public Branch findById(int id) throws SQLException {
-        String sql = "SELECT * FROM branch WHERE id = ?";
-
+    public List<Transaction> findByAccountId(int accountId)
+        throws SQLException {
+        String sql =
+            "SELECT * FROM transaction WHERE source_account_id = ? OR destination_account_id = ? ORDER BY id";
+        List<Transaction> result = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, id);
-
+            stmt.setInt(1, accountId);
+            stmt.setInt(2, accountId);
             try (ResultSet rs = stmt.executeQuery()) {
-                if (!rs.next()) return null;
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+                    int srcId = rs.getInt("source_account_id");
+                    int dstId = rs.getInt("destination_account_id");
+                    BigDecimal amount = rs.getBigDecimal("amount");
+                    Timestamp ts = rs.getTimestamp("time"); // adjust column name if different
+                    LocalDateTime time = ts == null
+                        ? null
+                        : ts.toLocalDateTime();
 
-                int branchId = rs.getInt("id");
-                String address = rs.getString("address");
-                int bankId = rs.getInt("bank_id");
+                    // resolve accounts via AccountDAO (requires AccountDAO.findById(int) -> Optional<Account>)
+                    Account src = accountDao
+                        .findById(srcId)
+                        .orElseThrow(
+                            () ->
+                                new SQLException(
+                                    "Source account not found: " + srcId
+                                )
+                        );
+                    Account dst = accountDao
+                        .findById(dstId)
+                        .orElseThrow(
+                            () ->
+                                new SQLException(
+                                    "Destination account not found: " + dstId
+                                )
+                        );
 
-                Bank bank = bankDao.findById(bankId);
-                if (bank == null) throw new SQLException(
-                    "Branch " + id + " refers to missing bank " + bankId
-                );
-
-                return new Branch(branchId, address, bank);
+                    TransactionInfo info = new TransactionInfo(
+                        src,
+                        dst,
+                        amount,
+                        time
+                    );
+                    result.add(new Transaction(id, info));
+                }
             }
         }
+        return result;
     }
 }
