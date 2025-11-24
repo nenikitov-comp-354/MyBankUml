@@ -1,17 +1,17 @@
 package bank.db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.*;
 
-/**
- * In-memory bank repository backed by the DB.
- * Loads all banks, branches, customers, accounts, and transactions on startup.
- * Keeps the cache in sync on mutations.
- */
 public class BankDb {
-    protected Connection connection;
+    private Connection connection;
+
+    // store params so connection can be created lazily
+    private final String host;
+    private final Optional<Integer> port;
+    private final String database;
+    private final String user;
+    private final Optional<String> password;
 
     private Map<Integer, Bank> banks;
     private Map<Integer, Branch> branches;
@@ -27,23 +27,38 @@ public class BankDb {
         Optional<String> password
     )
         throws SQLException {
-        String url =
-            "jdbc:postgresql://" +
-            host +
-            port.map(p -> ":" + p).orElse("") +
-            "/" +
-            database;
-        Properties props = new Properties();
-        props.setProperty("user", user);
-        password.ifPresent(p -> props.setProperty("password", p));
+        // store connection parameters but DO NOT connect here
+        this.host = host;
+        this.port = port;
+        this.database = database;
+        this.user = user;
+        this.password = password;
 
-        this.connection = DriverManager.getConnection(url, props);
+        this.connection = null; // created on demand
 
         this.banks = new HashMap<>();
         this.branches = new HashMap<>();
         this.customers = new HashMap<>();
         this.accounts = new HashMap<>();
         this.transactions = new HashMap<>();
+    }
+
+    // ensureConnection() creates the JDBC Connection only when needed
+    private synchronized void ensureConnection() throws SQLException {
+        if (this.connection != null) return;
+
+        String url =
+            "jdbc:postgresql://" +
+            host +
+            port.map(p -> ":" + p).orElse("") +
+            "/" +
+            database;
+
+        Properties props = new Properties();
+        props.setProperty("user", user);
+        password.ifPresent(pw -> props.setProperty("password", pw));
+
+        this.connection = DriverManager.getConnection(url, props);
     }
 
     public void connect() throws SQLException {
@@ -56,6 +71,8 @@ public class BankDb {
 
     public Optional<Customer> customerLogin(String email, String password)
         throws SQLException {
+        ensureConnection();
+
         String sql =
             "SELECT c.id " +
             "FROM customer c " +
@@ -77,6 +94,8 @@ public class BankDb {
 
     public List<Customer> getCustomersSearch(String[] query)
         throws SQLException {
+        ensureConnection();
+
         List<Customer> customers = new ArrayList<>();
 
         String sql = "SELECT * FROM search_for_customer_ids(?)";
@@ -115,7 +134,10 @@ public class BankDb {
         return Collections.unmodifiableMap(this.transactions);
     }
 
-    private Map<Integer, Bank> fetchBanks() throws SQLException {
+    // changed visibility from private -> protected so tests can override
+    protected Map<Integer, Bank> fetchBanks() throws SQLException {
+        ensureConnection();
+
         Map<Integer, Bank> banks = new HashMap<>();
 
         String sql = "SELECT * FROM bank";
@@ -132,8 +154,10 @@ public class BankDb {
         return banks;
     }
 
-    private Map<Integer, Branch> fetchBranches(Map<Integer, Bank> banks)
+    protected Map<Integer, Branch> fetchBranches(Map<Integer, Bank> banks)
         throws SQLException {
+        ensureConnection();
+
         Map<Integer, Branch> branches = new HashMap<>();
 
         String sql = "SELECT * FROM branch";
@@ -153,10 +177,12 @@ public class BankDb {
         return branches;
     }
 
-    private Map<Integer, Customer> fetchCustomers(
+    protected Map<Integer, Customer> fetchCustomers(
         Map<Integer, Branch> branches
     )
         throws SQLException {
+        ensureConnection();
+
         Map<Integer, Customer> customers = new HashMap<>();
 
         String sql = "SELECT * FROM customer";
@@ -185,7 +211,7 @@ public class BankDb {
         return customers;
     }
 
-    private Map<Integer, Account> fetchAccounts(
+    protected Map<Integer, Account> fetchAccounts(
         Map<Integer, Customer> customers
     )
         throws SQLException {
@@ -198,10 +224,13 @@ public class BankDb {
         return accounts;
     }
 
-    private Map<Integer, AccountChecking> fetchAccountsChecking(
+    // make these protected as well (optional but consistent)
+    protected Map<Integer, AccountChecking> fetchAccountsChecking(
         Map<Integer, Customer> customers
     )
         throws SQLException {
+        ensureConnection();
+
         Map<Integer, AccountChecking> accounts = new HashMap<>();
 
         String sql = "SELECT * FROM account_checking";
@@ -227,10 +256,12 @@ public class BankDb {
         return accounts;
     }
 
-    private Map<Integer, AccountCredit> fetchAccountsCredit(
+    protected Map<Integer, AccountCredit> fetchAccountsCredit(
         Map<Integer, Customer> customers
     )
         throws SQLException {
+        ensureConnection();
+
         Map<Integer, AccountCredit> accounts = new HashMap<>();
 
         String sql = "SELECT * FROM account_credit";
@@ -257,10 +288,12 @@ public class BankDb {
         return accounts;
     }
 
-    private Map<Integer, AccountSavings> fetchAccountsSavings(
+    protected Map<Integer, AccountSavings> fetchAccountsSavings(
         Map<Integer, Customer> customers
     )
         throws SQLException {
+        ensureConnection();
+
         Map<Integer, AccountSavings> accounts = new HashMap<>();
 
         String sql = "SELECT * FROM account_savings";
@@ -286,10 +319,12 @@ public class BankDb {
         return accounts;
     }
 
-    private Map<Integer, Transaction> fetchTransactions(
+    protected Map<Integer, Transaction> fetchTransactions(
         Map<Integer, Account> accounts
     )
         throws SQLException {
+        ensureConnection();
+
         Map<Integer, Transaction> transactions = new HashMap<>();
 
         String sql = "SELECT * FROM transaction";

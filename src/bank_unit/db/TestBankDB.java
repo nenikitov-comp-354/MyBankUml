@@ -10,22 +10,22 @@ import java.time.LocalDateTime;
 import java.util.*;
 import org.junit.jupiter.api.Test;
 
-public class TestBankDB {
+public class TestBankDb {
 
     /**
      * A test double replacing all DB access.
      * We override fetchBanks(), fetchBranches(), etc.
      * The real constructor still runs but connection is unused.
      */
-    static class FakeBankDB extends BankDB {
+    static class TestingBankDb extends BankDb {
         // In-memory fake data
-        Map<Integer, Bank> fakeBanks = new HashMap<>();
-        Map<Integer, Branch> fakeBranches = new HashMap<>();
-        Map<Integer, Customer> fakeCustomers = new HashMap<>();
-        Map<Integer, Account> fakeAccounts = new HashMap<>();
-        Map<Integer, Transaction> fakeTransactions = new HashMap<>();
+        Map<Integer, Bank> testBanks = new HashMap<>();
+        Map<Integer, Branch> testBranches = new HashMap<>();
+        Map<Integer, Customer> testCustomers = new HashMap<>();
+        Map<Integer, Account> testAccounts = new HashMap<>();
+        Map<Integer, Transaction> testTransactions = new HashMap<>();
 
-        public FakeBankDB() throws SQLException {
+        public TestingBankDb() throws SQLException {
             super(
                 "localhost",
                 Optional.empty(),
@@ -35,74 +35,68 @@ public class TestBankDB {
             );
         }
 
-        /* ------------ Override fetch methods ------------ */
-
         @Override
         protected Map<Integer, Bank> fetchBanks() {
-            return fakeBanks;
+            return testBanks;
         }
 
         @Override
         protected Map<Integer, Branch> fetchBranches(Map<Integer, Bank> banks) {
-            return fakeBranches;
+            return testBranches;
         }
 
         @Override
         protected Map<Integer, Customer> fetchCustomers(
             Map<Integer, Branch> branches
         ) {
-            return fakeCustomers;
+            return testCustomers;
         }
 
         @Override
         protected Map<Integer, Account> fetchAccounts(
             Map<Integer, Customer> customers
         ) {
-            return fakeAccounts;
+            return testAccounts;
         }
 
         @Override
         protected Map<Integer, Transaction> fetchTransactions(
             Map<Integer, Account> accounts
         ) {
-            return fakeTransactions;
+            return testTransactions;
         }
 
-        /* ------------ Helper methods to populate fake data ------------ */
-        void addBank(Bank b) {
-            fakeBanks.put(b.getId(), b);
+        // Helper methods to populate fake data
+        void addBank(Bank bank) {
+            testBanks.put(bank.getId(), bank);
         }
 
-        void addBranch(Branch br) {
-            fakeBranches.put(br.getId(), br);
-            br.getBank().addBranch(br);
+        void addBranch(Branch branch) {
+            testBranches.put(branch.getId(), branch);
+            branch.getBank().addBranch(branch);
         }
 
-        void addCustomer(Customer c) {
-            fakeCustomers.put(c.getId(), c);
-            c.getBranch().addCustomer(c);
+        void addCustomer(Customer customer) {
+            testCustomers.put(customer.getId(), customer);
+            customer.getBranch().addCustomer(customer);
         }
 
-        void addAccount(Account a) {
-            fakeAccounts.put(a.getId(), a);
-            a.getCustomer().addAccount(a);
+        void addAccount(Account account) {
+            testAccounts.put(account.getId(), account);
+            account.getCustomer().addAccount(account);
         }
 
-        void addTransaction(Transaction t) {
-            fakeTransactions.put(t.getId(), t);
-            t.getInfo().getSource().addTransaction(t);
+        void addTransaction(Transaction transaction) {
+            testTransactions.put(transaction.getId(), transaction);
+            transaction.getInfo().getSource().addTransaction(transaction);
         }
     }
 
-    // ============================================================
-    //                    TEST: connect()
-    // ============================================================
-
     @Test
     void testHierarchyPreload() throws Exception {
-        FakeBankDB db = new FakeBankDB();
+        TestingBankDb db = new TestingBankDb();
 
-        // --- Create fake data ---
+        // Fake data
         Bank bank = new Bank(1, "TestBank");
         db.addBank(bank);
 
@@ -114,8 +108,8 @@ public class TestBankDB {
             "Alice",
             "Smith",
             LocalDate.of(1990, 1, 1),
-            "111",
-            "555",
+            "111-111-111",
+            "+15550000001",
             "alice@test.com",
             branch
         );
@@ -130,21 +124,30 @@ public class TestBankDB {
         );
         db.addAccount(acc);
 
-        Transaction tx = new Transaction(
+        // create a second account to use as transaction destination
+        AccountSavings accDestination = new AccountSavings(
+            201,
+            "Alice Savings",
+            false,
+            cust,
+            BigDecimal.valueOf(0.01)
+        );
+
+        Transaction transaction = new Transaction(
             300,
             new TransactionInfo(
                 acc,
-                acc, // self-transfer to simplify test
+                accDestination, // use separate destination account
                 BigDecimal.valueOf(50),
                 LocalDateTime.now()
             )
         );
-        db.addTransaction(tx);
+        db.addTransaction(transaction);
 
-        // --- Run connect() which calls overridden fetch methods ---
+        // Run connect() which calls overridden fetch methods
         db.connect();
 
-        // --- Assertions ---
+        // Assertions
         assertEquals(1, db.getBanks().size());
         assertEquals(1, db.getBranches().size());
         assertEquals(1, db.getCustomers().size());
@@ -157,35 +160,30 @@ public class TestBankDB {
         assertEquals("Alice Checking", db.getAccounts().get(200).getName());
     }
 
-    // ============================================================
-    //                   TEST: customerLogin
-    // ============================================================
-
     @Test
     void testCustomerLogin() throws Exception {
-        FakeBankDB db = new FakeBankDB();
+        TestingBankDb db = new TestingBankDb();
 
         // Create fake customer
-        Bank b = new Bank(1, "B");
-        Branch br = new Branch(10, "A", b);
-        Customer c = new Customer(
+        Bank bank = new Bank(1, "B");
+        Branch branch = new Branch(10, "A", bank);
+        Customer cust = new Customer(
             99,
             "John",
             "Doe",
             LocalDate.of(1995, 5, 5),
-            "111",
-            "555",
+            "111-111-111",
+            "+15550000002",
             "john@x.com",
-            br
+            branch
         );
 
-        db.addBank(b);
-        db.addBranch(br);
-        db.addCustomer(c);
+        db.addBank(bank);
+        db.addBranch(branch);
+        db.addCustomer(cust);
 
-        // But IMPORTANT: customerLogin executes SQL, so override it here:
-        db =
-            new FakeBankDB() {
+        // customerLogin executes SQL, so override it here:
+        db = new TestingBankDb() {
 
                 @Override
                 public Optional<Customer> customerLogin(
@@ -193,7 +191,7 @@ public class TestBankDB {
                     String pwd
                 ) {
                     if (email.equals("john@x.com") && pwd.equals("secret")) {
-                        return Optional.of(c);
+                        return Optional.of(cust);
                     }
                     return Optional.empty();
                 }
@@ -202,65 +200,60 @@ public class TestBankDB {
         Optional<Customer> result = db.customerLogin("john@x.com", "secret");
 
         assertTrue(result.isPresent());
-        assertEquals(c, result.get());
+        assertEquals(cust, result.get());
     }
-
-    // ============================================================
-    //                   TEST: search function
-    // ============================================================
 
     @Test
     void testCustomerSearch() throws Exception {
-        FakeBankDB db = new FakeBankDB();
+        TestingBankDb db = new TestingBankDb();
 
         // Fake customers
-        Bank b = new Bank(1, "B");
-        Branch br = new Branch(10, "A", b);
+        Bank bank = new Bank(1, "B");
+        Branch branch = new Branch(10, "A", bank);
 
         Customer c1 = new Customer(
             1,
             "Alice",
             "A",
             LocalDate.of(1990, 1, 1),
-            "111",
-            "1",
+            "111-111-111",
+            "+15550000003",
             "alice@test.com",
-            br
+            branch
         );
         Customer c2 = new Customer(
             2,
             "Bob",
             "B",
             LocalDate.of(1980, 1, 1),
-            "222",
-            "2",
+            "222-222-222",
+            "+15550000004",
             "bob@test.com",
-            br
+            branch
         );
 
-        db.addBank(b);
-        db.addBranch(br);
+        db.addBank(bank);
+        db.addBranch(branch);
         db.addCustomer(c1);
         db.addCustomer(c2);
 
         // Override SQL-based search:
-        db =
-            new FakeBankDB() {
+        db = new TestingBankDb() {
 
                 @Override
                 public List<Customer> getCustomersSearch(String[] query) {
                     String q = query[0].toLowerCase();
-                    List<Customer> res = new ArrayList<>();
+                    List<Customer> customers = new ArrayList<>();
                     for (Customer c : List.of(c1, c2)) {
                         if (
                             c.getFirstName().toLowerCase().contains(q) ||
                             c.getLastName().toLowerCase().contains(q) ||
                             c.getEmail().toLowerCase().contains(q)
                         ) {
-                            res.add(c);
+                            customers.add(c);
                         }
                     }
-                    return res;
+                    return customers;
                 }
             };
 
