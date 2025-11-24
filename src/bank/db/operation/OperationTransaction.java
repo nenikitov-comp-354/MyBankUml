@@ -1,8 +1,6 @@
 package bank.db.operation;
 
-import bank.db.Account;
-import bank.db.Transaction;
-import bank.db.TransactionInfo;
+import bank.db.*;
 import bank.util.TypeValidator;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +18,7 @@ class OperationTransaction implements Operation {
     }
 
     @Override
-    public void process(Connection connection) throws SQLException {
+    public void process(Connection connection, BankDb BankDb) throws SQLException {
         String sql =
             "INSERT INTO transaction (account_id_source, account_id_destination, amount, time) VALUES (?, ?, ?, ?)";
 
@@ -45,7 +43,7 @@ class OperationTransaction implements Operation {
                 Transaction transaction = new Transaction(id, this.info);
 
                 this.info.getSource().addTransaction(transaction);
-                // TODO: Add transaction to DB cache
+                BankDb.addCachedTransaction(transaction);
             }
         }
     }

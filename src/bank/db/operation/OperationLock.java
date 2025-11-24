@@ -1,6 +1,6 @@
 package bank.db.operation;
 
-import bank.db.Account;
+import bank.db.*;
 import bank.util.TypeValidator;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +18,7 @@ class OperationLock implements Operation {
     }
 
     @Override
-    public void process(Connection connection) throws SQLException {
+    public void process(Connection connection, BankDb bankdb) throws SQLException {
         String sql = "UPDATE account SET is_locked = ? WHERE id = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {

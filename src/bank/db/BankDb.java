@@ -3,6 +3,9 @@ package bank.db;
 import java.sql.*;
 import java.util.*;
 
+import bank.db.operation.*;
+import bank.util.TypeValidator;
+
 public class BankDb {
     private Connection connection;
 
@@ -11,6 +14,8 @@ public class BankDb {
     private Map<Integer, Customer> customers;
     private Map<Integer, Account> accounts;
     private Map<Integer, Transaction> transactions;
+
+    private Queue<Operation> operations;
 
     public BankDb(
         String host,
@@ -40,6 +45,31 @@ public class BankDb {
         this.customers = new HashMap<>();
         this.accounts = new HashMap<>();
         this.transactions = new HashMap<>();
+
+        this.operations = new LinkedList<>();
+    }
+
+    public void addOperation(Operation operation) {
+        TypeValidator.validateNotNull("Operation", operation);
+        this.operations.add(operation);
+    }
+
+    public void processOperations() throws SQLException {
+        boolean autoCommit = this.connection.getAutoCommit();
+        this.connection.setAutoCommit(false);
+
+        while (!this.operations.isEmpty()) {
+            Operation operation = this.operations.remove();
+            try {
+                operation.process(this.connection, this);
+                this.connection.commit();
+            } catch (SQLException e) {
+                this.connection.rollback();
+                throw e;
+            }
+        }
+
+        this.connection.setAutoCommit(autoCommit);
     }
 
     public void connect() throws SQLException {
@@ -109,6 +139,11 @@ public class BankDb {
 
     public Map<Integer, Transaction> getTransactions() {
         return Collections.unmodifiableMap(this.transactions);
+    }
+
+    public void addTransaction(Transaction transaction) {
+        TypeValidator.validateNotNull("Transaction", transaction);
+        this.transactions.put(transaction.getId(), transaction);
     }
 
     private Map<Integer, Bank> fetchBanks() throws SQLException {
