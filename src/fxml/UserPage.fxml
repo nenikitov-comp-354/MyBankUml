@@ -12,7 +12,7 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
-      <Text layoutX="25.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome User!">
+      <Text fx:id="userNameText" layoutX="25.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome User!">
          <font>
             <Font size="24.0" />
          </font>
