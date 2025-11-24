@@ -20,6 +20,8 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Text>
+      <TextField fx:id="emailField" layoutX="52.0" layoutY="153.0" prefHeight="26.0" prefWidth="496.0" promptText="Email" styleClass="input" stylesheets="@../stylesheets/login.css" />
+      <PasswordField fx:id="passwordField" layoutX="52.0" layoutY="196.0" prefHeight="26.0" prefWidth="496.0" promptText="Password" styleClass="input" stylesheets="@../stylesheets/login.css" />
       <Button fx:id="signUpButton" layoutX="120.0" layoutY="261.0" mnemonicParsing="false" onAction="#loadSignUp" prefHeight="81.0" prefWidth="159.0" stylesheets="@../stylesheets/login.css" text="SIGN UP" textAlignment="CENTER">
          <font>
             <Font size="36.0" />
@@ -30,13 +32,11 @@
             <Font size="36.0" />
          </font>
       </Button>
-      <PasswordField fx:id="passwordField" layoutX="52.0" layoutY="196.0" prefHeight="26.0" prefWidth="496.0" promptText="Password" styleClass="input" stylesheets="@../stylesheets/login.css" />
       <Hyperlink layoutX="52.0" layoutY="237.0" styleClass="link" stylesheets="@../stylesheets/login.css" text="Forgot Password?" textFill="#1b26fc" underline="true">
          <font>
             <Font name="System Bold" size="10.0" />
          </font>
       </Hyperlink>
-      <TextField fx:id="usernameField" layoutX="52.0" layoutY="153.0" prefHeight="26.0" prefWidth="496.0" promptText="Email" styleClass="input" stylesheets="@../stylesheets/login.css" />
       <Text fx:id="errorText" fill="RED" layoutX="296.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" />
    </children>
 </AnchorPane>

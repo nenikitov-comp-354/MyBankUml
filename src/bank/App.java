@@ -2,7 +2,6 @@ package bank;
 
 import bank.db.BankDb;
 import bank.util.SceneManager;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -17,12 +16,13 @@ import javafx.stage.Stage;
 // [Solution](https://stackoverflow.com/a/70809214)
 
 public class App extends Application {
+
     public static void main(String[] args) {
         App.launch(args);
     }
 
     @Override
-    public void start(Stage stage) throws IOException, SQLException{
+    public void start(Stage stage) throws IOException, SQLException {
         BankDb db = new BankDb(
             "localhost",
             Optional.empty(),
@@ -34,11 +34,12 @@ public class App extends Application {
         SceneManager.getInstance().setDb(db);
 
         // for (Customer customer : db.getCustomersSearch(new String[] { "ar" })) {
-        for (bank.db.Customer customer : db.getCustomersSearch(
-            new String[] { "ar" }
-        )) {
-            System.out.println(customer);
-        }
+        // Print all current customers
+        // for (bank.db.Customer customer : db.getCustomersSearch(
+        //     new String[] { "ar" }
+        // )) {
+        //     System.out.println(customer);
+        // }
 
         Parent root = FXMLLoader.load(
             getClass().getResource("/fxml/LogInPage.fxml")
