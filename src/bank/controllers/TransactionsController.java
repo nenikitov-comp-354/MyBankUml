@@ -18,7 +18,7 @@ public class TransactionsController {
 
     @FXML
     private void handleSavings(ActionEvent event) {
-        sceneManager.switchScene("/fxml/SendMoneySavings.fxml", savingsButton);
+        sceneManager.switchScene("/fxml/SendMoneySavingsPage.fxml", savingsButton);
     }
     @FXML
     private void handleContacts(ActionEvent event) {
