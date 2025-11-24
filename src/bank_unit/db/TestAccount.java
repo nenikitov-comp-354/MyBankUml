@@ -120,12 +120,13 @@ final class TestAccount {
             )
         );
         account1.addTransaction(transaction);
+        account2.addTransaction(transaction);
     }
 
     @ParameterizedTest
     @CsvSource(
         {
-            "true,  'Transaction Transaction(id=1, info=TransactionInfo(source=Account(id=1, name=My simple 1, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), destination=Account(id=2, name=My simple 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), amount=17.79, time=2025-11-18T18:59)) does not belong to this account Account(id=2, name=My simple 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank))))'",
+            "true,  'Transaction Transaction(id=1, info=TransactionInfo(source=Account(id=1, name=My simple 1, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), destination=Account(id=2, name=My simple 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), amount=17.79, time=2025-11-18T18:59)) does not belong to this account Account(id=3, name=My simple 3, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank))))'",
             "false, 'Transaction is null'",
         }
     )
@@ -144,6 +145,7 @@ final class TestAccount {
         );
         Account account1 = new AccountSimple(1, "My simple 1", false, customer);
         Account account2 = new AccountSimple(2, "My simple 2", false, customer);
+        Account account3 = new AccountSimple(3, "My simple 3", false, customer);
         Transaction transaction = new Transaction(
             1,
             new TransactionInfo(
@@ -157,7 +159,7 @@ final class TestAccount {
         Exception e = assertThrows(
             IllegalArgumentException.class,
             () -> {
-                account2.addTransaction(
+                account3.addTransaction(
                     transactionNotNull ? transaction : null
                 );
             }
