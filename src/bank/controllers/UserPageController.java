@@ -1,22 +1,23 @@
 package bank.controllers;
 
-import java.io.IOException;
-import java.util.List;
-
 import bank.db.Account;
+import bank.db.AccountChecking;
+import bank.db.AccountCredit;
+import bank.db.AccountSavings;
 import bank.db.Customer;
 import bank.util.SceneManager;
+import java.io.IOException;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class UserPageController {
-
     @FXML
     private VBox accountHolderVBox;
+
     @FXML
     private Text userNameText;
 
@@ -25,12 +26,38 @@ public class UserPageController {
     public void initialize() {
         try {
             Customer currentCustomer = sceneManager.getCustomer();
-            userNameText.setText("Welcome, " + currentCustomer.getFirstName() + "!");
+            userNameText.setText(
+                "Welcome, " + currentCustomer.getFirstName() + "!"
+            );
             List<Account> accounts = currentCustomer.getAccounts();
 
             for (Account a : accounts) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/" + a.getClass().getSimpleName() + ".fxml"));
+                FXMLLoader loader = new FXMLLoader(
+                    getClass()
+                        .getResource(
+                            "/fxml/" + a.getClass().getSimpleName() + ".fxml"
+                        )
+                );
                 Parent card = loader.load();
+                AccountController ac = loader.getController();
+                ac.setAccountNameText(a.getName());
+
+                if (a instanceof AccountChecking) {
+                    AccountChecking c = (AccountChecking) a;
+                    ac.setFeeForChecking(c.getMonthlyFee());
+                }
+                else if (a instanceof AccountCredit) {
+                    AccountCredit c = (AccountCredit) a;
+                    ac.setCreditLimitAndGraceForCredit(c.getCreditLimit(), c.getPaymentGraceDays());
+                }
+                else if (a instanceof AccountSavings) {
+                    AccountSavings s = (AccountSavings) a;
+                    ac.setInterestForSavings(s.getInterestRate());
+                }
+                else {
+                    throw new IllegalArgumentException("Account of another type\nAccount info: " + a);
+                }
+
                 accountHolderVBox.getChildren().add(card);
                 VBox.setMargin(card, new javafx.geometry.Insets(15));
             }
@@ -38,5 +65,4 @@ public class UserPageController {
             e.printStackTrace();
         }
     }
-
 }

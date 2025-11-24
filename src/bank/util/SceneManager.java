@@ -2,7 +2,6 @@ package bank.util;
 
 import bank.db.BankDb;
 import bank.db.Customer;
-
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;

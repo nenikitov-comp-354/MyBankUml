@@ -6,11 +6,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 public class TransactionsController {
-
     @FXML
     private Button savingsButton;
+
     @FXML
     private Button contactsButton;
+
     @FXML
     private Button cancelButton;
 
@@ -18,11 +19,18 @@ public class TransactionsController {
 
     @FXML
     private void handleSavings(ActionEvent event) {
-        sceneManager.switchScene("/fxml/SendMoneySavingsPage.fxml", savingsButton);
+        sceneManager.switchScene(
+            "/fxml/SendMoneySavingsPage.fxml",
+            savingsButton
+        );
     }
+
     @FXML
     private void handleContacts(ActionEvent event) {
-        sceneManager.switchScene("/fxml/SendMoneyContacts.fxml", contactsButton);
+        sceneManager.switchScene(
+            "/fxml/SendMoneyContacts.fxml",
+            contactsButton
+        );
     }
 
     @FXML

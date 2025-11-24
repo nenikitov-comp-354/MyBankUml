@@ -1,6 +1,5 @@
 package bank.controllers;
 
-import bank.db.BankDb;
 import bank.db.Customer;
 import bank.util.SceneManager;
 import java.sql.SQLException;
