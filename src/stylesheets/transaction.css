@@ -1,0 +1,36 @@
+.button {
+    -fx-background-color: #338aee;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+}
+.button:hover {
+    -fx-background-color: #2a7bd5;
+}
+.button:pressed {
+    -fx-background-color: #1f5fa3;
+}
+#contactsButton, #savingsButton {
+    -fx-background-color: #338aee;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
+}
+#contactsButton:hover, #savingsButton:hover {
+    -fx-background-color: #2a7bd5;
+}
+#contactsButton:pressed, #savingsButton:pressed {
+    -fx-background-color: #1f5fa3;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 3, 0, 0, 1);
+}
+#cancelButton {
+    -fx-background-color: #6c757d;
+    -fx-text-fill: white;
+    -fx-background-radius: 3;
+    -fx-border-radius: 3;
+}
+#cancelButton:hover {
+    -fx-background-color: #5a6268;
+}
