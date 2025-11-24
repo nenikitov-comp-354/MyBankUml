@@ -59,5 +59,21 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
+      <Text fx:id="creditLimitText" strokeType="OUTSIDE" strokeWidth="0.0" text="Credit Limit: XX.XX" textAlignment="CENTER" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="30.0" left="15.0" />
+         </GridPane.margin>
+      </Text>
+      <Text fx:id="gracePeriodText" strokeType="OUTSIDE" strokeWidth="0.0" text="Grace Period: X days" textAlignment="CENTER" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <GridPane.margin>
+            <Insets left="15.0" top="5.0" />
+         </GridPane.margin>
+      </Text>
    </children>
 </GridPane>
