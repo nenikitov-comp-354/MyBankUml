@@ -1,6 +1,5 @@
 package bank.db;
 
-import bank.db.DAO.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,16 +10,8 @@ import java.util.*;
  * Loads all banks, branches, customers, accounts, and transactions on startup.
  * Keeps the cache in sync on mutations.
  */
-public class BankDB {
+public class BankDb {
     protected Connection connection;
-    protected BankDAO bankDao;
-    protected BranchDAO branchDao;
-    protected CustomerDAO customerDao;
-    protected AccountDAO accountDao;
-    protected AccountCheckingDAO accountCheckingDao;
-    protected AccountSavingsDAO accountSavingsDao;
-    protected AccountCreditDAO accountCreditDao;
-    protected TransactionDAO transactionDao;
 
     private Map<Integer, Bank> banks;
     private Map<Integer, Branch> branches;
