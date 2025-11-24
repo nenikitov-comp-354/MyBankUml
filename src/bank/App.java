@@ -2,7 +2,6 @@ package bank;
 
 import bank.db.BankDb;
 import bank.util.SceneManager;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -17,6 +16,7 @@ import javafx.stage.Stage;
 // [Solution](https://stackoverflow.com/a/70809214)
 
 public class App extends Application {
+
     public static void main(String[] args) {
         App.launch(args);
     }
@@ -30,30 +30,16 @@ public class App extends Application {
             "admin",
             Optional.of("admin")
         );
+        db.connect();
         SceneManager.getInstance().setDb(db);
 
-        // TODO: Remove this example when not needed
-        // This is how BankDb will initialize all classes. The order is important to avoid interdependence.
-        // This code must be done inside `bank.db` package since all `add...` functions are protected.
-        // This is done to prevent any data inconsistencies introduced outside the namespace that is responsible for both class and DB modifications.
-        //
-        // Bank bank = new Bank(1, "My bank");
-        //
-        // Branch branch = new Branch(1, "My branch", bank);
-        // bank.addBranch(branch);
-        //
-        // Customer customer = new Customer(1, "Big", "John", LocalDate.of(1990, 1, 17), "123-456-789", "+15147892571", "big-john@email.com", branch);
-        // branch.addCustomer(customer);
-        //
-        // Account account1 = new AccountChecking(1, "John's checking", false, customer, new BigDecimal("0.0")); customer.addAccount(account1);
-        // Account account2 = new AccountSavings(2, "John's savings", false, customer, new BigDecimal("1.12"));
-        // customer.addAccount(account2);
-        //
-        // TransactionInfo transactionInfo = new TransactionInfo(account1, account2, new BigDecimal("12.77"), LocalDateTime.of(2025, 11, 18, 18, 59));
-        // Transaction transaction = new Transaction(1, transactionInfo);
-        // account1.addTransaction(transaction);
-        //
-        // System.out.println(transaction);;
+        // for (Customer customer : db.getCustomersSearch(new String[] { "ar" })) {
+        // Print all current customers
+        // for (bank.db.Customer customer : db.getCustomersSearch(
+        //     new String[] { "ar" }
+        // )) {
+        //     System.out.println(customer);
+        // }
 
         Parent root = FXMLLoader.load(
             getClass().getResource("/fxml/LogInPage.fxml")

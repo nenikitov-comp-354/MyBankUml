@@ -1,6 +1,7 @@
 package bank.controllers;
 
 import bank.db.BankDb;
+import bank.db.Customer;
 import bank.util.SceneManager;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -19,7 +20,7 @@ public class LoginController {
     private Button signUpButton;
 
     @FXML
-    private TextField usernameField;
+    private TextField emailField;
 
     @FXML
     private PasswordField passwordField;
@@ -32,27 +33,32 @@ public class LoginController {
     @FXML
     private void connectToDB(ActionEvent event) {
         try {
-            // TODO: Use dao's when they're done. This isn't what we need to do
-            BankDb db = new BankDb(
-                "localhost",
-                Optional.empty(),
-                "bank",
-                usernameField.getText(),
-                Optional.of(passwordField.getText())
-            );
+            String email = emailField.getText();
+            String password = passwordField.getText();
+            Optional<Customer> customerOpt = SceneManager
+                .getInstance()
+                .getDb()
+                .customerLogin(email, password);
 
-            sceneManager.switchScene("/fxml/UserPage.fxml", loginButton);
-        } catch (SQLException e) {
-            if (
-                usernameField.getText().isEmpty() ||
-                passwordField.getText().isEmpty()
-            ) {
-                errorText.setText("No username or password was provided");
+            if (customerOpt.isPresent()) {
+                Customer customer = customerOpt.get();
+                System.out.println(customer);
+                sceneManager.switchScene("/fxml/UserPage.fxml", loginButton);
             } else {
-                errorText.setText(
-                    "Login failed. Username or password is incorrect"
-                );
+                if (
+                    emailField.getText().isEmpty() ||
+                    passwordField.getText().isEmpty()
+                ) {
+                    errorText.setText("No username or password was provided");
+                } else {
+                    errorText.setText(
+                        "Login failed. Username or password is incorrect"
+                    );
+                }
             }
+        } catch (SQLException e) {
+            System.err.println("SQL exception occurred on login");
+            System.exit(1);
         }
     }
 
