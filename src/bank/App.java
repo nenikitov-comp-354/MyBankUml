@@ -30,8 +30,9 @@ public class App extends Application {
         );
         db.connect();
 
-        for (Customer bank : db.getCustomersSearch(new String[] { "ar" })) {
-            System.out.println(bank);
+        // for (Customer customer : db.getCustomersSearch(new String[] { "ar" })) {
+        for (bank.db.Customer customer : db.getCustomersSearch(new String[] { "ar" })) {
+            System.out.println(customer);
         }
 
         String javaVersion = System.getProperty("java.version");
