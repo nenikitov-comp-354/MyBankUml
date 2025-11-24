@@ -31,7 +31,9 @@ public class App extends Application {
         db.connect();
 
         // for (Customer customer : db.getCustomersSearch(new String[] { "ar" })) {
-        for (bank.db.Customer customer : db.getCustomersSearch(new String[] { "ar" })) {
+        for (bank.db.Customer customer : db.getCustomersSearch(
+            new String[] { "ar" }
+        )) {
             System.out.println(customer);
         }
 
