@@ -455,16 +455,20 @@ public class BankDb {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 Account source = accounts.get(rs.getInt("account_id_source"));
+                Account destination = accounts.get(
+                    rs.getInt("account_id_destination")
+                );
                 Transaction transaction = new Transaction(
                     id,
                     new TransactionInfo(
                         source,
-                        accounts.get(rs.getInt("account_id_destination")),
+                        destination,
                         rs.getBigDecimal("amount"),
                         rs.getTimestamp("time").toLocalDateTime()
                     )
                 );
                 source.addTransaction(transaction);
+                destination.addTransaction(transaction);
                 transactions.put(id, transaction);
             }
         }

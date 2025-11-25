@@ -141,12 +141,13 @@ final class TestAccountSavings {
             )
         );
         account1.addTransaction(transaction);
+        account2.addTransaction(transaction);
     }
 
     @ParameterizedTest
     @CsvSource(
         {
-            "true,  'Transaction Transaction(id=1, info=TransactionInfo(source=AccountSavings(SUPER=Account(id=1, name=My savings 1, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), interestRate=0.00), destination=AccountSavings(SUPER=Account(id=2, name=My savings 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), interestRate=1.00), amount=17.79, time=2025-11-18T18:59)) does not belong to this account AccountSavings(SUPER=Account(id=2, name=My savings 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), interestRate=1.00)'",
+            "true,  'Transaction Transaction(id=1, info=TransactionInfo(source=AccountSavings(SUPER=Account(id=1, name=My savings 1, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), interestRate=0.00), destination=AccountSavings(SUPER=Account(id=2, name=My savings 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), interestRate=1.00), amount=17.79, time=2025-11-18T18:59)) does not belong to this account AccountSavings(SUPER=Account(id=3, name=My savings 3, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), interestRate=1.00)'",
             "false, 'Transaction is null'",
         }
     )
@@ -177,6 +178,13 @@ final class TestAccountSavings {
             customer,
             new BigDecimal("1.00")
         );
+        Account account3 = new AccountSavings(
+            3,
+            "My savings 3",
+            false,
+            customer,
+            new BigDecimal("1.00")
+        );
         Transaction transaction = new Transaction(
             1,
             new TransactionInfo(
@@ -190,7 +198,7 @@ final class TestAccountSavings {
         Exception e = assertThrows(
             IllegalArgumentException.class,
             () -> {
-                account2.addTransaction(
+                account3.addTransaction(
                     transactionNotNull ? transaction : null
                 );
             }

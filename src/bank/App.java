@@ -46,8 +46,16 @@ public class App extends Application {
         db.addOperation(new OperationLock(db.getAccounts().get(6), true));
         db.processOperations();
 
-        System.out.println(db.getAccounts().get(6).isLocked());
-        System.out.println(db.getTransactions().get(6));
+        System.out.println("LOCKED " + db.getAccounts().get(6).isLocked());
+        System.out.println("TRANSACTIONS" + db.getTransactions().get(6));
+        System.out.println("BALANCE " + db.getAccounts().get(1).getBalance());
+
+        // for (Customer customer : db.getCustomersSearch(new String[] { "ar" })) {
+        for (bank.db.Customer customer : db.getCustomersSearch(
+            new String[] { "ar" }
+        )) {
+            System.out.println("CUSTOMER " + customer);
+        }
 
         String javaVersion = System.getProperty("java.version");
         String javafxVersion = System.getProperty("javafx.version");
