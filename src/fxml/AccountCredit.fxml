@@ -43,14 +43,6 @@
             <Insets left="15.0" />
          </GridPane.margin>
       </Text>
-      <Button fx:id="payCardButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" stylesheets="@../stylesheets/userPage.css" text="Pay Card" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <GridPane.margin>
-            <Insets left="10.0" />
-         </GridPane.margin>
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
       <Button fx:id="lockCardButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Lock Card" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets left="115.0" />
