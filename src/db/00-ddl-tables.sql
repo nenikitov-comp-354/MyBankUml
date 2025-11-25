@@ -25,7 +25,7 @@ create table customer(
     phone phone,
     email email not null,
     branch_id integer references branch(id),
-    admin_stat boolean not null
+    admin_stat boolean not null default false
 );
 
 create table customer_login (
