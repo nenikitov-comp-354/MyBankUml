@@ -8,7 +8,6 @@ import bank.db.Customer;
 import bank.util.SceneManager;
 import java.io.IOException;
 import java.util.List;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -80,6 +79,9 @@ public class UserPageController {
 
     @FXML
     private void loadTransferPage(ActionEvent event) {
-        sceneManager.switchScene("/fxml/TransferPage.fxml", transferFundsButton);
+        sceneManager.switchScene(
+            "/fxml/TransferPage.fxml",
+            transferFundsButton
+        );
     }
 }
