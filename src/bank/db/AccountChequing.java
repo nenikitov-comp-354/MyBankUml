@@ -4,11 +4,11 @@ import bank.util.TypeValidator;
 import java.math.BigDecimal;
 import lombok.Getter;
 
-public class AccountChecking extends Account {
+public class AccountChequing extends Account {
     @Getter
     private BigDecimal monthlyFee;
 
-    public AccountChecking(
+    public AccountChequing(
         int id,
         String name,
         boolean isLocked,
@@ -23,9 +23,9 @@ public class AccountChecking extends Account {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof AccountChecking)) return false;
+        if (!(obj instanceof AccountChequing)) return false;
 
-        AccountChecking other = (AccountChecking) obj;
+        AccountChequing other = (AccountChequing) obj;
         return this.getId() == other.getId();
     }
 

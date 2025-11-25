@@ -29,7 +29,7 @@ final class TestTransaction {
             "big-john@email.com",
             branch
         );
-        Account account1 = new AccountChecking(
+        Account account1 = new AccountChequing(
             1,
             "My checking",
             false,
@@ -77,7 +77,7 @@ final class TestTransaction {
             "big-john@email.com",
             branch
         );
-        Account account1 = new AccountChecking(
+        Account account1 = new AccountChequing(
             1,
             "My checking",
             false,

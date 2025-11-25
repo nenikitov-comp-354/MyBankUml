@@ -1,7 +1,7 @@
 package bank.controllers;
 
 import bank.db.Account;
-import bank.db.AccountChecking;
+import bank.db.AccountChequing;
 import bank.db.AccountCredit;
 import bank.db.AccountSavings;
 import bank.db.Customer;
@@ -42,20 +42,25 @@ public class UserPageController {
                 AccountController ac = loader.getController();
                 ac.setAccountNameText(a.getName());
 
-                if (a instanceof AccountChecking) {
-                    AccountChecking c = (AccountChecking) a;
-                    ac.setFeeForChecking(c.getMonthlyFee());
-                }
-                else if (a instanceof AccountCredit) {
+                if (a instanceof AccountChequing) {
+                    AccountChequing c = (AccountChequing) a;
+                    AccountChequingController acc = (AccountChequingController) ac;
+                    acc.setFee(c.getMonthlyFee());
+                } else if (a instanceof AccountCredit) {
                     AccountCredit c = (AccountCredit) a;
-                    ac.setCreditLimitAndGraceForCredit(c.getCreditLimit(), c.getPaymentGraceDays());
-                }
-                else if (a instanceof AccountSavings) {
+                    AccountCreditController acc = (AccountCreditController) ac;
+                    acc.setCreditLimitAndGrace(
+                        c.getCreditLimit(),
+                        c.getPaymentGraceDays()
+                    );
+                } else if (a instanceof AccountSavings) {
                     AccountSavings s = (AccountSavings) a;
-                    ac.setInterestForSavings(s.getInterestRate());
-                }
-                else {
-                    throw new IllegalArgumentException("Account of another type\nAccount info: " + a);
+                    AccountSavingsController asc = (AccountSavingsController) ac;
+                    asc.setInterest(s.getInterestRate());
+                } else {
+                    throw new IllegalArgumentException(
+                        "Account of another type\nAccount info: " + a
+                    );
                 }
 
                 accountHolderVBox.getChildren().add(card);

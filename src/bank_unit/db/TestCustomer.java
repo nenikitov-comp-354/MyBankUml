@@ -123,7 +123,7 @@ final class TestCustomer {
             "big-john@email.com",
             branch
         );
-        Account account = new AccountChecking(
+        Account account = new AccountChequing(
             1,
             "My checking",
             false,
@@ -164,7 +164,7 @@ final class TestCustomer {
             branch
         );
 
-        Account account = new AccountChecking(
+        Account account = new AccountChequing(
             1,
             "My checking",
             false,

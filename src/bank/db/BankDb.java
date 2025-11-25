@@ -194,11 +194,11 @@ public class BankDb {
         return accounts;
     }
 
-    private Map<Integer, AccountChecking> fetchAccountsChecking(
+    private Map<Integer, AccountChequing> fetchAccountsChecking(
         Map<Integer, Customer> customers
     )
         throws SQLException {
-        Map<Integer, AccountChecking> accounts = new HashMap<>();
+        Map<Integer, AccountChequing> accounts = new HashMap<>();
 
         String sql = "SELECT * FROM account_checking";
         try (
@@ -208,7 +208,7 @@ public class BankDb {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 Customer customer = customers.get(rs.getInt("customer_id"));
-                AccountChecking account = new AccountChecking(
+                AccountChequing account = new AccountChequing(
                     id,
                     rs.getString("name"),
                     rs.getBoolean("is_locked"),

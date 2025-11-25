@@ -9,6 +9,7 @@
 }
 .button:hover {
     -fx-background-color: #2a7bd5;
+    -fx-cursor: hand;
 }
 .button:pressed {
     -fx-background-color: #1f5fa3;

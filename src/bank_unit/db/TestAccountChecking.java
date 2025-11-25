@@ -40,7 +40,7 @@ final class TestAccountChecking {
             branch
         );
 
-        AccountChecking account = new AccountChecking(
+        AccountChequing account = new AccountChequing(
             id,
             name,
             isLocked,
@@ -91,7 +91,7 @@ final class TestAccountChecking {
         Exception e = assertThrows(
             IllegalArgumentException.class,
             () -> {
-                new AccountChecking(
+                new AccountChequing(
                     id,
                     name,
                     false,
@@ -117,14 +117,14 @@ final class TestAccountChecking {
             "big-john@email.com",
             branch
         );
-        AccountChecking account1 = new AccountChecking(
+        AccountChequing account1 = new AccountChequing(
             1,
             "My checking 1",
             false,
             customer,
             new BigDecimal("0.00")
         );
-        AccountChecking account2 = new AccountChecking(
+        AccountChequing account2 = new AccountChequing(
             2,
             "My checking 2",
             false,
@@ -163,14 +163,14 @@ final class TestAccountChecking {
             "big-john@email.com",
             branch
         );
-        Account account1 = new AccountChecking(
+        Account account1 = new AccountChequing(
             1,
             "My checking 1",
             false,
             customer,
             new BigDecimal("0.00")
         );
-        Account account2 = new AccountChecking(
+        Account account2 = new AccountChequing(
             2,
             "My checking 2",
             false,
