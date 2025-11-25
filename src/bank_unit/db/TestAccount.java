@@ -39,7 +39,8 @@ final class TestAccount {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
 
         Account account = new AccountSimple(id, name, isLocked, customer);

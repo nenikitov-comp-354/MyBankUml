@@ -16,8 +16,8 @@ final class TestCustomer {
     @ParameterizedTest
     @CsvSource(
         {
-            "1, 'John', 'Big', 1990, 1, 17, '123-456-789', '+15147892571', 'big-john@email.com'",
-            "2, 'Jane', 'Doe', 1800, 3, 24, '789-456-123', '+48864632577', 'jane-doe@email.com'",
+            "1, 'John', 'Big', 1990, 1, 17, '123-456-789', '+15147892571', 'big-john@email.com', false",
+            "2, 'Jane', 'Doe', 1800, 3, 24, '789-456-123', '+48864632577', 'jane-doe@email.com', false",
         }
     )
     void testConstructorValid(
@@ -59,25 +59,25 @@ final class TestCustomer {
         assertEquals(email, customer.getEmail());
         assertEquals(branch, customer.getBranch());
         assertEquals(new ArrayList<>(), customer.getAccounts());
-        assertEquals(adminStat, customer.getAdminStat());
+        assertEquals(adminStat, customer.getAdminStatus());
     }
 
     @ParameterizedTest
     @CsvSource(
         value = {
-            "-3, 'John', 'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  'Id `-3` is not a valid SQL id (must be > 0)'",
-            "1,  NULL,   'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  'First name is null'",
-            "1,  '   ',  'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  'First name `   ` is blank or starts and ends with trailing spaces'",
-            "1,  'John', NULL,  true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  'Last name is null'",
-            "1,  'John', '   ', true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  'Last name `   ` is blank or starts and ends with trailing spaces'",
-            "1,  'John', 'Big', false, '123-456-789', '+15147892571', 'big-john@email.com', true,  'Date of birth is null'",
-            "1,  'John', 'Big', true,  NULL,          '+15147892571', 'big-john@email.com', true,  'Social insurance number is null'",
-            "1,  'John', 'Big', true,  'abcdefghijk', '+15147892571', 'big-john@email.com', true,  'Social insurance number `abcdefghijk` does not match social insurance format of 3 groups of 3 digits separated by `-`'",
-            "1,  'John', 'Big', true,  '123-456-789', NULL,           'big-john@email.com', true,  'Phone is null'",
-            "1,  'John', 'Big', true,  '123-456-789', 'fhjdsljfdlsj', 'big-john@email.com', true,  'Phone `fhjdsljfdlsj` does not match phone number format of `+` followed by 2-15 digits'",
-            "1,  'John', 'Big', true,  '123-456-789', '+15147892571', NULL,                 true,  'Email is null'",
-            "1,  'John', 'Big', true,  '123-456-789', '+15147892571', 'invalidemail',       true,  'Email `invalidemail` does not match email format of some text followed by `@` followed by some text'",
-            "1,  'John', 'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', false, 'Branch is null'",
+            "-3, 'John', 'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', true, false,  'Id `-3` is not a valid SQL id (must be > 0)'",
+            "1,  NULL,   'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', true, false,  'First name is null'",
+            "1,  '   ',  'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', true, false,  'First name `   ` is blank or starts and ends with trailing spaces'",
+            "1,  'John', NULL,  true,  '123-456-789', '+15147892571', 'big-john@email.com', true, false,  'Last name is null'",
+            "1,  'John', '   ', true,  '123-456-789', '+15147892571', 'big-john@email.com', true, false,  'Last name `   ` is blank or starts and ends with trailing spaces'",
+            "1,  'John', 'Big', false, '123-456-789', '+15147892571', 'big-john@email.com', true, false,  'Date of birth is null'",
+            "1,  'John', 'Big', true,  NULL,          '+15147892571', 'big-john@email.com', true, false,  'Social insurance number is null'",
+            "1,  'John', 'Big', true,  'abcdefghijk', '+15147892571', 'big-john@email.com', true, false,  'Social insurance number `abcdefghijk` does not match social insurance format of 3 groups of 3 digits separated by `-`'",
+            "1,  'John', 'Big', true,  '123-456-789', NULL,           'big-john@email.com', true, false,  'Phone is null'",
+            "1,  'John', 'Big', true,  '123-456-789', 'fhjdsljfdlsj', 'big-john@email.com', true, false,  'Phone `fhjdsljfdlsj` does not match phone number format of `+` followed by 2-15 digits'",
+            "1,  'John', 'Big', true,  '123-456-789', '+15147892571', NULL,                 true, false,  'Email is null'",
+            "1,  'John', 'Big', true,  '123-456-789', '+15147892571', 'invalidemail',       true, false,  'Email `invalidemail` does not match email format of some text followed by `@` followed by some text'",
+            "1,  'John', 'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', false, false, 'Branch is null'",
         },
         nullValues = "NULL"
     )

@@ -124,8 +124,8 @@ public class Customer {
             email +
             ", branch=" +
             branch +
-            ", Admin_Stat=" +
-            adminStatus +
+            // ", Admin_Stat=" +
+            // adminStatus +
             ")"
         );
     }
