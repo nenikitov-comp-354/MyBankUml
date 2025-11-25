@@ -18,7 +18,7 @@ class OperationTransaction implements Operation {
     }
 
     @Override
-    public void process(Connection connection, BankDb BankDb)
+    public void process(Connection connection, BankDb bankDb)
         throws SQLException {
         String sql =
             "INSERT INTO transaction (account_id_source, account_id_destination, amount, time) VALUES (?, ?, ?, ?)";
@@ -44,7 +44,7 @@ class OperationTransaction implements Operation {
                 Transaction transaction = new Transaction(id, this.info);
 
                 this.info.getSource().addTransaction(transaction);
-                BankDb.addCachedTransaction(transaction);
+                bankDb.addTransaction(transaction);
             }
         }
     }
