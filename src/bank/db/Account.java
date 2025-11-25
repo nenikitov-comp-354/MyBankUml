@@ -3,6 +3,7 @@ package bank.db;
 import bank.util.TypeValidator;
 import java.util.*;
 import lombok.Getter;
+import lombok.Setter;
 
 public abstract class Account {
     @Getter
@@ -12,6 +13,7 @@ public abstract class Account {
     private String name;
 
     @Getter
+    @Setter
     private boolean isLocked;
 
     @Getter
@@ -50,10 +52,6 @@ public abstract class Account {
         }
 
         this.transactions.add(transaction);
-    }
-
-    public void setLocked(boolean isLocked) {
-        this.isLocked = isLocked;
     }
 
     @Override
