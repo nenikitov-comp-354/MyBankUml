@@ -18,7 +18,8 @@ class OperationTransaction implements Operation {
     }
 
     @Override
-    public void process(Connection connection, BankDb BankDb) throws SQLException {
+    public void process(Connection connection, BankDb BankDb)
+        throws SQLException {
         String sql =
             "INSERT INTO transaction (account_id_source, account_id_destination, amount, time) VALUES (?, ?, ?, ?)";
 

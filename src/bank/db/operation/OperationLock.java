@@ -18,7 +18,8 @@ class OperationLock implements Operation {
     }
 
     @Override
-    public void process(Connection connection, BankDb bankdb) throws SQLException {
+    public void process(Connection connection, BankDb bankdb)
+        throws SQLException {
         String sql = "UPDATE account SET is_locked = ? WHERE id = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {

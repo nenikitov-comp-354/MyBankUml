@@ -1,10 +1,9 @@
 package bank.db;
 
-import java.sql.*;
-import java.util.*;
-
 import bank.db.operation.*;
 import bank.util.TypeValidator;
+import java.sql.*;
+import java.util.*;
 
 public class BankDb {
     private Connection connection;
