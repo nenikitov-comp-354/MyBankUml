@@ -45,7 +45,6 @@ final class TestCustomer {
             email,
             branch,
             adminStat
-            
         );
 
         assertEquals(id, customer.getId());

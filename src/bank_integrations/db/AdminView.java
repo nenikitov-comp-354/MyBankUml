@@ -1,12 +1,12 @@
 package bank_integrations.db;
-import bank.db.*;
-import bank.controllers.AdminController;
-import bank.models.User;
-import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import bank.controllers.AdminController;
+import bank.db.*;
+import bank.models.User;
 import java.util.Scanner;
+import org.junit.jupiter.api.*;
 
 public class AdminView {
     private final BankDb db;
@@ -32,33 +32,35 @@ public class AdminView {
 
             String choice = scanner.nextLine().trim();
             switch (choice) {
-                case "1": 
+                case "1":
                     handleSearchCustomers();
                     break;
-                case "2": 
+                case "2":
                     handleLockUnlock(true);
                     break;
                 case "3":
                     handleLockUnlock(false);
                     break;
-                case "0": {
-                    System.out.println("Exiting admin integration view.");
-                    return;
-                }
-                default: System.out.println("Invalid choice, try again.");
+                case "0":
+                    {
+                        System.out.println("Exiting admin integration view.");
+                        return;
+                    }
+                default:
+                    System.out.println("Invalid choice, try again.");
             }
         }
     }
 
     /**
-     * 
+     *
      * @throws SQLException
      */
-    private void handleSearchCustomers() throws SQLException{
+    private void handleSearchCustomers() throws SQLException {
         System.out.println("Enter search keywords (space separated): ");
         String line = scanner.nextLine().trim();
 
-        if (line.isEmpty()){
+        if (line.isEmpty()) {
             System.out.println("No keywords entered.");
             return;
         }
@@ -66,13 +68,15 @@ public class AdminView {
         String[] queries = line.split("\\s+");
         List<Customer> results = db.getCustomersSearch(queries);
 
-        if(results.isEmpty()){
-            System.out.println("No Customer has been found using the keywords.");
+        if (results.isEmpty()) {
+            System.out.println(
+                "No Customer has been found using the keywords."
+            );
             return;
         }
 
         System.out.println("\nMatching Customers found: ");
-        for (Customers c : results){
+        for (Customers c : results) {
             System.out.printf(
                 "ID=%d | %s %s | email=%s | branch=%s%n",
                 c.getId(),
@@ -90,7 +94,9 @@ public class AdminView {
      * @throws SQLException
      */
     private void handleLockUnlock(boolean lock) throws SQLException {
-        System.out.print("Enter account ID to " + (lock ? "lock" : "unlock") + ": ");
+        System.out.print(
+            "Enter account ID to " + (lock ? "lock" : "unlock") + ": "
+        );
         String input = scanner.nextLine().trim();
 
         int accountId;

@@ -1,4 +1,3 @@
 package bank_integrations.db;
-public class TransactionOperation {
-    
-}
+
+public class TransactionOperation {}

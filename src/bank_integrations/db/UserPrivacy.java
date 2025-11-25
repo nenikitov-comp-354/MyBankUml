@@ -1,3 +1,1 @@
-public class UserPrivacy {
-    
-}
+public class UserPrivacy {}
