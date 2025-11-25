@@ -180,7 +180,8 @@ public class BankDb {
                     rs.getString("social_insurance_number"),
                     rs.getString("phone"),
                     rs.getString("email"),
-                    branch
+                    branch,
+                    rs.getString("admin_stat")
                 );
                 if (!branch.getCustomers().contains(c)) {
                     branch.addCustomer(c);
@@ -316,7 +317,8 @@ public class BankDb {
                     rs.getString("social_insurance_number"),
                     rs.getString("phone"),
                     rs.getString("email"),
-                    branch
+                    branch,
+                    rs.getString("admin_stat")
                 );
                 branch.addCustomer(customer);
                 customers.put(id, customer);

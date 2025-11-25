@@ -32,6 +32,8 @@ public class Customer {
 
     private List<Account> accounts;
 
+    private Boolean adminStatus;
+
     public Customer(
         int id,
         String firstName,
@@ -41,7 +43,7 @@ public class Customer {
         String phone,
         String email,
         Branch branch,
-        Boolean admin_Stat
+        Boolean adminStatus
     ) {
         TypeValidator.validateId("Id", id);
         this.id = id;
@@ -72,8 +74,8 @@ public class Customer {
 
         this.accounts = new ArrayList<>();
 
-        TypeValidator.validateNotNull("Admin_Stat", admin_Stat);
-        this.admin_Stat = admin_Stat;
+        TypeValidator.validateNotNull("AdminStatus", admin_Stat);
+        this.adminStatus = admin_Stat;
     }
 
     public List<Account> getAccounts() {
