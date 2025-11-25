@@ -75,7 +75,6 @@ public class Customer {
 
         this.accounts = new ArrayList<>();
 
-        TypeValidator.validateNotNull("AdminStatus", adminStatus);
         this.adminStatus = adminStatus;
     }
 
