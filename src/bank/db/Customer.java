@@ -40,7 +40,8 @@ public class Customer {
         String socialInsuranceNumber,
         String phone,
         String email,
-        Branch branch
+        Branch branch,
+        Boolean admin_Stat
     ) {
         TypeValidator.validateId("Id", id);
         this.id = id;
@@ -70,6 +71,9 @@ public class Customer {
         this.branch = branch;
 
         this.accounts = new ArrayList<>();
+
+        TypeValidator.validateNotNull("Admin_Stat", admin_Stat);
+        this.admin_Stat = admin_Stat;
     }
 
     public List<Account> getAccounts() {
@@ -117,6 +121,8 @@ public class Customer {
             email +
             ", branch=" +
             branch +
+            ", Admin_Stat=" +
+            admin_Stat +
             ")"
         );
     }

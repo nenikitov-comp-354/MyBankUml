@@ -24,7 +24,8 @@ create table customer(
     social_insurance_number social_insurance_number not null unique,
     phone phone,
     email email not null,
-    branch_id integer references branch(id)
+    branch_id integer references branch(id),
+    admin_stat boolean not null
 );
 
 create table customer_login (
