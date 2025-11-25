@@ -77,7 +77,8 @@ final class TestAccount {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
 
         Exception e = assertThrows(
@@ -106,7 +107,8 @@ final class TestAccount {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         Account account1 = new AccountSimple(1, "My simple 1", false, customer);
         Account account2 = new AccountSimple(2, "My simple 2", false, customer);
@@ -141,7 +143,8 @@ final class TestAccount {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         Account account1 = new AccountSimple(1, "My simple 1", false, customer);
         Account account2 = new AccountSimple(2, "My simple 2", false, customer);

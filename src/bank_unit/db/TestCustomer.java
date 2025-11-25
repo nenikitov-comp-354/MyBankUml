@@ -29,7 +29,8 @@ final class TestCustomer {
         int dateOfBirthDay,
         String socialInsuranceNumber,
         String phone,
-        String email
+        String email,
+        Boolean adminStat
     ) {
         Bank bank = new Bank(1, "My bank");
         Branch branch = new Branch(1, "Address", bank);
@@ -42,7 +43,9 @@ final class TestCustomer {
             socialInsuranceNumber,
             phone,
             email,
-            branch
+            branch,
+            adminStat
+            
         );
 
         assertEquals(id, customer.getId());
@@ -56,6 +59,7 @@ final class TestCustomer {
         assertEquals(email, customer.getEmail());
         assertEquals(branch, customer.getBranch());
         assertEquals(new ArrayList<>(), customer.getAccounts());
+        assertEquals(adminStat, customer.getAdminStat());
     }
 
     @ParameterizedTest
@@ -86,6 +90,7 @@ final class TestCustomer {
         String phone,
         String email,
         boolean branchNotNull,
+        boolean adminStat,
         String error
     ) {
         Bank bank = new Bank(1, "My bank");
@@ -102,7 +107,8 @@ final class TestCustomer {
                     socialInsuranceNumber,
                     phone,
                     email,
-                    branchNotNull ? branch : null
+                    branchNotNull ? branch : null,
+                    adminStat
                 );
             }
         );
@@ -121,7 +127,8 @@ final class TestCustomer {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         Account account = new AccountChequing(
             1,
@@ -151,7 +158,8 @@ final class TestCustomer {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         Customer customer2 = new Customer(
             2,
@@ -161,7 +169,8 @@ final class TestCustomer {
             "789-456-123",
             "+48864632577",
             "jane-doe@email.com",
-            branch
+            branch,
+            false
         );
 
         Account account = new AccountChequing(

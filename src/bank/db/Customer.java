@@ -32,6 +32,7 @@ public class Customer {
 
     private List<Account> accounts;
 
+    @Getter
     private Boolean adminStatus;
 
     public Customer(

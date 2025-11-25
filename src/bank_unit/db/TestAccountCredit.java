@@ -38,7 +38,8 @@ final class TestAccountCredit {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
 
         AccountCredit account = new AccountCredit(
@@ -90,7 +91,8 @@ final class TestAccountCredit {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
 
         Exception e = assertThrows(
@@ -121,7 +123,8 @@ final class TestAccountCredit {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         AccountCredit account1 = new AccountCredit(
             1,
@@ -170,7 +173,8 @@ final class TestAccountCredit {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         Account account1 = new AccountCredit(
             1,

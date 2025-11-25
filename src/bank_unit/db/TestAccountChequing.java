@@ -37,7 +37,8 @@ final class TestAccountChequing {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
 
         AccountChequing account = new AccountChequing(
@@ -85,7 +86,8 @@ final class TestAccountChequing {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
 
         Exception e = assertThrows(
@@ -115,7 +117,8 @@ final class TestAccountChequing {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         AccountChequing account1 = new AccountChequing(
             1,
@@ -162,7 +165,8 @@ final class TestAccountChequing {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         Account account1 = new AccountChequing(
             1,

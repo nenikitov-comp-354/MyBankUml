@@ -64,7 +64,8 @@ final class TestBranch {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         branch.addCustomer(customer);
     }
@@ -89,7 +90,8 @@ final class TestBranch {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch2
+            branch2,
+            false
         );
         Exception e = assertThrows(
             IllegalArgumentException.class,
