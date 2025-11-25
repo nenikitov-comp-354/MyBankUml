@@ -28,7 +28,7 @@
          <children>
             <Button fx:id="transferFundsButton" mnemonicParsing="false" prefHeight="90.0" prefWidth="238.0" styleClass="button-primary" text="Transfer Funds">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
             </Button>
          </children>
