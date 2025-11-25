@@ -18,6 +18,6 @@ public class AccountChequingController extends AccountController {
     }
 
     public void loadSendMoney(ActionEvent event) {
-        sceneManager.switchScene("/fxml/ChequingSendMoney.fxml", sendMoneyButton);
+        sceneManager.switchScene("/fxml/SendMoneySavingsPage.fxml", sendMoneyButton);
     }
 }

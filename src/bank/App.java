@@ -13,6 +13,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 // HACK: The only way to make Maven correctly package a JavaFX application
@@ -37,42 +38,37 @@ public class App extends Application {
         db.connect();
         SceneManager.getInstance().setDb(db);
 
-        // for (Customer customer : db.getCustomersSearch(new String[] { "ar" })) {
-        // Print all current customers
-        // for (bank.db.Customer customer : db.getCustomersSearch(
-        //     new String[] { "ar" }
-        // )) {
-        //     System.out.println(customer);
-        // }
-        db.addOperation(
-            new OperationTransaction(
-                new TransactionInfo(
-                    db.getAccounts().get(1),
-                    db.getAccounts().get(2),
-                    new BigDecimal("250.79"),
-                    LocalDateTime.now()
-                )
-            )
-        );
-        db.addOperation(new OperationLock(db.getAccounts().get(6), true));
-        db.processOperations();
-
-        System.out.println("LOCKED " + db.getAccounts().get(6).isLocked());
-        System.out.println("TRANSACTIONS" + db.getTransactions().get(6));
-        System.out.println("BALANCE " + db.getAccounts().get(1).getBalance());
-
-        // for (Customer customer : db.getCustomersSearch(new String[] { "ar" })) {
-        for (bank.db.Customer customer : db.getCustomersSearch(
-            new String[] { "ar" }
-        )) {
-            System.out.println("CUSTOMER " + customer);
-        }
-
         Parent root = FXMLLoader.load(
             getClass().getResource("/fxml/LogInPage.fxml")
         );
         Scene scene = new Scene(root);
+        stage.getIcons().add(new Image("file:icons/bank.png"));
         stage.setScene(scene);
         stage.show();
+
+        // Example code
+        // db.addOperation(
+        //     new OperationTransaction(
+        //         new TransactionInfo(
+        //             db.getAccounts().get(1),
+        //             db.getAccounts().get(2),
+        //             new BigDecimal("250.79"),
+        //             LocalDateTime.now()
+        //         )
+        //     )
+        // );
+        // db.addOperation(new OperationLock(db.getAccounts().get(6), true));
+        // db.processOperations();
+
+        // System.out.println("LOCKED " + db.getAccounts().get(6).isLocked());
+        // System.out.println("TRANSACTIONS" + db.getTransactions().get(6));
+        // System.out.println("BALANCE " + db.getAccounts().get(1).getBalance());
+
+        // for (Customer customer : db.getCustomersSearch(new String[] { "ar" })) {
+        // for (bank.db.Customer customer : db.getCustomersSearch(
+        //     new String[] { "ar" }
+        // )) {
+        //     System.out.println("CUSTOMER " + customer);
+        // }
     }
 }
