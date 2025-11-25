@@ -33,7 +33,7 @@ public class Customer {
     private List<Account> accounts;
 
     @Getter
-    private Boolean adminStatus;
+    private boolean adminStatus;
 
     public Customer(
         int id,
