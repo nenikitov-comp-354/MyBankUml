@@ -15,6 +15,9 @@ public class TransactionsController {
     @FXML
     private Button cancelButton;
 
+    @FXML
+    private Button cancelButtonContact;
+
     private SceneManager sceneManager = SceneManager.getInstance();
 
     @FXML
@@ -36,5 +39,10 @@ public class TransactionsController {
     @FXML
     private void handleCancel(ActionEvent event) {
         sceneManager.switchScene("/fxml/UserPage.fxml", cancelButton);
+    }
+
+    @FXML
+    private void handleCancelContact(ActionEvent event) {
+        sceneManager.switchScene("/fxml/ChequingSendMoney.fxml", cancelButtonContact);
     }
 }

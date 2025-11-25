@@ -37,8 +37,8 @@
                   <Insets top="10.0" right="10.0" bottom="10.0" left="10.0" />
                </padding>
                <children>
-                  <Button fx:id="contactsButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" stylesheets="@../stylesheets/transaction.css" text="CONTACTS" onAction="#handleContacts" />
-                  <Button fx:id="savingsButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" stylesheets="@../stylesheets/transaction.css" text="SAVINGS" onAction="#handleSavings" />
+                  <Button fx:id="contactsButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" styleClass="big-button" stylesheets="@../stylesheets/transaction.css" text="CONTACTS" onAction="#handleContacts" />
+                  <Button fx:id="savingsButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="150.0" styleClass="big-button" stylesheets="@../stylesheets/transaction.css" text="SAVINGS" onAction="#handleSavings" />
                </children>
             </HBox>
             <HBox alignment="CENTER" GridPane.rowIndex="2" GridPane.columnSpan="2">
