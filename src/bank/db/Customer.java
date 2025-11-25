@@ -74,8 +74,8 @@ public class Customer {
 
         this.accounts = new ArrayList<>();
 
-        TypeValidator.validateNotNull("AdminStatus", admin_Stat);
-        this.adminStatus = admin_Stat;
+        TypeValidator.validateNotNull("AdminStatus", adminStatus);
+        this.adminStatus = adminStatus;
     }
 
     public List<Account> getAccounts() {
@@ -124,7 +124,7 @@ public class Customer {
             ", branch=" +
             branch +
             ", Admin_Stat=" +
-            admin_Stat +
+            adminStatus +
             ")"
         );
     }
