@@ -23,6 +23,7 @@
 }
 .button-primary:hover {
     -fx-cursor: hand;
+    -fx-font-size: 24px;
 }
 .scroll-pane {
     -fx-background-color: transparent;
