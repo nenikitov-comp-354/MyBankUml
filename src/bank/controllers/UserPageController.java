@@ -41,6 +41,7 @@ public class UserPageController {
                 Parent card = loader.load();
                 AccountController ac = loader.getController();
                 ac.setAccountNameText(a.getName());
+                ac.setBalance(a.getBalance());
 
                 if (a instanceof AccountChequing) {
                     AccountChequing c = (AccountChequing) a;
