@@ -27,7 +27,7 @@
             <Insets bottom="30.0" left="15.0" />
          </GridPane.margin>
       </Text>
-      <Text fx:id="creditAmount" strokeType="OUTSIDE" strokeWidth="0.0" text="XX.XX">
+      <Text fx:id="amountText" strokeType="OUTSIDE" strokeWidth="0.0" text="XX.XX">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
