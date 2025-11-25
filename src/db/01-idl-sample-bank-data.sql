@@ -33,20 +33,20 @@ INSERT INTO customer_login (
 CREATE OR REPLACE FUNCTION create_customer_accounts(
     customer_id INTEGER,
     base_name TEXT,
-    checking_fee NUMERIC,
+    chequing_fee NUMERIC,
     savings_rate NUMERIC,
     credit_limit NUMERIC,
     grace_days INTEGER
 ) RETURNS VOID AS $$
 BEGIN
-  -- Checking
+  -- Chequing
   WITH acc AS (
     INSERT INTO account (name, is_locked, customer_id)
-    VALUES (base_name || ' Checking', false, customer_id)
+    VALUES (base_name || ' Chequing', false, customer_id)
     RETURNING id
   )
-  INSERT INTO account_checking (id, monthly_fee)
-  SELECT acc.id, checking_fee
+  INSERT INTO account_chequing (id, monthly_fee)
+  SELECT acc.id, chequing_fee
   FROM acc;
 
   -- Savings

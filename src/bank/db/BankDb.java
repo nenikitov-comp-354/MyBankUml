@@ -332,7 +332,7 @@ public class BankDb {
         throws SQLException {
         Map<Integer, Account> accounts = new HashMap<>();
 
-        accounts.putAll(this.fetchAccountsChecking(customers));
+        accounts.putAll(this.fetchAccountsChequing(customers));
         accounts.putAll(this.fetchAccountsCredit(customers));
         accounts.putAll(this.fetchAccountsSavings(customers));
 
@@ -340,17 +340,17 @@ public class BankDb {
     }
 
     // made these protected as well so tests can override
-    protected Map<Integer, AccountChecking> fetchAccountsChecking(
+    protected Map<Integer, AccountChequing> fetchAccountsChequing(
         Map<Integer, Customer> customers
     )
         throws SQLException {
         ensureConnection();
         Connection conn = this.connection.get();
 
-        Map<Integer, AccountChecking> accounts = new HashMap<>();
+        Map<Integer, AccountChequing> accounts = new HashMap<>();
 
         String sql =
-            "SELECT * FROM account NATURAL INNER JOIN account_checking";
+            "SELECT * FROM account NATURAL INNER JOIN account_chequing";
         try (
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()
@@ -358,7 +358,7 @@ public class BankDb {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 Customer customer = customers.get(rs.getInt("customer_id"));
-                AccountChecking account = new AccountChecking(
+                AccountChequing account = new AccountChequing(
                     id,
                     rs.getString("name"),
                     rs.getBoolean("is_locked"),

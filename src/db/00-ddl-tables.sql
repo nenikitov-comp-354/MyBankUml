@@ -39,7 +39,7 @@ create table account(
     customer_id integer references customer(id) not null
 );
 
-create table account_checking(
+create table account_chequing(
     id integer not null references account(id) on delete cascade,
     monthly_fee positive_money not null default 0
 );

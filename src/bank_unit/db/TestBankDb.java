@@ -116,9 +116,9 @@ public class TestBankDb {
         );
         db.addCustomer(cust);
 
-        AccountChecking acc = new AccountChecking(
+        AccountChequing acc = new AccountChequing(
             200,
-            "Harry Checking",
+            "Harry Chequing",
             false,
             cust,
             BigDecimal.valueOf(5.00)
@@ -158,7 +158,7 @@ public class TestBankDb {
         assertEquals("TestBank", db.getBanks().get(1).getName());
         assertEquals("Address", db.getBranches().get(10).getAddress());
         assertEquals("Harry", db.getCustomers().get(100).getFirstName());
-        assertEquals("Harry Checking", db.getAccounts().get(200).getName());
+        assertEquals("Harry Chequing", db.getAccounts().get(200).getName());
     }
 
     @Test
