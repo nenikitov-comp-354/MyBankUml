@@ -45,7 +45,7 @@
 }
 .contact-button {
     -fx-background-color: #ffffff;
-    -fx-background-radius: 12;
+    -fx-background-radius: 5;
     -fx-padding: 20;
     -fx-pref-width: 360px;
     -fx-pref-height: 70px;

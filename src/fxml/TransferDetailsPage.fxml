@@ -60,10 +60,10 @@
                 </Text>
                 <HBox spacing="20" alignment="CENTER" GridPane.rowIndex="4" GridPane.columnSpan="2">
                     <children>
-                        <Button fx:id="confirmButton" text="Confirm">
+                        <Button fx:id="confirmTransferButton" text="Confirm" onAction ="#handleConfirmTransfer">
                             <font><Font name="System Bold" size="12.0" /></font>
                         </Button>
-                        <Button fx:id="cancelButton" text="Cancel">
+                        <Button fx:id="cancelTransferButton" text="Cancel" onAction="#handleCancelTransfer">
                             <font><Font name="System Bold" size="12.0" /></font>
                         </Button>
                     </children>
