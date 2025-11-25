@@ -31,6 +31,11 @@ public class TestBankDb {
         }
 
         @Override
+        protected synchronized void ensureConnection() throws SQLException {
+            // Do nothing here we're just overriding to avoid real DB connection
+        }
+
+        @Override
         protected Map<Integer, Bank> fetchBanks() {
             return testBanks;
         }

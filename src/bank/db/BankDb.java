@@ -62,14 +62,15 @@ public class BankDb {
         this.transactions = new HashMap<>();
     }
 
-    private synchronized void ensureConnection() throws SQLException {
-        if (this.connection.isEmpty()) return;
+    protected synchronized void ensureConnection() throws SQLException {
+        if (this.connection.isPresent()) return;
 
-        if (this.dataSource.isPresent() && this.dataSource != null) {
+        if (this.dataSource.isPresent()) {
             this.connection =
                 Optional.of(this.dataSource.get().getConnection());
             return;
         }
+
         String url =
             "jdbc:postgresql://" +
             host +
@@ -86,6 +87,14 @@ public class BankDb {
 
     public void connect() throws SQLException {
         ensureConnection();
+
+        // clears caches to avoid duplicates on multiple connect() calls
+        this.banks.clear();
+        this.branches.clear();
+        this.customers.clear();
+        this.accounts.clear();
+        this.transactions.clear();
+
         this.banks = this.fetchBanks();
         this.branches = this.fetchBranches(this.banks);
         this.customers = this.fetchCustomers(this.branches);
@@ -102,7 +111,7 @@ public class BankDb {
             "SELECT c.id " +
             "FROM customer c " +
             "JOIN customer_login cl ON c.id = cl.customer_id " +
-            "WHERE c.email = ? AND cl.password = ?";
+            "WHERE LOWER(c.email) = LOWER(?) AND cl.password = ?";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, email);
@@ -112,7 +121,42 @@ public class BankDb {
                 // invalid credentials
                 if (!rs.next()) return Optional.empty();
 
-                return Optional.ofNullable(this.customers.get(rs.getInt("id")));
+                int id = rs.getInt("id");
+
+                if (this.customers.containsKey(id)) {
+                    return Optional.of(this.customers.get(id));
+                }
+                return Optional.ofNullable(loadSingleCustomer(conn, id));
+            }
+        }
+    }
+
+    private Customer loadSingleCustomer(Connection conn, int id)
+        throws SQLException {
+        String sql = "SELECT * FROM customer WHERE id = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (!rs.next()) return null;
+
+                Branch branch = this.branches.get(rs.getInt("branch_id"));
+                // avoid duplicates in case of multiple calls
+                Customer c = new Customer(
+                    id,
+                    rs.getString("first_name"),
+                    rs.getString("last_name"),
+                    rs.getDate("date_of_birth").toLocalDate(),
+                    rs.getString("social_insurance_number"),
+                    rs.getString("phone"),
+                    rs.getString("email"),
+                    branch
+                );
+                if (!branch.getCustomers().contains(c)) {
+                    branch.addCustomer(c);
+                }
+
+                this.customers.put(id, c);
+                return c;
             }
         }
     }
@@ -131,7 +175,12 @@ public class BankDb {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    customers.add(this.customers.get(rs.getInt("id")));
+                    int id = rs.getInt("id");
+                    Customer cust = this.customers.get(id);
+                    if (cust == null) {
+                        cust = loadSingleCustomer(conn, id);
+                    }
+                    customers.add(cust);
                 }
             }
 
