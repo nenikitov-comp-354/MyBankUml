@@ -349,7 +349,8 @@ public class BankDb {
 
         Map<Integer, AccountChecking> accounts = new HashMap<>();
 
-        String sql = "SELECT * FROM account_checking";
+        String sql =
+            "SELECT * FROM account NATURAL INNER JOIN account_checking";
         try (
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()
@@ -381,7 +382,7 @@ public class BankDb {
 
         Map<Integer, AccountCredit> accounts = new HashMap<>();
 
-        String sql = "SELECT * FROM account_credit";
+        String sql = "SELECT * FROM account NATURAL INNER JOIN account_credit";
         try (
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()
@@ -414,7 +415,7 @@ public class BankDb {
 
         Map<Integer, AccountSavings> accounts = new HashMap<>();
 
-        String sql = "SELECT * FROM account_savings";
+        String sql = "SELECT * FROM account NATURAL INNER JOIN account_savings";
         try (
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()

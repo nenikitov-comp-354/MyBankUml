@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-class OperationLock implements Operation {
+public class OperationLock implements Operation {
     private final Account account;
     private final boolean isLocked;
 

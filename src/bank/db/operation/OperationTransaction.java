@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 
-class OperationTransaction implements Operation {
+public class OperationTransaction implements Operation {
     private final TransactionInfo info;
 
     public OperationTransaction(TransactionInfo info) {
@@ -34,12 +34,20 @@ class OperationTransaction implements Operation {
             stmt.setBigDecimal(3, this.info.getAmount());
             stmt.setTimestamp(4, Timestamp.valueOf(this.info.getTime()));
 
-            try (ResultSet rs = stmt.executeQuery()) {
+            int updated = stmt.executeUpdate();
+            if (updated != 1) {
+                throw new SQLException(
+                    "Could not create a transaction " + this.info
+                );
+            }
+
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
                 if (!rs.next()) throw new SQLException(
-                    "Could not insert transaction"
+                    "Could not get the ID of the new transaction"
                 );
 
                 int id = rs.getInt(1);
+                System.out.println("ID " + id);
 
                 Transaction transaction = new Transaction(id, this.info);
 
