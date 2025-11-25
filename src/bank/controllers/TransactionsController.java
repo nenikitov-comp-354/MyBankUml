@@ -50,7 +50,7 @@ public class TransactionsController {
 
     @FXML
     private void handleCancel(ActionEvent event) {
-        sceneManager.switchScene("/fxml/AccountChequing.fxml", cancelButton);
+        sceneManager.switchScene("/fxml/UserPage.fxml", cancelButton);
     }
 
     @FXML
