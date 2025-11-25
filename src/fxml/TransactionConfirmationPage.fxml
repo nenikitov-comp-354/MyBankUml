@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bank.controllers.TransactionsController">
+    <children>
+        <VBox alignment="CENTER" spacing="40" layoutX="100.0" layoutY="80.0" prefWidth="300.0">
+            <children>
+                <ImageView fx:id="checkmarkImage" fitHeight="120.0" fitWidth="120.0" preserveRatio="true">
+                    <image>
+                        <javafx.scene.image.Image url="file:src/icons/checkmark.png"/>
+                    </image>
+                </ImageView>
+                <Text text="Transaction Successful!" styleClass="success-title">
+                    <font>
+                        <Font name="System Bold" size="24.0" />
+                    </font>
+                </Text>
+                <Button fx:id="doneButton" text="Done" styleClass="button" stylesheets="@../stylesheets/userPage.css">
+                <font><Font name="System Bold" size="12.0" /></font>
+                </Button>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
