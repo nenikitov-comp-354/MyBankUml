@@ -181,7 +181,7 @@ public class BankDb {
                     rs.getString("phone"),
                     rs.getString("email"),
                     branch,
-                    rs.getString("admin_stat")
+                    rs.getBoolean("admin_stat")
                 );
                 if (!branch.getCustomers().contains(c)) {
                     branch.addCustomer(c);
@@ -318,7 +318,7 @@ public class BankDb {
                     rs.getString("phone"),
                     rs.getString("email"),
                     branch,
-                    rs.getString("admin_stat")
+                    rs.getBoolean("admin_stat")
                 );
                 branch.addCustomer(customer);
                 customers.put(id, customer);
