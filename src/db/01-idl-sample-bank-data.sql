@@ -33,41 +33,41 @@ INSERT INTO customer_login (
 CREATE OR REPLACE FUNCTION create_customer_accounts(
     customer_id INTEGER,
     base_name TEXT,
-    checking_fee NUMERIC,
+    chequing_fee NUMERIC,
     savings_rate NUMERIC,
     credit_limit NUMERIC,
     grace_days INTEGER
 ) RETURNS VOID AS $$
 BEGIN
-  -- Checking
+  -- Chequing
   WITH acc AS (
     INSERT INTO account (name, is_locked, customer_id)
-    VALUES (base_name || ' Checking', false, customer_id)
-    RETURNING id, name, is_locked
+    VALUES (base_name || ' Chequing', false, customer_id)
+    RETURNING id
   )
-  INSERT INTO account_checking (id, name, is_locked, customer_id, monthly_fee)
-  SELECT acc.id, acc.name, acc.is_locked, c.customer_id, checking_fee
-  FROM acc CROSS JOIN (SELECT customer_id) AS c;
+  INSERT INTO account_chequing (id, monthly_fee)
+  SELECT acc.id, chequing_fee
+  FROM acc;
 
   -- Savings
   WITH acc AS (
     INSERT INTO account (name, is_locked, customer_id)
     VALUES (base_name || ' Savings', false, customer_id)
-    RETURNING id, name, is_locked
+    RETURNING id
   )
-  INSERT INTO account_savings (id, name, is_locked, customer_id, interest_rate)
-  SELECT acc.id, acc.name, acc.is_locked, c.customer_id, savings_rate
-  FROM acc CROSS JOIN (SELECT customer_id) AS c;
+  INSERT INTO account_savings (id, interest_rate)
+  SELECT acc.id, savings_rate
+  FROM acc;
 
   -- Credit
   WITH acc AS (
     INSERT INTO account (name, is_locked, customer_id)
     VALUES (base_name || ' Credit', false, customer_id)
-    RETURNING id, name, is_locked
+    RETURNING id
   )
-  INSERT INTO account_credit (id, name, is_locked, customer_id, credit_limit, payment_grace_days)
-  SELECT acc.id, acc.name, acc.is_locked, c.customer_id, credit_limit, grace_days
-  FROM acc CROSS JOIN (SELECT customer_id) AS c;
+  INSERT INTO account_credit (id, credit_limit, payment_grace_days)
+  SELECT acc.id, credit_limit, grace_days
+  FROM acc;
 END;
 $$ LANGUAGE plpgsql;
 

@@ -125,7 +125,7 @@ final class TestCustomer {
         );
         Account account = new AccountChequing(
             1,
-            "My checking",
+            "My chequing",
             false,
             customer,
             new BigDecimal("100.00")
@@ -136,7 +136,7 @@ final class TestCustomer {
     @ParameterizedTest
     @CsvSource(
         {
-            "true,  'Account AccountChecking(SUPER=Account(id=1, name=My checking, isLocked=false, customer=Customer(id=2, firstName=Jane, lastName=Doe, dateOfBirth=1800-03-24, socialInsuranceNumber=789-456-123, phone=+48864632577, email=jane-doe@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), monthlyFee=100.00) does not belong to this customer Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))'",
+            "true,  'Account AccountChequing(SUPER=Account(id=1, name=My chequing, isLocked=false, customer=Customer(id=2, firstName=Jane, lastName=Doe, dateOfBirth=1800-03-24, socialInsuranceNumber=789-456-123, phone=+48864632577, email=jane-doe@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), monthlyFee=100.00) does not belong to this customer Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))'",
             "false, 'Account is null'",
         }
     )
@@ -166,7 +166,7 @@ final class TestCustomer {
 
         Account account = new AccountChequing(
             1,
-            "My checking",
+            "My chequing",
             false,
             customer2,
             new BigDecimal("100.00")

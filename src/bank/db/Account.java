@@ -1,8 +1,10 @@
 package bank.db;
 
 import bank.util.TypeValidator;
+import java.math.BigDecimal;
 import java.util.*;
 import lombok.Getter;
+import lombok.Setter;
 
 public abstract class Account {
     @Getter
@@ -12,6 +14,7 @@ public abstract class Account {
     private String name;
 
     @Getter
+    @Setter
     private boolean isLocked;
 
     @Getter
@@ -38,9 +41,26 @@ public abstract class Account {
         return Collections.unmodifiableList(this.transactions);
     }
 
+    public BigDecimal getBalance() {
+        BigDecimal balance = new BigDecimal(0);
+
+        for (Transaction t : this.transactions) {
+            if (this.equals(t.getInfo().getSource())) {
+                balance = balance.subtract(t.getInfo().getAmount());
+            } else {
+                balance = balance.add(t.getInfo().getAmount());
+            }
+        }
+
+        return balance;
+    }
+
     public void addTransaction(Transaction transaction) {
         TypeValidator.validateNotNull("Transaction", transaction);
-        if (!this.equals(transaction.getInfo().getSource())) {
+        if (
+            !this.equals(transaction.getInfo().getSource()) &&
+            !this.equals(transaction.getInfo().getDestination())
+        ) {
             throw new IllegalArgumentException(
                 "Transaction " +
                 transaction +

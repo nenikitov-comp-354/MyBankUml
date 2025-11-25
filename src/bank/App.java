@@ -1,10 +1,14 @@
 package bank;
 
-import bank.db.BankDb;
 import bank.util.SceneManager;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
+import bank.db.*;
+import bank.db.operation.OperationLock;
+import bank.db.operation.OperationTransaction;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -40,6 +44,29 @@ public class App extends Application {
         // )) {
         //     System.out.println(customer);
         // }
+        db.addOperation(
+            new OperationTransaction(
+                new TransactionInfo(
+                    db.getAccounts().get(1),
+                    db.getAccounts().get(2),
+                    new BigDecimal("250.79"),
+                    LocalDateTime.now()
+                )
+            )
+        );
+        db.addOperation(new OperationLock(db.getAccounts().get(6), true));
+        db.processOperations();
+
+        System.out.println("LOCKED " + db.getAccounts().get(6).isLocked());
+        System.out.println("TRANSACTIONS" + db.getTransactions().get(6));
+        System.out.println("BALANCE " + db.getAccounts().get(1).getBalance());
+
+        // for (Customer customer : db.getCustomersSearch(new String[] { "ar" })) {
+        for (bank.db.Customer customer : db.getCustomersSearch(
+            new String[] { "ar" }
+        )) {
+            System.out.println("CUSTOMER " + customer);
+        }
 
         Parent root = FXMLLoader.load(
             getClass().getResource("/fxml/LogInPage.fxml")

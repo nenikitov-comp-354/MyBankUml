@@ -32,7 +32,7 @@ public class AccountChequing extends Account {
     @Override
     public String toString() {
         return (
-            "AccountChecking(SUPER=" +
+            "AccountChequing(SUPER=" +
             super.toString() +
             ", monthlyFee=" +
             monthlyFee +
