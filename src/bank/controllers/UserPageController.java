@@ -8,9 +8,12 @@ import bank.db.Customer;
 import bank.util.SceneManager;
 import java.io.IOException;
 import java.util.List;
+
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -20,6 +23,9 @@ public class UserPageController {
 
     @FXML
     private Text userNameText;
+
+    @FXML
+    private Button transferFundsButton;
 
     private SceneManager sceneManager = SceneManager.getInstance();
 
@@ -70,5 +76,10 @@ public class UserPageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void loadTransferPage(ActionEvent event) {
+        sceneManager.switchScene("/fxml/TransferPage.fxml", transferFundsButton);
     }
 }
