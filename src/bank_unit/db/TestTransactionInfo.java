@@ -43,9 +43,9 @@ final class TestTransactionInfo {
             "big-john@email.com",
             branch
         );
-        Account account1 = new AccountChecking(
+        Account account1 = new AccountChequing(
             1,
-            "My checking",
+            "My chequing",
             false,
             customer,
             new BigDecimal("10.99")
@@ -116,9 +116,9 @@ final class TestTransactionInfo {
             "big-john@email.com",
             branch
         );
-        Account account1 = new AccountChecking(
+        Account account1 = new AccountChequing(
             1,
-            "My checking",
+            "My chequing",
             false,
             customer,
             new BigDecimal("10.99")

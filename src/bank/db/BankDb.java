@@ -1,5 +1,7 @@
 package bank.db;
 
+import bank.db.operation.*;
+import bank.util.TypeValidator;
 import java.sql.*;
 import java.util.*;
 import javax.sql.DataSource;
@@ -20,6 +22,8 @@ public class BankDb {
     private Map<Integer, Customer> customers;
     private Map<Integer, Account> accounts;
     private Map<Integer, Transaction> transactions;
+
+    private Queue<Operation> operations;
 
     public BankDb(
         String host,
@@ -83,6 +87,7 @@ public class BankDb {
         password.ifPresent(pw -> props.setProperty("password", pw));
 
         this.connection = Optional.of(DriverManager.getConnection(url, props));
+        this.operations = new LinkedList<>();
     }
 
     public void connect() throws SQLException {
@@ -100,6 +105,32 @@ public class BankDb {
         this.customers = this.fetchCustomers(this.branches);
         this.accounts = this.fetchAccounts(this.customers);
         this.transactions = this.fetchTransactions(this.accounts);
+    }
+
+    public void addOperation(Operation operation) {
+        TypeValidator.validateNotNull("Operation", operation);
+        this.operations.add(operation);
+    }
+
+    public void processOperations() throws SQLException {
+        ensureConnection();
+        Connection conn = this.connection.get();
+
+        boolean autoCommit = conn.getAutoCommit();
+        conn.setAutoCommit(false);
+
+        while (!this.operations.isEmpty()) {
+            Operation operation = this.operations.remove();
+            try {
+                operation.process(conn, this);
+                conn.commit();
+            } catch (SQLException e) {
+                conn.rollback();
+                throw e;
+            }
+        }
+
+        conn.setAutoCommit(autoCommit);
     }
 
     public Optional<Customer> customerLogin(String email, String password)
@@ -210,6 +241,11 @@ public class BankDb {
         return Collections.unmodifiableMap(this.transactions);
     }
 
+    public void addTransaction(Transaction transaction) {
+        TypeValidator.validateNotNull("Transaction", transaction);
+        this.transactions.put(transaction.getId(), transaction);
+    }
+
     // changed visibility from private to protected so tests can override
     protected Map<Integer, Bank> fetchBanks() throws SQLException {
         ensureConnection();
@@ -296,7 +332,7 @@ public class BankDb {
         throws SQLException {
         Map<Integer, Account> accounts = new HashMap<>();
 
-        accounts.putAll(this.fetchAccountsChecking(customers));
+        accounts.putAll(this.fetchAccountsChequing(customers));
         accounts.putAll(this.fetchAccountsCredit(customers));
         accounts.putAll(this.fetchAccountsSavings(customers));
 
@@ -304,16 +340,17 @@ public class BankDb {
     }
 
     // made these protected as well so tests can override
-    protected Map<Integer, AccountChecking> fetchAccountsChecking(
+    protected Map<Integer, AccountChequing> fetchAccountsChequing(
         Map<Integer, Customer> customers
     )
         throws SQLException {
         ensureConnection();
         Connection conn = this.connection.get();
 
-        Map<Integer, AccountChecking> accounts = new HashMap<>();
+        Map<Integer, AccountChequing> accounts = new HashMap<>();
 
-        String sql = "SELECT * FROM account_checking";
+        String sql =
+            "SELECT * FROM account NATURAL INNER JOIN account_chequing";
         try (
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()
@@ -321,7 +358,7 @@ public class BankDb {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 Customer customer = customers.get(rs.getInt("customer_id"));
-                AccountChecking account = new AccountChecking(
+                AccountChequing account = new AccountChequing(
                     id,
                     rs.getString("name"),
                     rs.getBoolean("is_locked"),
@@ -345,7 +382,7 @@ public class BankDb {
 
         Map<Integer, AccountCredit> accounts = new HashMap<>();
 
-        String sql = "SELECT * FROM account_credit";
+        String sql = "SELECT * FROM account NATURAL INNER JOIN account_credit";
         try (
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()
@@ -378,7 +415,7 @@ public class BankDb {
 
         Map<Integer, AccountSavings> accounts = new HashMap<>();
 
-        String sql = "SELECT * FROM account_savings";
+        String sql = "SELECT * FROM account NATURAL INNER JOIN account_savings";
         try (
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery()

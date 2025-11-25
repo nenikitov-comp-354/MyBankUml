@@ -39,18 +39,21 @@ create table account(
     customer_id integer references customer(id) not null
 );
 
-create table account_checking(
+create table account_chequing(
+    id integer not null references account(id) on delete cascade,
     monthly_fee positive_money not null default 0
-) inherits(account);
+);
 
 create table account_savings(
+    id integer not null references account(id) on delete cascade,
     interest_rate numeric(7, 4) not null check(interest_rate >= 0)
-) inherits(account);
+);
 
 create table account_credit(
+    id integer not null references account(id) on delete cascade,
     credit_limit positive_money not null,
     payment_grace_days integer not null default 21 check(payment_grace_days >= 0)
-) inherits(account);
+);
 
 create table transaction(
     id integer primary key generated always as identity,

@@ -1,7 +1,11 @@
 package bank;
 
 import bank.db.*;
+import bank.db.operation.OperationLock;
+import bank.db.operation.OperationTransaction;
+import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -29,14 +33,28 @@ public class App extends Application {
             Optional.of("admin")
         );
         db.connect();
+        db.addOperation(
+            new OperationTransaction(
+                new TransactionInfo(
+                    db.getAccounts().get(1),
+                    db.getAccounts().get(2),
+                    new BigDecimal("250.79"),
+                    LocalDateTime.now()
+                )
+            )
+        );
+        db.addOperation(new OperationLock(db.getAccounts().get(6), true));
+        db.processOperations();
 
-        System.out.println(db.getAccounts().get(1).getBalance());
+        System.out.println("LOCKED " + db.getAccounts().get(6).isLocked());
+        System.out.println("TRANSACTIONS" + db.getTransactions().get(6));
+        System.out.println("BALANCE " + db.getAccounts().get(1).getBalance());
 
         // for (Customer customer : db.getCustomersSearch(new String[] { "ar" })) {
         for (bank.db.Customer customer : db.getCustomersSearch(
             new String[] { "ar" }
         )) {
-            System.out.println(customer);
+            System.out.println("CUSTOMER " + customer);
         }
 
         String javaVersion = System.getProperty("java.version");

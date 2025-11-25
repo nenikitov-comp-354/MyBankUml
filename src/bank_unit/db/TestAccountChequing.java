@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-final class TestAccountChecking {
+final class TestAccountChequing {
 
     @ParameterizedTest
     @CsvSource(
         {
-            "1, 'John`s Checking', false, '10.17'",
+            "1, 'John`s Chequing', false, '10.17'",
             "2, 'John`s Wallet',   true,  '123.342'",
         }
     )
@@ -40,7 +40,7 @@ final class TestAccountChecking {
             branch
         );
 
-        AccountChecking account = new AccountChecking(
+        AccountChequing account = new AccountChequing(
             id,
             name,
             isLocked,
@@ -59,12 +59,12 @@ final class TestAccountChecking {
     @ParameterizedTest
     @CsvSource(
         value = {
-            "-3, 'John`s Checking', true,  '10.17',  'Id `-3` is not a valid SQL id (must be > 0)'",
+            "-3, 'John`s Chequing', true,  '10.17',  'Id `-3` is not a valid SQL id (must be > 0)'",
             "1,  NULL,              true,  '10.17',  'Name is null'",
             "1,  '   ',             true,  '10.17',  'Name `   ` is blank or starts and ends with trailing spaces'",
-            "1,  'John`s Checking', false, '10.17',  'Customer is null'",
-            "1,  'John`s Checking', true,  'NULL',   'Monthly fee is null'",
-            "1,  'John`s Checking', true,  '-10.17', 'Monthly fee `-10.17` is not positive or zero'",
+            "1,  'John`s Chequing', false, '10.17',  'Customer is null'",
+            "1,  'John`s Chequing', true,  'NULL',   'Monthly fee is null'",
+            "1,  'John`s Chequing', true,  '-10.17', 'Monthly fee `-10.17` is not positive or zero'",
         },
         nullValues = "NULL"
     )
@@ -91,7 +91,7 @@ final class TestAccountChecking {
         Exception e = assertThrows(
             IllegalArgumentException.class,
             () -> {
-                new AccountChecking(
+                new AccountChequing(
                     id,
                     name,
                     false,
@@ -117,16 +117,16 @@ final class TestAccountChecking {
             "big-john@email.com",
             branch
         );
-        AccountChecking account1 = new AccountChecking(
+        AccountChequing account1 = new AccountChequing(
             1,
-            "My checking 1",
+            "My chequing 1",
             false,
             customer,
             new BigDecimal("0.00")
         );
-        AccountChecking account2 = new AccountChecking(
+        AccountChequing account2 = new AccountChequing(
             2,
-            "My checking 2",
+            "My chequing 2",
             false,
             customer,
             new BigDecimal("10.00")
@@ -147,7 +147,7 @@ final class TestAccountChecking {
     @ParameterizedTest
     @CsvSource(
         {
-            "true,  'Transaction Transaction(id=1, info=TransactionInfo(source=AccountChecking(SUPER=Account(id=1, name=My checking 1, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), monthlyFee=0.00), destination=AccountChecking(SUPER=Account(id=2, name=My checking 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), monthlyFee=10.00), amount=17.79, time=2025-11-18T18:59)) does not belong to this account AccountChecking(SUPER=Account(id=3, name=My checking 3, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), monthlyFee=10.00)'",
+            "true,  'Transaction Transaction(id=1, info=TransactionInfo(source=AccountChequing(SUPER=Account(id=1, name=My chequing 1, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), monthlyFee=0.00), destination=AccountChequing(SUPER=Account(id=2, name=My chequing 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), monthlyFee=10.00), amount=17.79, time=2025-11-18T18:59)) does not belong to this account AccountChequing(SUPER=Account(id=3, name=My checking 3, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), monthlyFee=10.00)'",
             "false, 'Transaction is null'",
         }
     )
@@ -164,21 +164,21 @@ final class TestAccountChecking {
             "big-john@email.com",
             branch
         );
-        Account account1 = new AccountChecking(
+        Account account1 = new AccountChequing(
             1,
-            "My checking 1",
+            "My chequing 1",
             false,
             customer,
             new BigDecimal("0.00")
         );
-        Account account2 = new AccountChecking(
+        Account account2 = new AccountChequing(
             2,
-            "My checking 2",
+            "My chequing 2",
             false,
             customer,
             new BigDecimal("10.00")
         );
-        Account account3 = new AccountChecking(
+        Account account3 = new AccountChequing(
             3,
             "My checking 3",
             false,

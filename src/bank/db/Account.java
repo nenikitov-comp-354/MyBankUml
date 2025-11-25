@@ -4,6 +4,7 @@ import bank.util.TypeValidator;
 import java.math.BigDecimal;
 import java.util.*;
 import lombok.Getter;
+import lombok.Setter;
 
 public abstract class Account {
     @Getter
@@ -13,6 +14,7 @@ public abstract class Account {
     private String name;
 
     @Getter
+    @Setter
     private boolean isLocked;
 
     @Getter
