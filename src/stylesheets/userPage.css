@@ -30,8 +30,8 @@
     -fx-background-color: #f2f2f2;
     -fx-background-radius: 10;
     -fx-border-radius: 10;
-    -fx-background-insets: 0;
-    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.25), 10, 0.5, 0, 4);
+    -fx-background-insets: 1;
+    -fx-effect: innershadow(one-pass-box, rgba(0, 0, 0, 0.25), 5, 0.5, 0, 2);
     -fx-padding: 8;
     -fx-background-clip: padding-box;
 }
@@ -60,4 +60,12 @@
 }
 .scroll-bar .thumb:hover {
     -fx-background-color: rgba(0, 0, 0, 0.25);
+}
+/* make any VBox used as ScrollPane content fully transparent */
+.scroll-pane .vbox,
+.scroll-pane .content,
+.scroll-pane .viewport .vbox {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
 }
