@@ -30,6 +30,8 @@ public class App extends Application {
         );
         db.connect();
 
+        System.out.println(db.getAccounts().get(1).getBalance());
+
         // for (Customer customer : db.getCustomersSearch(new String[] { "ar" })) {
         for (bank.db.Customer customer : db.getCustomersSearch(
             new String[] { "ar" }
