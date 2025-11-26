@@ -1,18 +1,17 @@
 package bank_integrations.db;
 
 import bank.db.*;
-import bank.db.operation.OperationLock;
 import bank.db.operation.Operation;
+import bank.db.operation.OperationLock;
 import bank.db.operation.OperationTransaction;
-
-import java.sql.SQLException;
-import java.util.*;
-import java.time.LocalDate;
 import java.math.BigDecimal;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.*;
 
 public class LockOperation {
+
     public static void main(String[] args) {
-        
         BankDb db = new BankDb(
             "localhost",
             Optional.empty(),
@@ -26,13 +25,11 @@ public class LockOperation {
 
             runLockUnlock(db);
             runMissingAccount(db);
-
         } catch (Exception e) {
             System.err.println("[LockOperation] Error: " + e.getMessage());
             e.printStackTrace();
         }
     }
-
 
     /**
      * @brief ensures that queue can be written to,
@@ -40,12 +37,14 @@ public class LockOperation {
      * @param db
      * @throws SQLException
      */
-     private static void runLockUnlockScenario(BankDb db) throws SQLException {
+    private static void runLockUnlockScenario(BankDb db) throws SQLException {
         System.out.println("LockOperation Integration: lock/unlock");
 
         Map<Integer, Account> accounts = db.getAccounts();
         if (accounts.size() < 2) {
-            System.out.println("Not enough accounts in DB to run this scenario.");
+            System.out.println(
+                "Not enough accounts in DB to run this scenario."
+            );
             return;
         }
 
@@ -111,7 +110,8 @@ public class LockOperation {
      * @param db
      * @throws SQLException
      */
-    private static void runMissingAccountScenario(BankDb db) throws SQLException {
+    private static void runMissingAccountScenario(BankDb db)
+        throws SQLException {
         System.out.println(
             "LockOperation Integration: missing account exception test"
         );
@@ -128,14 +128,13 @@ public class LockOperation {
         Customer anyCustomer = customers.values().iterator().next();
         int fakeId = 999_999; // id that does not exist in DB
 
-        Account fakeAccount =
-            new AccountChequing(
-                fakeId,
-                "Non-existent account",
-                false,
-                anyCustomer,
-                BigDecimal.ZERO
-            );
+        Account fakeAccount = new AccountChequing(
+            fakeId,
+            "Non-existent account",
+            false,
+            anyCustomer,
+            BigDecimal.ZERO
+        );
 
         db.addOperation(new OperationLock(fakeAccount, true));
 
@@ -146,21 +145,23 @@ public class LockOperation {
             );
         } catch (UnsupportedOperationException e) {
             System.out.println(
-                "Correctly caught UnsupportedOperationException: " + e.getMessage()
+                "Correctly caught UnsupportedOperationException: " +
+                e.getMessage()
             );
         }
 
         System.out.println("End of missing-account test");
     }
 
-   /**
-    * @brief Helper that re-loads accounts from the DB (via a new BankDb) and prints / checks
-    * the lock state for the given account id.
-    * @param accountId
-    * @param expected
-    * @throws SQLException
-    */
-    private static void verifyLockedStateInDb(int accountId, boolean expected) throws SQLException {
+    /**
+     * @brief Helper that re-loads accounts from the DB (via a new BankDb) and prints / checks
+     * the lock state for the given account id.
+     * @param accountId
+     * @param expected
+     * @throws SQLException
+     */
+    private static void verifyLockedStateInDb(int accountId, boolean expected)
+        throws SQLException {
         BankDb verifyDb = new BankDb(
             "localhost",
             Optional.empty(),
@@ -173,7 +174,9 @@ public class LockOperation {
         Account fromDb = verifyDb.getAccounts().get(accountId);
         if (fromDb == null) {
             System.out.println(
-                "  [DB] Account " + accountId + " not found when verifying lock state."
+                "  [DB] Account " +
+                accountId +
+                " not found when verifying lock state."
             );
             return;
         }
@@ -188,5 +191,4 @@ public class LockOperation {
             ")"
         );
     }
-
 }
