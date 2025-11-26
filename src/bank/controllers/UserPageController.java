@@ -35,7 +35,11 @@ public class UserPageController {
         try {
             Customer currentCustomer = sceneManager.getCustomer();
             userNameText.setText(
-                "Welcome, " + currentCustomer.getFirstName() + " " + currentCustomer.getLastName() + "!"
+                "Welcome, " +
+                currentCustomer.getFirstName() +
+                " " +
+                currentCustomer.getLastName() +
+                "!"
             );
             List<Account> accounts = currentCustomer.getAccounts();
 
@@ -88,6 +92,7 @@ public class UserPageController {
             transferFundsButton
         );
     }
+
     @FXML
     private void loadSearchPage(ActionEvent event) {
         sceneManager.switchScene(

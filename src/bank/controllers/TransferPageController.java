@@ -4,7 +4,6 @@ import bank.db.Account;
 import bank.db.Customer;
 import bank.db.TransactionInfo;
 import bank.util.SceneManager;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -106,10 +105,7 @@ public class TransferPageController {
                 return;
             } else {
                 FXMLLoader loader = new FXMLLoader(
-                    getClass()
-                        .getResource(
-                            "/fxml/TransferDetailsPage.fxml"
-                        )
+                    getClass().getResource("/fxml/TransferDetailsPage.fxml")
                 );
                 Parent root = loader.load();
                 TransferDetailsPageController tdpc = loader.getController();

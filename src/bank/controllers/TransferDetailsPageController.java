@@ -1,11 +1,10 @@
 package bank.controllers;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
 import bank.db.TransactionInfo;
 import bank.db.operation.OperationTransaction;
 import bank.util.SceneManager;
+import java.io.IOException;
+import java.sql.SQLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,30 +40,30 @@ public class TransferDetailsPageController {
 
     private SceneManager sceneManager = SceneManager.getInstance();
 
-    public void initialize() {
-    }
+    public void initialize() {}
 
     public void initializeData(TransactionInfo currentTransaction) {
         this.currentTransaction = currentTransaction;
 
         transferFromText.setText(currentTransaction.getSource().getName());
         transferToText.setText(currentTransaction.getDestination().getName());
-        bankNameText.setText(sceneManager.getCustomer().getBranch().getBank().getName());
+        bankNameText.setText(
+            sceneManager.getCustomer().getBranch().getBank().getName()
+        );
         amountText.setText(currentTransaction.getAmount().toString());
     }
 
     @FXML
     private void handleConfirmTransfer(ActionEvent event) {
         try {
-            sceneManager.getDb().addOperation(new OperationTransaction(currentTransaction));
+            sceneManager
+                .getDb()
+                .addOperation(new OperationTransaction(currentTransaction));
             sceneManager.getDb().processOperations();
 
             FXMLLoader loader = new FXMLLoader(
-                    getClass()
-                        .getResource(
-                            "/fxml/TransactionConfirmationPage.fxml"
-                        )
-                );
+                getClass().getResource("/fxml/TransactionConfirmationPage.fxml")
+            );
 
             Scene newScene;
             try {
@@ -75,12 +74,17 @@ public class TransferDetailsPageController {
             }
 
             Stage confirmStage = new Stage();
-            confirmStage.initOwner(confirmTransferButton.getScene().getWindow());
+            confirmStage.initOwner(
+                confirmTransferButton.getScene().getWindow()
+            );
             confirmStage.initModality(Modality.APPLICATION_MODAL);
             confirmStage.setScene(newScene);
             confirmStage.showAndWait();
 
-            sceneManager.switchScene("/fxml/UserPage.fxml", confirmTransferButton);
+            sceneManager.switchScene(
+                "/fxml/UserPage.fxml",
+                confirmTransferButton
+            );
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -2,19 +2,18 @@ package bank.controllers;
 
 import bank.db.Customer;
 import bank.util.SceneManager;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 
 public class AdminSearchController {
-
     @FXML
     private VBox customersHolderVBox;
 
@@ -23,10 +22,13 @@ public class AdminSearchController {
 
     @FXML
     private javafx.scene.control.TextField searchInput;
+
     private SceneManager sceneManager = SceneManager.getInstance();
 
     public void initialize() {
-        Map<Integer, Customer> customersMap = sceneManager.getDb().getCustomers();
+        Map<Integer, Customer> customersMap = sceneManager
+            .getDb()
+            .getCustomers();
         loadCustomers(customersMap.values().stream().toList());
     }
 
@@ -56,17 +58,17 @@ public class AdminSearchController {
     private void handleSearch() {
         String query = searchInput.getText().trim().toLowerCase();
         try {
-            List<Customer> results = sceneManager.getDb().getCustomersSearch(new String[]{query});
+            List<Customer> results = sceneManager
+                .getDb()
+                .getCustomersSearch(new String[] { query });
             loadCustomers(results);
         } catch (SQLException e) {
-        e.printStackTrace();
+            e.printStackTrace();
+        }
     }
-}
-@FXML
+
+    @FXML
     private void loadUserPage(ActionEvent event) {
-        sceneManager.switchScene(
-            "/fxml/UserPage.fxml",
-            cancelSearchButton
-        );
+        sceneManager.switchScene("/fxml/UserPage.fxml", cancelSearchButton);
     }
 }

@@ -5,7 +5,6 @@ import bank.db.operation.OperationLock;
 import bank.util.SceneManager;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -51,19 +50,17 @@ public class AccountController {
             lockCardButton.setText("Unlock Card");
             cardGridPane.setStyle("-fx-background-color: #c5c5c5;");
             for (Node n : cardGridPane.getChildren()) {
-                if (n instanceof Text)
-                    n.setStyle("-fx-fill: #4e4e4e");
-
+                if (n instanceof Text) n.setStyle("-fx-fill: #4e4e4e");
             }
         } else {
             lockCardButton.setText("Lock Card");
             cardGridPane.setStyle("-fx-background-color: #f2f2f2;");
             for (Node n : cardGridPane.getChildren()) {
-                if (n instanceof Text)
-                    if (n.getId().equals("cardTypeName"))
-                        n.setStyle("-fx-fill: #338aee");
-                    else
-                        n.setStyle("-fx-fill: black");
+                if (n instanceof Text) if (
+                    n.getId().equals("cardTypeName")
+                ) n.setStyle("-fx-fill: #338aee"); else n.setStyle(
+                    "-fx-fill: black"
+                );
             }
         }
     }
@@ -75,15 +72,13 @@ public class AccountController {
             if (!account.isLocked()) {
                 ol = new OperationLock(account, true);
                 setLockStyle(true);
-            }
-            else {
+            } else {
                 ol = new OperationLock(account, false);
                 setLockStyle(false);
             }
 
             sceneManager.getDb().addOperation(ol);
             sceneManager.getDb().processOperations();
-
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
             return;
@@ -91,6 +86,5 @@ public class AccountController {
             e.printStackTrace();
             return;
         }
-
     }
 }

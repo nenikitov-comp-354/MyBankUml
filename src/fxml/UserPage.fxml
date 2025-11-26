@@ -22,7 +22,7 @@
       </ScrollPane>
       <VBox layoutY="268.0" prefHeight="327.0" prefWidth="286.0" spacing="15.0">
          <children>
-            <Button fx:id="searchCustomerButton" onAction="#loadSearchPage" mnemonicParsing="false" prefHeight="90.0" prefWidth="245.0" styleClass="button-primary" text="Search Customer">
+            <Button fx:id="searchCustomerButton" mnemonicParsing="false" onAction="#loadSearchPage" prefHeight="90.0" prefWidth="245.0" styleClass="button-primary" text="Search Customer">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -43,46 +43,46 @@
             <Insets left="20.0" top="10.0" />
          </padding>
       </VBox>
-      <VBox id="welcome" fx:id="userInfoVBox" layoutX="25.0" layoutY="71.0" prefHeight="153.0" prefWidth="229.0" styleClass="card">
+      <VBox id="welcome" fx:id="userInfoVBox" layoutX="7.0" layoutY="79.0" maxHeight="153.0" prefHeight="135.0" prefWidth="331.0" styleClass="info-card">
          <children>
             <Text fx:id="userNameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome User!">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
                <VBox.margin>
-                  <Insets top="5.0" />
+                  <Insets left="10.0" top="5.0" />
                </VBox.margin>
             </Text>
             <Text fx:id="emailText" strokeType="OUTSIDE" strokeWidth="0.0" text="Email: XX.XX">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
                <VBox.margin>
-                  <Insets top="5.0" />
+                  <Insets left="10.0" top="5.0" />
                </VBox.margin>
             </Text>
             <Text fx:id="phoneNumberText" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number: XX.XX">
                <VBox.margin>
-                  <Insets top="5.0" />
+                  <Insets left="10.0" top="5.0" />
                </VBox.margin>
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Text>
             <Text fx:id="sinText" strokeType="OUTSIDE" strokeWidth="0.0" text="SIN: XXX">
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
                <VBox.margin>
-                  <Insets top="5.0" />
+                  <Insets left="10.0" top="5.0" />
                </VBox.margin>
             </Text>
             <Text fx:id="dobText" strokeType="OUTSIDE" strokeWidth="0.0" text="DOB: XX.XX">
                <VBox.margin>
-                  <Insets top="5.0" />
+                  <Insets left="10.0" top="5.0" />
                </VBox.margin>
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Text>
          </children>
