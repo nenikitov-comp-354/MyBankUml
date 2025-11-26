@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="600.0" stylesheets="@../stylesheets/login.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bank.controllers.SignUpController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="600.0" stylesheets="@../stylesheets/login.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bank.controllers.SignUpController">
    <children>
       <Text layoutX="148.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create an Account" textAlignment="CENTER" underline="true">
          <font>
@@ -25,7 +25,7 @@
       <PasswordField fx:id="confirmPasswordField" layoutX="148.0" layoutY="384.0" prefWidth="310.0" promptText="Confirm Password" styleClass="input" />
       <Button fx:id="signUpConfirmButton" layoutX="225.0" layoutY="445.0" mnemonicParsing="false" onAction="#signUpUser" prefHeight="51.0" prefWidth="155.0" text="SIGN UP" />
 
-      <Text fx:id="errorText" fill="RED" layoutX="287.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" />
+      <Text fx:id="errorText" fill="RED" layoutX="148.0" layoutY="428.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="310.0" />
       <DatePicker fx:id="dobField" layoutX="148.0" layoutY="153.0" prefHeight="25.0" prefWidth="310.0" promptText="Date of Birth" styleClass="date-picker" />
       <ComboBox fx:id="branchComboBox" layoutX="147.0" layoutY="271.0" prefHeight="25.0" prefWidth="310.0" promptText="Branch Name" styleClass="dropdown" />
    </children>

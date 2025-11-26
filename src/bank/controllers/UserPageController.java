@@ -54,9 +54,15 @@ public class UserPageController {
                 "!"
             );
             emailText.setText("Email: " + currentCustomer.getEmail());
-            phoneNumberText.setText("Phone Number: " + currentCustomer.getPhone());
-            sinText.setText("SIN: " + currentCustomer.getSocialInsuranceNumber());
-            dobText.setText("DOB: " + currentCustomer.getDateOfBirth().toString());
+            phoneNumberText.setText(
+                "Phone Number: " + currentCustomer.getPhone()
+            );
+            sinText.setText(
+                "SIN: " + currentCustomer.getSocialInsuranceNumber()
+            );
+            dobText.setText(
+                "DOB: " + currentCustomer.getDateOfBirth().toString()
+            );
             List<Account> accounts = currentCustomer.getAccounts();
 
             for (Account a : accounts) {

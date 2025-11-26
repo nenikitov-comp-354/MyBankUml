@@ -1,18 +1,18 @@
 package bank;
 
 import bank.db.*;
+import bank.db.operation.*;
 import bank.db.operation.OperationLock;
 import bank.db.operation.OperationTransaction;
 import bank.util.SceneManager;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.Optional;
-import bank.db.operation.*;
 import java.sql.*;
+import java.sql.SQLException;
 import java.time.*;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.Optional;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -49,7 +49,6 @@ public class App extends Application {
         stage.getIcons().add(new Image("file:icons/bank.png"));
         stage.setScene(scene);
         stage.show();
-
         // Example code
         // db.addOperation(
         //     new OperationTransaction(
