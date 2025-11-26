@@ -57,7 +57,7 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Text>
-      <Button fx:id="makeAdminButton" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" styleClass="admin-button" text="Make Admin" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <Button fx:id="makeAdminButton" onAction="#loadAdminConfirmation" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" styleClass="admin-button" text="Make Admin" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>

@@ -1,6 +1,9 @@
 package bank.controllers;
 
+import bank.util.SceneManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 
 public class CustomerCardController {
@@ -18,6 +21,14 @@ public class CustomerCardController {
 
     @FXML
     private Text customerPhoneText;
+
+    @FXML
+    private Button makeAdminButton;
+
+    @FXML
+    private Button cancelMakeAdminButton;
+
+    private SceneManager sceneManager = SceneManager.getInstance();
 
     public void setCustomerName(String name) {
         customerNameText.setText(name);
@@ -37,5 +48,19 @@ public class CustomerCardController {
 
     public void setCustomerPhone(String phone) {
         customerPhoneText.setText("Phone: " + phone);
+    }
+    @FXML
+    private void loadAdminConfirmation(ActionEvent event) {
+        sceneManager.switchScene(
+            "/fxml/MakeAdminConfirmation.fxml",
+            makeAdminButton
+        );
+    }
+    @FXML
+    private void handleCancelMakeAdmin(ActionEvent event) {
+        sceneManager.switchScene(
+            "/fxml/AdminSearch.fxml",
+            cancelMakeAdminButton
+        );
     }
 }
