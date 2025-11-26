@@ -22,7 +22,7 @@
             </Text>
             <ScrollPane prefHeight="252.0" prefWidth="400.0">
               <content>
-            <VBox fx:id="customersHolderVBox" prefHeight="525.0" prefWidth="462.0" />
+            <VBox fx:id="customersHolderVBox" prefHeight="525.0" prefWidth="385.0" />
              </content>
             </ScrollPane>
             </children>
