@@ -1,5 +1,6 @@
 package bank.controllers;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import bank.db.Account;
@@ -8,8 +9,12 @@ import bank.db.operation.OperationTransaction;
 import bank.util.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import lombok.Setter;
 
 public class TransferDetailsPageController {
@@ -55,10 +60,29 @@ public class TransferDetailsPageController {
         try {
             sceneManager.getDb().addOperation(new OperationTransaction(currentTransaction));
             sceneManager.getDb().processOperations();
-            sceneManager.switchScene(
-                "/fxml/TransactionConfirmationPage.fxml",
-                confirmTransferButton
-            );
+
+            FXMLLoader loader = new FXMLLoader(
+                    getClass()
+                        .getResource(
+                            "/fxml/TransactionConfirmationPage.fxml"
+                        )
+                );
+
+            Scene newScene;
+            try {
+                newScene = new Scene(loader.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+
+            Stage confirmStage = new Stage();
+            confirmStage.initOwner(confirmTransferButton.getScene().getWindow());
+            confirmStage.initModality(Modality.APPLICATION_MODAL);
+            confirmStage.setScene(newScene);
+            confirmStage.showAndWait();
+
+            sceneManager.switchScene("/fxml/UserPage.fxml", confirmTransferButton);
         } catch (SQLException e) {
             e.printStackTrace();
         }
