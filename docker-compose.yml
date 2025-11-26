@@ -8,5 +8,6 @@ services:
     volumes:
       - ./src/db/:/docker-entrypoint-initdb.d
     ports:
-      - 5432:5432
+      # - 5432:5432
+      - 12456:5432
     restart: always
