@@ -2,7 +2,6 @@ package bank.db.operation;
 
 import bank.db.*;
 import bank.util.TypeValidator;
-
 import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
@@ -116,7 +115,11 @@ public class OperationNewCustomer implements Operation {
         }
     }
 
-    private Account insertAccount(Connection connection, BankDb bankDb, Customer customer)
+    private Account insertAccount(
+        Connection connection,
+        BankDb bankDb,
+        Customer customer
+    )
         throws SQLException {
         String sql =
             "WITH acc AS (INSERT INTO account (name, is_locked, customer_id) VALUES (?, ?, ?) RETURNING id) INSERT INTO account_chequing (id, monthly_fee) SELECT acc.id, ? FROM acc";
@@ -135,8 +138,7 @@ public class OperationNewCustomer implements Operation {
             int updated = stmt.executeUpdate();
             if (updated != 1) {
                 throw new SQLException(
-                    "Could not create an account " +
-                    this.accountName
+                    "Could not create an account " + this.accountName
                 );
             }
 
@@ -147,7 +149,13 @@ public class OperationNewCustomer implements Operation {
 
                 int id = rs.getInt(1);
 
-                return new AccountChequing(id, this.accountName, false, customer, new BigDecimal(0));
+                return new AccountChequing(
+                    id,
+                    this.accountName,
+                    false,
+                    customer,
+                    new BigDecimal(0)
+                );
             }
         }
     }

@@ -32,7 +32,18 @@ public class App extends Application {
         );
         db.connect();
 
-        db.addOperation(new OperationNewCustomer("Mykyta", "Onipchenko", LocalDate.now(), "783-456-789", "+1234567878", "mykyta@email.com", db.getBranches().get(1), "My chequing"));
+        db.addOperation(
+            new OperationNewCustomer(
+                "Mykyta",
+                "Onipchenko",
+                LocalDate.now(),
+                "783-456-789",
+                "+1234567878",
+                "mykyta@email.com",
+                db.getBranches().get(1),
+                "My chequing"
+            )
+        );
         db.processOperations();
 
         System.out.println(db.getCustomers().get(11));
