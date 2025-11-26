@@ -24,7 +24,7 @@ final class TestAccountChequing {
     void testConstructorValid(
         int id,
         String name,
-        Boolean isLocked,
+        boolean isLocked,
         String monthlyFee
     ) {
         Bank bank = new Bank(1, "My bank");
@@ -150,7 +150,7 @@ final class TestAccountChequing {
     @ParameterizedTest
     @CsvSource(
         {
-            "true,  'Transaction Transaction(id=1, info=TransactionInfo(source=AccountChequing(SUPER=Account(id=1, name=My chequing 1, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), monthlyFee=0.00), destination=AccountChequing(SUPER=Account(id=2, name=My chequing 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), monthlyFee=10.00), amount=17.79, time=2025-11-18T18:59)) does not belong to this account AccountChequing(SUPER=Account(id=3, name=My checking 3, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), monthlyFee=10.00)'",
+            "true,  'Transaction Transaction(id=1, info=TransactionInfo(source=AccountChequing(SUPER=Account(id=1, name=My chequing 1, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)), isAdmin=false)), monthlyFee=0.00), destination=AccountChequing(SUPER=Account(id=2, name=My chequing 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)), isAdmin=false)), monthlyFee=10.00), amount=17.79, time=2025-11-18T18:59)) does not belong to this account AccountChequing(SUPER=Account(id=3, name=My checking 3, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)), isAdmin=false)), monthlyFee=10.00)'",
             "false, 'Transaction is null'",
         }
     )

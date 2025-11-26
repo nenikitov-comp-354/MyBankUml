@@ -7,15 +7,15 @@ VALUES ('123 Main Street, Montreal, QC', 1);
 
 -- Sample customers with branch_id = 1
 INSERT INTO customer (
-    first_name, last_name, date_of_birth, social_insurance_number, phone, email, branch_id, admin_stat
+    first_name, last_name, date_of_birth, social_insurance_number, phone, email, branch_id, is_admin
 ) VALUES
-('Harry',  'Styles',     DATE '1994-02-01', '123-456-789', '+14165551234', 'harry.styles@email.com', 1, BOOLEAN TRUE),
-('Sabrina','Carpenter',  DATE '1999-05-11', '234-567-890', '+16045557890', 'sabrina.carpenter@email.com', 1, BOOLEAN FALSE),
-('Carey',  'Price',      DATE '1987-08-16', '345-678-901', '+12045553456', 'carey.price@email.com', 1, BOOLEAN FALSE),
-('Zara',   'Larsson',    DATE '1997-12-16', '456-789-012', '+17785559876', 'zara.larsson@email.com', 1, BOOLEAN FALSE),
-('Tate',   'McRae',      DATE '2003-07-01', '567-890-123', '+15875551212', 'tate.mcrae@email.com', 1, BOOLEAN FALSE),
-('Sidney', 'Crosby',     DATE '1987-08-07', '678-901-234', '+19025550123', 'sidney.crosby@email.com', 1, BOOLEAN FALSE),
-('Connor', 'McDavid',    DATE '1997-01-13', '901-234-567', '+17805551234', 'connor.mcdavid@email.com', 1, BOOLEAN FALSE);
+('Harry',  'Styles',     DATE '1994-02-01', '123-456-789', '+14165551234', 'harry.styles@email.com', 1, true),
+('Sabrina','Carpenter',  DATE '1999-05-11', '234-567-890', '+16045557890', 'sabrina.carpenter@email.com', 1, false),
+('Carey',  'Price',      DATE '1987-08-16', '345-678-901', '+12045553456', 'carey.price@email.com', 1, false),
+('Zara',   'Larsson',    DATE '1997-12-16', '456-789-012', '+17785559876', 'zara.larsson@email.com', 1, false),
+('Tate',   'McRae',      DATE '2003-07-01', '567-890-123', '+15875551212', 'tate.mcrae@email.com', 1, false),
+('Sidney', 'Crosby',     DATE '1987-08-07', '678-901-234', '+19025550123', 'sidney.crosby@email.com', 1, false),
+('Connor', 'McDavid',    DATE '1997-01-13', '901-234-567', '+17805551234', 'connor.mcdavid@email.com', 1, false);
 
 -- Sample logins
 INSERT INTO customer_login (

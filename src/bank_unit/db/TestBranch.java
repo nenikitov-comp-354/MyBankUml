@@ -73,7 +73,7 @@ final class TestBranch {
     @ParameterizedTest
     @CsvSource(
         {
-            "true,  'Customer Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=2, address=Address, bank=Bank(id=1, name=First World Bank))) does not belong to this branch Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank))'",
+            "true,  'Customer Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=2, address=Address, bank=Bank(id=1, name=First World Bank)), isAdmin=false) does not belong to this branch Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank))'",
             "false, 'Customer is null'",
         }
     )

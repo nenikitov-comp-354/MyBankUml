@@ -30,7 +30,7 @@ final class TestCustomer {
         String socialInsuranceNumber,
         String phone,
         String email,
-        Boolean adminStat
+        boolean isAdmin
     ) {
         Bank bank = new Bank(1, "My bank");
         Branch branch = new Branch(1, "Address", bank);
@@ -44,7 +44,7 @@ final class TestCustomer {
             phone,
             email,
             branch,
-            adminStat
+            isAdmin
         );
 
         assertEquals(id, customer.getId());
@@ -58,7 +58,7 @@ final class TestCustomer {
         assertEquals(email, customer.getEmail());
         assertEquals(branch, customer.getBranch());
         assertEquals(new ArrayList<>(), customer.getAccounts());
-        assertEquals(adminStat, customer.getAdminStatus());
+        assertEquals(isAdmin, customer.isAdmin());
     }
 
     @ParameterizedTest
@@ -89,7 +89,7 @@ final class TestCustomer {
         String phone,
         String email,
         boolean branchNotNull,
-        boolean adminStat,
+        boolean isAdmin,
         String error
     ) {
         Bank bank = new Bank(1, "My bank");
@@ -107,7 +107,7 @@ final class TestCustomer {
                     phone,
                     email,
                     branchNotNull ? branch : null,
-                    adminStat
+                    isAdmin
                 );
             }
         );
@@ -142,7 +142,7 @@ final class TestCustomer {
     @ParameterizedTest
     @CsvSource(
         {
-            "true,  'Account AccountChequing(SUPER=Account(id=1, name=My chequing, isLocked=false, customer=Customer(id=2, firstName=Jane, lastName=Doe, dateOfBirth=1800-03-24, socialInsuranceNumber=789-456-123, phone=+48864632577, email=jane-doe@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), monthlyFee=100.00) does not belong to this customer Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))'",
+            "true,  'Account AccountChequing(SUPER=Account(id=1, name=My chequing, isLocked=false, customer=Customer(id=2, firstName=Jane, lastName=Doe, dateOfBirth=1800-03-24, socialInsuranceNumber=789-456-123, phone=+48864632577, email=jane-doe@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)), isAdmin=false)), monthlyFee=100.00) does not belong to this customer Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)), isAdmin=false)'",
             "false, 'Account is null'",
         }
     )
