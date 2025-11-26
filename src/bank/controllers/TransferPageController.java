@@ -39,6 +39,9 @@ public class TransferPageController {
     @FXML
     private Button proceedButton;
 
+    @FXML
+    private Button cancelTransferButton;
+
     private List<Account> accounts;
     private SceneManager sceneManager = SceneManager.getInstance();
 
@@ -120,5 +123,10 @@ public class TransferPageController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void cancelTransfer(ActionEvent event) {
+        sceneManager.switchScene("/fxml/UserPage.fxml", cancelTransferButton);
     }
 }
