@@ -41,12 +41,13 @@ public class App extends Application {
                 "+1234567878",
                 "mykyta@email.com",
                 db.getBranches().get(1),
-                "My chequing"
+                "My chequing",
+                "my password"
             )
         );
         db.processOperations();
 
-        System.out.println(db.getCustomers().get(11));
+        System.out.println(db.getCustomers().get(8));
 
         String javaVersion = System.getProperty("java.version");
         String javafxVersion = System.getProperty("javafx.version");

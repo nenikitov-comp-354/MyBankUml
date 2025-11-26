@@ -15,6 +15,7 @@ public class OperationNewCustomer implements Operation {
     private final String email;
     private final Branch branch;
     private final String accountName;
+    private final String password;
 
     public OperationNewCustomer(
         String firstName,
@@ -24,7 +25,8 @@ public class OperationNewCustomer implements Operation {
         String phone,
         String email,
         Branch branch,
-        String accountName
+        String accountName,
+        String password
     ) {
         TypeValidator.validateNonEmptyText("First name", firstName);
         this.firstName = firstName;
@@ -52,6 +54,8 @@ public class OperationNewCustomer implements Operation {
 
         TypeValidator.validateNonEmptyText("Account name", accountName);
         this.accountName = accountName;
+
+        this.password = password;
     }
 
     @Override
@@ -67,7 +71,7 @@ public class OperationNewCustomer implements Operation {
     private Customer insertCustomer(Connection connection, BankDb bankDb)
         throws SQLException {
         String sql =
-            "INSERT INTO customer (first_name, last_name, date_of_birth, social_insurance_number, phone, email, branch_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            "WITH c as (INSERT INTO customer (first_name, last_name, date_of_birth, social_insurance_number, phone, email, branch_id) VALUES (?, ?, ?, ?, ?, ?, ?) RETURNING id) INSERT INTO customer_login (customer_id, password) SELECT c.id, ? FROM c";
 
         try (
             PreparedStatement stmt = connection.prepareStatement(
@@ -82,6 +86,7 @@ public class OperationNewCustomer implements Operation {
             stmt.setString(5, this.phone);
             stmt.setString(6, this.email);
             stmt.setInt(7, this.branch.getId());
+            stmt.setString(8, this.password);
 
             int updated = stmt.executeUpdate();
             if (updated != 1) {
@@ -122,7 +127,7 @@ public class OperationNewCustomer implements Operation {
     )
         throws SQLException {
         String sql =
-            "WITH acc AS (INSERT INTO account (name, is_locked, customer_id) VALUES (?, ?, ?) RETURNING id) INSERT INTO account_chequing (id, monthly_fee) SELECT acc.id, ? FROM acc";
+            "WITH a AS (INSERT INTO account (name, is_locked, customer_id) VALUES (?, ?, ?) RETURNING id) INSERT INTO account_chequing (id, monthly_fee) SELECT a.id, ? FROM a";
 
         try (
             PreparedStatement stmt = connection.prepareStatement(
