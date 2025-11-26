@@ -17,6 +17,13 @@
     -fx-padding: 0 0 0 20px;
     -fx-pref-height: 30px;
 }
+.dropdown{
+    -fx-background-color: #F3F3F3;
+    -fx-effect: innershadow(one-pass-box, rgba(0, 0, 0, 0.25), 5, 0.5, 0, 2);
+    -fx-padding: 0 0 0 15px;
+    -fx-pref-height: 30px;
+    -fx-opacity: 0.6;
+}
 .link{
     -fx-font-weight: bold;
     -fx-text-fill: #007ADE;
