@@ -14,7 +14,7 @@
         <Text layoutX="25.0" layoutY="50.0" text="Search a Customer">
             <font><Font name="System Bold" size="30.0" /></font>
         </Text>
-        <TextField fx:id="searchInput" layoutX="50.0" layoutY="90.0" prefWidth="400.0" promptText="Search Customer" styleClass="input" />
+        <TextField fx:id="searchInput" onAction="#handleSearch" layoutX="50.0" layoutY="90.0" prefWidth="400.0" promptText="Search Customer" styleClass="input" />
         <VBox layoutX="50.0" layoutY="140.0" prefWidth="400.0" spacing="10">
             <children>
             <Text layoutX="25.0" layoutY="50.0" text="Customer List:">
