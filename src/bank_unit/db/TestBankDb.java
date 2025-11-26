@@ -112,7 +112,8 @@ public class TestBankDb {
             "123-456-789",
             "+14165551234",
             "harry.styles@email.com",
-            branch
+            branch,
+            false
         );
         db.addCustomer(cust);
 
@@ -176,7 +177,8 @@ public class TestBankDb {
             "234-567-890",
             "+16045557890",
             "sabrina.carpenter@email.com",
-            branch
+            branch,
+            false
         );
 
         db.addBank(bank);
@@ -227,7 +229,8 @@ public class TestBankDb {
             "123-456-789",
             "+14165551234",
             "harry.styles@email.com",
-            branch
+            branch,
+            false
         );
         Customer c2 = new Customer(
             2,
@@ -237,7 +240,8 @@ public class TestBankDb {
             "234-567-890",
             "+16045557890",
             "sabrina.carpenter@email.com",
-            branch
+            branch,
+            false
         );
 
         db.addBank(bank);

@@ -16,8 +16,8 @@ final class TestCustomer {
     @ParameterizedTest
     @CsvSource(
         {
-            "1, 'John', 'Big', 1990, 1, 17, '123-456-789', '+15147892571', 'big-john@email.com'",
-            "2, 'Jane', 'Doe', 1800, 3, 24, '789-456-123', '+48864632577', 'jane-doe@email.com'",
+            "1, 'John', 'Big', 1990, 1, 17, '123-456-789', '+15147892571', 'big-john@email.com', false",
+            "2, 'Jane', 'Doe', 1800, 3, 24, '789-456-123', '+48864632577', 'jane-doe@email.com', false",
         }
     )
     void testConstructorValid(
@@ -29,7 +29,8 @@ final class TestCustomer {
         int dateOfBirthDay,
         String socialInsuranceNumber,
         String phone,
-        String email
+        String email,
+        boolean isAdmin
     ) {
         Bank bank = new Bank(1, "My bank");
         Branch branch = new Branch(1, "Address", bank);
@@ -42,7 +43,8 @@ final class TestCustomer {
             socialInsuranceNumber,
             phone,
             email,
-            branch
+            branch,
+            isAdmin
         );
 
         assertEquals(id, customer.getId());
@@ -56,24 +58,25 @@ final class TestCustomer {
         assertEquals(email, customer.getEmail());
         assertEquals(branch, customer.getBranch());
         assertEquals(new ArrayList<>(), customer.getAccounts());
+        assertEquals(isAdmin, customer.isAdmin());
     }
 
     @ParameterizedTest
     @CsvSource(
         value = {
-            "-3, 'John', 'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  'Id `-3` is not a valid SQL id (must be > 0)'",
-            "1,  NULL,   'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  'First name is null'",
-            "1,  '   ',  'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  'First name `   ` is blank or starts and ends with trailing spaces'",
-            "1,  'John', NULL,  true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  'Last name is null'",
-            "1,  'John', '   ', true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  'Last name `   ` is blank or starts and ends with trailing spaces'",
-            "1,  'John', 'Big', false, '123-456-789', '+15147892571', 'big-john@email.com', true,  'Date of birth is null'",
-            "1,  'John', 'Big', true,  NULL,          '+15147892571', 'big-john@email.com', true,  'Social insurance number is null'",
-            "1,  'John', 'Big', true,  'abcdefghijk', '+15147892571', 'big-john@email.com', true,  'Social insurance number `abcdefghijk` does not match social insurance format of 3 groups of 3 digits separated by `-`'",
-            "1,  'John', 'Big', true,  '123-456-789', NULL,           'big-john@email.com', true,  'Phone is null'",
-            "1,  'John', 'Big', true,  '123-456-789', 'fhjdsljfdlsj', 'big-john@email.com', true,  'Phone `fhjdsljfdlsj` does not match phone number format of `+` followed by 2-15 digits'",
-            "1,  'John', 'Big', true,  '123-456-789', '+15147892571', NULL,                 true,  'Email is null'",
-            "1,  'John', 'Big', true,  '123-456-789', '+15147892571', 'invalidemail',       true,  'Email `invalidemail` does not match email format of some text followed by `@` followed by some text'",
-            "1,  'John', 'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', false, 'Branch is null'",
+            "-3, 'John', 'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  false,  'Id `-3` is not a valid SQL id (must be > 0)'",
+            "1,  NULL,   'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  false,  'First name is null'",
+            "1,  '   ',  'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  false,  'First name `   ` is blank or starts and ends with trailing spaces'",
+            "1,  'John', NULL,  true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  false,  'Last name is null'",
+            "1,  'John', '   ', true,  '123-456-789', '+15147892571', 'big-john@email.com', true,  false,  'Last name `   ` is blank or starts and ends with trailing spaces'",
+            "1,  'John', 'Big', false, '123-456-789', '+15147892571', 'big-john@email.com', true,  false,  'Date of birth is null'",
+            "1,  'John', 'Big', true,  NULL,          '+15147892571', 'big-john@email.com', true,  false,  'Social insurance number is null'",
+            "1,  'John', 'Big', true,  'abcdefghijk', '+15147892571', 'big-john@email.com', true,  false,  'Social insurance number `abcdefghijk` does not match social insurance format of 3 groups of 3 digits separated by `-`'",
+            "1,  'John', 'Big', true,  '123-456-789', NULL,           'big-john@email.com', true,  false,  'Phone is null'",
+            "1,  'John', 'Big', true,  '123-456-789', 'fhjdsljfdlsj', 'big-john@email.com', true,  false,  'Phone `fhjdsljfdlsj` does not match phone number format of `+` followed by 2-15 digits'",
+            "1,  'John', 'Big', true,  '123-456-789', '+15147892571', NULL,                 true,  false,  'Email is null'",
+            "1,  'John', 'Big', true,  '123-456-789', '+15147892571', 'invalidemail',       true,  false,  'Email `invalidemail` does not match email format of some text followed by `@` followed by some text'",
+            "1,  'John', 'Big', true,  '123-456-789', '+15147892571', 'big-john@email.com', false, false, 'Branch is null'",
         },
         nullValues = "NULL"
     )
@@ -86,6 +89,7 @@ final class TestCustomer {
         String phone,
         String email,
         boolean branchNotNull,
+        boolean isAdmin,
         String error
     ) {
         Bank bank = new Bank(1, "My bank");
@@ -102,7 +106,8 @@ final class TestCustomer {
                     socialInsuranceNumber,
                     phone,
                     email,
-                    branchNotNull ? branch : null
+                    branchNotNull ? branch : null,
+                    isAdmin
                 );
             }
         );
@@ -121,7 +126,8 @@ final class TestCustomer {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         Account account = new AccountChequing(
             1,
@@ -136,7 +142,7 @@ final class TestCustomer {
     @ParameterizedTest
     @CsvSource(
         {
-            "true,  'Account AccountChequing(SUPER=Account(id=1, name=My chequing, isLocked=false, customer=Customer(id=2, firstName=Jane, lastName=Doe, dateOfBirth=1800-03-24, socialInsuranceNumber=789-456-123, phone=+48864632577, email=jane-doe@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), monthlyFee=100.00) does not belong to this customer Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))'",
+            "true,  'Account AccountChequing(SUPER=Account(id=1, name=My chequing, isLocked=false, customer=Customer(id=2, firstName=Jane, lastName=Doe, dateOfBirth=1800-03-24, socialInsuranceNumber=789-456-123, phone=+48864632577, email=jane-doe@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)), isAdmin=false)), monthlyFee=100.00) does not belong to this customer Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)), isAdmin=false)'",
             "false, 'Account is null'",
         }
     )
@@ -151,7 +157,8 @@ final class TestCustomer {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         Customer customer2 = new Customer(
             2,
@@ -161,7 +168,8 @@ final class TestCustomer {
             "789-456-123",
             "+48864632577",
             "jane-doe@email.com",
-            branch
+            branch,
+            false
         );
 
         Account account = new AccountChequing(

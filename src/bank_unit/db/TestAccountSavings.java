@@ -24,7 +24,7 @@ final class TestAccountSavings {
     void testConstructorValid(
         int id,
         String name,
-        Boolean isLocked,
+        boolean isLocked,
         String interestRate
     ) {
         Bank bank = new Bank(1, "My bank");
@@ -37,7 +37,8 @@ final class TestAccountSavings {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
 
         AccountSavings account = new AccountSavings(
@@ -85,7 +86,8 @@ final class TestAccountSavings {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
 
         Exception e = assertThrows(
@@ -115,7 +117,8 @@ final class TestAccountSavings {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         AccountSavings account1 = new AccountSavings(
             1,
@@ -147,7 +150,7 @@ final class TestAccountSavings {
     @ParameterizedTest
     @CsvSource(
         {
-            "true,  'Transaction Transaction(id=1, info=TransactionInfo(source=AccountSavings(SUPER=Account(id=1, name=My savings 1, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), interestRate=0.00), destination=AccountSavings(SUPER=Account(id=2, name=My savings 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), interestRate=1.00), amount=17.79, time=2025-11-18T18:59)) does not belong to this account AccountSavings(SUPER=Account(id=3, name=My savings 3, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), interestRate=1.00)'",
+            "true,  'Transaction Transaction(id=1, info=TransactionInfo(source=AccountSavings(SUPER=Account(id=1, name=My savings 1, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)), isAdmin=false)), interestRate=0.00), destination=AccountSavings(SUPER=Account(id=2, name=My savings 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)), isAdmin=false)), interestRate=1.00), amount=17.79, time=2025-11-18T18:59)) does not belong to this account AccountSavings(SUPER=Account(id=3, name=My savings 3, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)), isAdmin=false)), interestRate=1.00)'",
             "false, 'Transaction is null'",
         }
     )
@@ -162,7 +165,8 @@ final class TestAccountSavings {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         Account account1 = new AccountSavings(
             1,

@@ -1,13 +1,17 @@
 package bank;
 
 import bank.db.*;
+import bank.db.operation.*;
 import bank.db.operation.OperationLock;
 import bank.db.operation.OperationTransaction;
 import bank.util.SceneManager;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.*;
 import java.sql.SQLException;
+import java.time.*;
 import java.time.LocalDateTime;
+import java.util.*;
 import java.util.Optional;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -69,5 +73,22 @@ public class App extends Application {
         // )) {
         //     System.out.println("CUSTOMER " + customer);
         // }
+
+        // db.addOperation(
+        //     new OperationNewCustomer(
+        //         "Mykyta",
+        //         "Onipchenko",
+        //         LocalDate.now(),
+        //         "783-456-789",
+        //         "+1234567878",
+        //         "mykyta@email.com",
+        //         db.getBranches().get(1),
+        //         "My chequing",
+        //         "my password"
+        //     )
+        // );
+        // db.processOperations();
+
+        // System.out.println(db.getCustomers().get(8));
     }
 }

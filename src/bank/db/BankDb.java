@@ -180,7 +180,8 @@ public class BankDb {
                     rs.getString("social_insurance_number"),
                     rs.getString("phone"),
                     rs.getString("email"),
-                    branch
+                    branch,
+                    rs.getBoolean("is_admin")
                 );
                 if (!branch.getCustomers().contains(c)) {
                     branch.addCustomer(c);
@@ -244,6 +245,11 @@ public class BankDb {
     public void addTransaction(Transaction transaction) {
         TypeValidator.validateNotNull("Transaction", transaction);
         this.transactions.put(transaction.getId(), transaction);
+    }
+
+    public void addCustomer(Customer customer) {
+        TypeValidator.validateNotNull("Customer", customer);
+        this.customers.put(customer.getId(), customer);
     }
 
     // changed visibility from private to protected so tests can override
@@ -316,7 +322,8 @@ public class BankDb {
                     rs.getString("social_insurance_number"),
                     rs.getString("phone"),
                     rs.getString("email"),
-                    branch
+                    branch,
+                    rs.getBoolean("is_admin")
                 );
                 branch.addCustomer(customer);
                 customers.put(id, customer);
