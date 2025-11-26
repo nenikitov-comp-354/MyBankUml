@@ -16,8 +16,8 @@
     </properties>
 
     <build>
-        <sourceDirectory>src/bank</sourceDirectory>
-        <testSourceDirectory>src/bank_unit/db</testSourceDirectory>
+        <sourceDirectory>src</sourceDirectory>
+        <testSourceDirectory>src</testSourceDirectory>
 
         <plugins>
             <!-- Format -->
