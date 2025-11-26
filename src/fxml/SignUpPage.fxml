@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -19,7 +20,6 @@
       <TextField fx:id="lastNameField" layoutX="147.0" layoutY="110.0" prefWidth="310.0" promptText="Last Name" styleClass="input" />
       <PasswordField fx:id="sinField" layoutX="148.0" layoutY="189.0" prefWidth="310.0" promptText="SIN" styleClass="input" />
       <TextField fx:id="phoneNumberField" layoutX="148.0" layoutY="228.0" prefWidth="310.0" promptText="Phone Number" styleClass="input" />
-      <TextField fx:id="branchNameField" layoutX="148.0" layoutY="267.0" prefWidth="310.0" promptText="Branch Name" styleClass="input" />
       <TextField fx:id="emailField" layoutX="148.0" layoutY="306.0" prefWidth="310.0" promptText="Email" styleClass="input" />
       <PasswordField fx:id="passwordField" layoutX="148.0" layoutY="345.0" prefWidth="310.0" promptText="Password" styleClass="input" />
       <PasswordField fx:id="confirmPasswordField" layoutX="148.0" layoutY="384.0" prefWidth="310.0" promptText="Confirm Password" styleClass="input" />
@@ -27,5 +27,6 @@
 
       <Text fx:id="errorText" fill="RED" layoutX="287.0" layoutY="434.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" />
       <DatePicker fx:id="dobField" layoutX="148.0" layoutY="153.0" prefHeight="25.0" prefWidth="310.0" promptText="Date of Birth" styleClass="date-picker" />
+      <ComboBox fx:id="branchComboBox" layoutX="147.0" layoutY="271.0" prefHeight="25.0" prefWidth="310.0" promptText="Branch Name" styleClass="dropdown" />
    </children>
 </AnchorPane>
