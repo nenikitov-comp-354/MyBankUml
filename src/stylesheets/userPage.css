@@ -70,3 +70,7 @@
     -fx-background-insets: 0;
     -fx-padding: 0;
 }
+
+#welcome {
+    -fx-word-wrap: break-word;
+}

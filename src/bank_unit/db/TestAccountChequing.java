@@ -64,7 +64,7 @@ final class TestAccountChequing {
             "1,  '   ',             true,  '10.17',  'Name `   ` is blank or starts and ends with trailing spaces'",
             "1,  'John`s Chequing', false, '10.17',  'Customer is null'",
             "1,  'John`s Chequing', true,  'NULL',   'Monthly fee is null'",
-            "1,  'John`s Chequing', true,  '-10.17', 'Monthly fee `-10.17` is not positive or zero'",
+            "1,  'John`s Chequing', true,  '-10.17', 'Monthly fee `-10.17` cannot be negative'",
         },
         nullValues = "NULL"
     )

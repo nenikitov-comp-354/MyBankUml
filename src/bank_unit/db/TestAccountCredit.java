@@ -67,7 +67,7 @@ final class TestAccountCredit {
             "1,  '   ',           true,  '10.17',  17, 'Name `   ` is blank or starts and ends with trailing spaces'",
             "1,  'John`s Credit', false, '10.17',  17, 'Customer is null'",
             "1,  'John`s Credit', true,  'NULL',   17, 'Credit limit is null'",
-            "1,  'John`s Credit', true,  '-10.17', 17, 'Credit limit `-10.17` is not positive or zero'",
+            "1,  'John`s Credit', true,  '-10.17', 17, 'Credit limit `-10.17` cannot be negative'",
             "1,  'John`s Credit', true,  '10.17',  -17,'Payment grace days `-17` is not positive'",
         },
         nullValues = "NULL"

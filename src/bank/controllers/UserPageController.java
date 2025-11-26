@@ -32,7 +32,7 @@ public class UserPageController {
         try {
             Customer currentCustomer = sceneManager.getCustomer();
             userNameText.setText(
-                "Welcome, " + currentCustomer.getFirstName() + "!"
+                "Welcome, " + currentCustomer.getFirstName() + " " + currentCustomer.getLastName() + "!"
             );
             List<Account> accounts = currentCustomer.getAccounts();
 
