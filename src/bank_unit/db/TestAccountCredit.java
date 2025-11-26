@@ -24,7 +24,7 @@ final class TestAccountCredit {
     void testConstructorValid(
         int id,
         String name,
-        Boolean isLocked,
+        boolean isLocked,
         String creditLimit,
         int paymentGraceDays
     ) {
@@ -38,7 +38,8 @@ final class TestAccountCredit {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
 
         AccountCredit account = new AccountCredit(
@@ -90,7 +91,8 @@ final class TestAccountCredit {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
 
         Exception e = assertThrows(
@@ -121,7 +123,8 @@ final class TestAccountCredit {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         AccountCredit account1 = new AccountCredit(
             1,
@@ -155,7 +158,7 @@ final class TestAccountCredit {
     @ParameterizedTest
     @CsvSource(
         {
-            "true,  'Transaction Transaction(id=1, info=TransactionInfo(source=AccountCredit(SUPER=Account(id=1, name=My credit 1, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), creditLimit=0.00, paymentGraceDays=17), destination=AccountCredit(SUPER=Account(id=2, name=My credit 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), creditLimit=10.00, paymentGraceDays=21), amount=17.79, time=2025-11-18T18:59)) does not belong to this account AccountCredit(SUPER=Account(id=3, name=My credit 3, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)))), creditLimit=10.00, paymentGraceDays=21)'",
+            "true,  'Transaction Transaction(id=1, info=TransactionInfo(source=AccountCredit(SUPER=Account(id=1, name=My credit 1, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)), isAdmin=false)), creditLimit=0.00, paymentGraceDays=17), destination=AccountCredit(SUPER=Account(id=2, name=My credit 2, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)), isAdmin=false)), creditLimit=10.00, paymentGraceDays=21), amount=17.79, time=2025-11-18T18:59)) does not belong to this account AccountCredit(SUPER=Account(id=3, name=My credit 3, isLocked=false, customer=Customer(id=1, firstName=John, lastName=Big, dateOfBirth=1990-01-17, socialInsuranceNumber=123-456-789, phone=+15147892571, email=big-john@email.com, branch=Branch(id=1, address=Address, bank=Bank(id=1, name=First World Bank)), isAdmin=false)), creditLimit=10.00, paymentGraceDays=21)'",
             "false, 'Transaction is null'",
         }
     )
@@ -170,7 +173,8 @@ final class TestAccountCredit {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         Account account1 = new AccountCredit(
             1,

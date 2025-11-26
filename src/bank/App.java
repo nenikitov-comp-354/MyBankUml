@@ -9,6 +9,10 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import bank.db.operation.*;
+import java.sql.*;
+import java.time.*;
+import java.util.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -45,6 +49,7 @@ public class App extends Application {
         stage.getIcons().add(new Image("file:icons/bank.png"));
         stage.setScene(scene);
         stage.show();
+
         // Example code
         // db.addOperation(
         //     new OperationTransaction(
@@ -69,5 +74,22 @@ public class App extends Application {
         // )) {
         //     System.out.println("CUSTOMER " + customer);
         // }
+
+        // db.addOperation(
+        //     new OperationNewCustomer(
+        //         "Mykyta",
+        //         "Onipchenko",
+        //         LocalDate.now(),
+        //         "783-456-789",
+        //         "+1234567878",
+        //         "mykyta@email.com",
+        //         db.getBranches().get(1),
+        //         "My chequing",
+        //         "my password"
+        //     )
+        // );
+        // db.processOperations();
+
+        // System.out.println(db.getCustomers().get(8));
     }
 }

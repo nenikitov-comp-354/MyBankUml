@@ -41,7 +41,8 @@ final class TestTransactionInfo {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         Account account1 = new AccountChequing(
             1,
@@ -114,7 +115,8 @@ final class TestTransactionInfo {
             "123-456-789",
             "+15147892571",
             "big-john@email.com",
-            branch
+            branch,
+            false
         );
         Account account1 = new AccountChequing(
             1,

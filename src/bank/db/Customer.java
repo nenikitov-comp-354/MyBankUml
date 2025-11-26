@@ -32,6 +32,9 @@ public class Customer {
 
     private List<Account> accounts;
 
+    @Getter
+    private boolean isAdmin;
+
     public Customer(
         int id,
         String firstName,
@@ -40,7 +43,8 @@ public class Customer {
         String socialInsuranceNumber,
         String phone,
         String email,
-        Branch branch
+        Branch branch,
+        boolean isAdmin
     ) {
         TypeValidator.validateId("Id", id);
         this.id = id;
@@ -70,6 +74,8 @@ public class Customer {
         this.branch = branch;
 
         this.accounts = new ArrayList<>();
+
+        this.isAdmin = isAdmin;
     }
 
     public List<Account> getAccounts() {
@@ -117,6 +123,8 @@ public class Customer {
             email +
             ", branch=" +
             branch +
+            ", isAdmin=" +
+            isAdmin +
             ")"
         );
     }
