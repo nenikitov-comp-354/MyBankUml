@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="500.0" prefWidth="500.0" stylesheets="@../stylesheets/transaction.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bank.controllers.AdminSearchController">
+    <children>
+        <Text layoutX="25.0" layoutY="50.0" text="Search a Customer">
+            <font><Font name="System Bold" size="30.0" /></font>
+        </Text>
+        <TextField fx:id="searchInput" layoutX="50.0" layoutY="90.0" prefWidth="400.0" promptText="Search Customer" styleClass="input" />
+        <VBox layoutX="50.0" layoutY="140.0" prefWidth="400.0" spacing="10">
+            <children>
+            <Text layoutX="25.0" layoutY="50.0" text="Customer List:">
+            <font><Font name="System Bold" size="20.0" /></font>
+            </Text>
+            <ScrollPane prefHeight="252.0" prefWidth="400.0">
+              <content>
+            <VBox fx:id="customersHolderVBox" prefHeight="525.0" prefWidth="462.0" />
+             </content>
+            </ScrollPane>
+            </children>
+        </VBox>
+        <HBox alignment="CENTER" prefWidth="400.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="50.0">
+            <children>
+                <Button fx:id="cancelButtonContact" prefHeight="25.0" prefWidth="95.0" styleClass="button" text="Cancel">
+                    <font><Font name="System Bold" size="12.0" /></font>
+                </Button>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>
