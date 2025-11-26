@@ -1,12 +1,9 @@
 package bank_integrations.db;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import bank.controllers.AdminController;
 import bank.db.*;
-import bank.models.User;
-import java.util.Scanner;
-import org.junit.jupiter.api.*;
+import bank.db.operation.OperationLock;
+import java.sql.SQLException;
+import java.util.*;
 
 public class AdminView {
     private final BankDb db;
@@ -76,14 +73,14 @@ public class AdminView {
         }
 
         System.out.println("\nMatching Customers found: ");
-        for (Customers c : results) {
+        for (Customer c : results) {
             System.out.printf(
-                "ID=%d | %s %s | email=%s | branch=%s%n",
+                "ID=%d | %s %s | email=%s | bank=%s%n",
                 c.getId(),
                 c.getFirstName(),
                 c.getLastName(),
                 c.getEmail(),
-                c.getBranch().getName()
+                c.getBranch().getBank().getName()
             );
         }
     }
