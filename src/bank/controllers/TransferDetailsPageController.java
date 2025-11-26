@@ -3,7 +3,6 @@ package bank.controllers;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import bank.db.Account;
 import bank.db.TransactionInfo;
 import bank.db.operation.OperationTransaction;
 import bank.util.SceneManager;
@@ -15,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import lombok.Setter;
 
 public class TransferDetailsPageController {
     @FXML
