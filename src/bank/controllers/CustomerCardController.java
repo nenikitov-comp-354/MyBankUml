@@ -28,6 +28,9 @@ public class CustomerCardController {
     @FXML
     private Button cancelMakeAdminButton;
 
+    @FXML
+    private Text isAdminText;
+
     private SceneManager sceneManager = SceneManager.getInstance();
 
     public void setCustomerName(String name) {
@@ -63,4 +66,11 @@ public class CustomerCardController {
             cancelMakeAdminButton
         );
     }
+    public void setIsAdmin(boolean isAdmin) {
+    if (isAdmin) {
+        isAdminText.setText("Admin");
+    } else {
+        isAdminText.setText("Not Admin");
+    }
+}
 }
