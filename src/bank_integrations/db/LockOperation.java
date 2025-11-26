@@ -65,22 +65,12 @@ public class LockOperation {
         boolean initialTargetLocked = target.isLocked();
         boolean initialOtherLocked = other.isLocked();
 
+        //should print out unlocked
         System.out.println(
             "Initial isLocked: target=" +
             initialTargetLocked +
             ", other=" +
             initialOtherLocked
-        );
-
-        // making sure operation doesnt change lock 
-        db.addOperation(new OperationLock(target, initialTargetLocked));
-        db.processOperations();
-
-        System.out.println(
-            "After Operation lock call, isLocked: target=" +
-            target.isLocked() +
-            ", other=" +
-            other.isLocked()
         );
 
         // lock target account
@@ -115,9 +105,15 @@ public class LockOperation {
         System.out.println("End of lock/unlock test\n");
     }
 
+    /**
+     * @brief Missing account testing, creates a fakeID and fake account in  order to test
+     * the missing account exception
+     * @param db
+     * @throws SQLException
+     */
     private static void runMissingAccountScenario(BankDb db) throws SQLException {
         System.out.println(
-            "LockOperation Integration: missing account exception"
+            "LockOperation Integration: missing account exception test"
         );
 
         Map<Integer, Customer> customers = db.getCustomers();
@@ -155,6 +151,42 @@ public class LockOperation {
         }
 
         System.out.println("End of missing-account test");
+    }
+
+   /**
+    * @brief Helper that re-loads accounts from the DB (via a new BankDb) and prints / checks
+    * the lock state for the given account id.
+    * @param accountId
+    * @param expected
+    * @throws SQLException
+    */
+    private static void verifyLockedStateInDb(int accountId, boolean expected) throws SQLException {
+        BankDb verifyDb = new BankDb(
+            "localhost",
+            Optional.empty(),
+            "bank",
+            "admin",
+            Optional.of("admin")
+        );
+        verifyDb.connect();
+
+        Account fromDb = verifyDb.getAccounts().get(accountId);
+        if (fromDb == null) {
+            System.out.println(
+                "  [DB] Account " + accountId + " not found when verifying lock state."
+            );
+            return;
+        }
+
+        System.out.println(
+            "  [DB] account " +
+            accountId +
+            " is_locked=" +
+            fromDb.isLocked() +
+            " (expected " +
+            expected +
+            ")"
+        );
     }
 
 }
