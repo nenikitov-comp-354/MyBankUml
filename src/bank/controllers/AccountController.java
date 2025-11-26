@@ -11,7 +11,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import lombok.Setter;
 
 public class AccountController {
     @FXML
@@ -56,11 +55,11 @@ public class AccountController {
             lockCardButton.setText("Lock Card");
             cardGridPane.setStyle("-fx-background-color: #f2f2f2;");
             for (Node n : cardGridPane.getChildren()) {
-                if (n instanceof Text) if (
-                    n.getId().equals("cardTypeName")
-                ) n.setStyle("-fx-fill: #338aee"); else n.setStyle(
-                    "-fx-fill: black"
-                );
+                if (n instanceof Text) {
+                    if (n.getId().equals("cardTypeName")) n.setStyle(
+                        "-fx-fill: #338aee"
+                    ); else n.setStyle("-fx-fill: black");
+                }
             }
         }
     }

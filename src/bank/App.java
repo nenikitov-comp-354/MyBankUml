@@ -36,8 +36,6 @@ public class App extends Application {
             Optional.of("admin")
         );
         db.connect();
-
-        //new TransactionInfo(db.getAccounts().get(1), db.getAccounts().get(2), new BigDecimal("00"), LocalDateTime.now());
         SceneManager.getInstance().setDb(db);
 
         Parent root = FXMLLoader.load(

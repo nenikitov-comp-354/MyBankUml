@@ -24,6 +24,18 @@ public class UserPageController {
     private Text userNameText;
 
     @FXML
+    private Text emailText;
+
+    @FXML
+    private Text phoneNumberText;
+
+    @FXML
+    private Text sinText;
+
+    @FXML
+    private Text dobText;
+
+    @FXML
     private Button transferFundsButton;
 
     @FXML
@@ -41,6 +53,10 @@ public class UserPageController {
                 currentCustomer.getLastName() +
                 "!"
             );
+            emailText.setText("Email: " + currentCustomer.getEmail());
+            phoneNumberText.setText("Phone Number: " + currentCustomer.getPhone());
+            sinText.setText("SIN: " + currentCustomer.getSocialInsuranceNumber());
+            dobText.setText("DOB: " + currentCustomer.getDateOfBirth().toString());
             List<Account> accounts = currentCustomer.getAccounts();
 
             for (Account a : accounts) {
