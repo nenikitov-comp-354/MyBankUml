@@ -2,9 +2,11 @@ package bank.controllers;
 
 import bank.db.Customer;
 import bank.util.SceneManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,6 +17,9 @@ public class AdminSearchController {
 
     @FXML
     private VBox customersHolderVBox;
+
+    @FXML
+    private Button cancelSearchButton;
 
     @FXML
     private javafx.scene.control.TextField searchInput;
@@ -57,4 +62,11 @@ public class AdminSearchController {
         e.printStackTrace();
     }
 }
+@FXML
+    private void loadUserPage(ActionEvent event) {
+        sceneManager.switchScene(
+            "/fxml/UserPage.fxml",
+            cancelSearchButton
+        );
+    }
 }

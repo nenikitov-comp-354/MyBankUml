@@ -22,7 +22,7 @@
       </ScrollPane>
       <VBox layoutY="268.0" prefHeight="327.0" prefWidth="286.0" spacing="15.0">
          <children>
-            <Button fx:id="searchCustomerButton" mnemonicParsing="false" onAction="#loadTransferPage" prefHeight="90.0" prefWidth="245.0" styleClass="button-primary" text="Search Customer">
+            <Button fx:id="searchCustomerButton" onAction="#loadSearchPage" mnemonicParsing="false" prefHeight="90.0" prefWidth="245.0" styleClass="button-primary" text="Search Customer">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -30,7 +30,7 @@
                   <Insets />
                </VBox.margin>
             </Button>
-            <Button fx:id="transferFundsButton1" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadTransferPage" prefHeight="90.0" prefWidth="245.0" styleClass="button-primary" text="Transfer Funds">
+            <Button fx:id="transferFundsButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadTransferPage" prefHeight="90.0" prefWidth="245.0" styleClass="button-primary" text="Transfer Funds">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>

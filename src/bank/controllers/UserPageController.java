@@ -26,6 +26,9 @@ public class UserPageController {
     @FXML
     private Button transferFundsButton;
 
+    @FXML
+    private Button searchCustomerButton;
+
     private SceneManager sceneManager = SceneManager.getInstance();
 
     public void initialize() {
@@ -82,6 +85,13 @@ public class UserPageController {
         sceneManager.switchScene(
             "/fxml/TransferPage.fxml",
             transferFundsButton
+        );
+    }
+    @FXML
+    private void loadSearchPage(ActionEvent event) {
+        sceneManager.switchScene(
+            "/fxml/AdminSearch.fxml",
+            searchCustomerButton
         );
     }
 }
