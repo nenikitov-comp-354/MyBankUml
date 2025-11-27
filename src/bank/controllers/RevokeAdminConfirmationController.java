@@ -17,38 +17,54 @@ public class RevokeAdminConfirmationController {
     @FXML
     private Button confirmRevokeAdminButton;
 
+    private CustomerCardController parentController;
     private final SceneManager sceneManager = SceneManager.getInstance();
-    private Customer customer;
+    private Customer selectedCustomer;
 
     public void initialize() {
-        customer = sceneManager.getPendingCustomer();
+        selectedCustomer = sceneManager.getSelectedCustomer();
         setConfirmRevokeAdminTxt();
     }
 
     public void setConfirmRevokeAdminTxt() {
         confirmRevokeAdminTxt.setText(
             "Are you sure you want to revoke " +
-            customer.getFirstName() +
+            selectedCustomer.getFirstName() +
             "'s admin priviledge?"
         );
     }
 
+    public void setParentController(CustomerCardController controller) {
+      this.parentController = controller;
+    }
+
     @FXML
     private void handleCancelRevokeAdmin(ActionEvent event) {
-      sceneManager.setPendingCustomer(null); // Clear pending  
-      sceneManager.switchScene(
-            "fxml/AdminSearch.fxml",
-            cancelRevokeAdminButton
-        );
+      if (parentController != null) {
+        parentController.updateFieldVisibility();
+      }
+      // sceneManager.switchScene(
+      //       "fxml/AdminSearch.fxml",
+      //       cancelRevokeAdminButton
+      //   );
+      cancelRevokeAdminButton.getScene().getWindow().hide();
     }
 
     @FXML
     private void handleConfirmRevokeAdmin(ActionEvent event) {
-      customer.setAdmin(false);
-      sceneManager.setPendingCustomer(null); // Clear pending  
-      sceneManager.switchScene(
-            "fxml/AdminSearch.fxml",
-            confirmRevokeAdminButton
-        );
+      if (selectedCustomer != null) {
+        selectedCustomer.setAdmin(false);
+        sceneManager.setSelectedCustomer(selectedCustomer); 
+      
+        if (parentController != null) {
+          parentController.updateAdminButtons(false);
+        }
+      }
+      
+      // sceneManager.switchScene(
+      //       "/fxml/AdminSearch.fxml",
+      //       confirmMakeAdminButton
+      //   );
+      confirmRevokeAdminButton.getScene().getWindow().hide();
     }
 }

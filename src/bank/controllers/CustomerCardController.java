@@ -4,8 +4,14 @@ import bank.db.Customer;
 import bank.util.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import java.io.IOException;
 
 public class CustomerCardController {
     @FXML
@@ -131,12 +137,10 @@ public class CustomerCardController {
     private void handleMakeAdmin() {
         if (customer == null) return;
 
-        customer.setAdmin(true);
-        sceneManager.setPendingCustomer(customer);
-
-        updateAdminButtons(true);
-
-        System.out.println(customer.getFirstName() + " is now an admin.");
+        // customer.setAdmin(true);
+        sceneManager.setSelectedCustomer(customer);
+        // updateAdminButtons(true);
+        //System.out.println(customer.getFirstName() + " is now an admin.");
         handleMakeAdminPopup(new ActionEvent());
     }
 
@@ -144,29 +148,69 @@ public class CustomerCardController {
     public void handleRevokeAdmin() {
         if (customer == null) return;
 
-        customer.setAdmin(false);
-        sceneManager.setPendingCustomer(customer);
-        
-        updateAdminButtons(false);
+        // customer.setAdmin(false);
+        sceneManager.setSelectedCustomer(customer);
+        // updateAdminButtons(false);
+        // System.out.println(customer.getFirstName() + " is no longer an admin.");
 
-        System.out.println(customer.getFirstName() + " is no longer an admin.");
         handleRevokePopup(new ActionEvent());
     }
 
     @FXML
     public void handleMakeAdminPopup(ActionEvent event) {
-        sceneManager.switchScene(
-            "/fxml/MakeAdminConfirmation.fxml",
-            makeAdminButton
-        );
+        // sceneManager.switchScene(
+        //     "/fxml/MakeAdminConfirmation.fxml",
+        //     makeAdminButton
+        // );
+
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/fxml/MakeAdminConfirmation.fxml")
+            );
+            Parent root = loader.load();
+
+            // Pass current card to the popup
+            MakeAdminConfirmationController controller = loader.getController();
+            controller.setParentController(this);
+            sceneManager.setSelectedCustomer(customer);
+
+            // Create new Stage for popup
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL); // Blocks interaction with original scene
+            popupStage.setTitle("Confirm Admin Action");
+            popupStage.setScene(new Scene(root));
+            popupStage.showAndWait(); // Waits until popup is closed
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     public void handleRevokePopup(ActionEvent event) {
-        sceneManager.switchScene(
-            "/fxml/RevokeAdminConfirmation.fxml",
-            revokeAdminButton
-        );
+        // sceneManager.switchScene(
+        //     "/fxml/RevokeAdminConfirmation.fxml",
+        //     revokeAdminButton
+        // );
+        try {
+            FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("/fxml/RevokeAdminConfirmation.fxml")
+            );
+            Parent root = loader.load();
+
+            // Pass current card to the popup
+            RevokeAdminConfirmationController controller = loader.getController();
+            controller.setParentController(this);
+            sceneManager.setSelectedCustomer(customer);
+
+            // Create new Stage for popup
+            Stage popupStage = new Stage();
+            popupStage.initModality(Modality.APPLICATION_MODAL); // Blocks interaction with original scene
+            popupStage.setTitle("Confirm Admin Action");
+            popupStage.setScene(new Scene(root));
+            popupStage.showAndWait(); // Waits until popup is closed
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -17,38 +17,55 @@ public class MakeAdminConfirmationController {
     @FXML
     private Button confirmMakeAdminButton;
 
+    private CustomerCardController parentController;;
     private final SceneManager sceneManager = SceneManager.getInstance();
-    private Customer customer;
+    private Customer selectedCustomer;
 
     public void initialize() {
-        customer = sceneManager.getPendingCustomer();
+        selectedCustomer = sceneManager.getSelectedCustomer();
         setConfirmMakeAdminTxt();
     }
 
     public void setConfirmMakeAdminTxt() {
         confirmMakeAdminTxt.setText(
             "Are you sure you want to make " +
-            customer.getFirstName() +
+            selectedCustomer.getFirstName() +
             " an admin?"
         );
     }
 
+   public void setParentController(CustomerCardController controller) {
+        this.parentController = controller;
+  }
+
     @FXML
     private void handleCancelMakeAdmin(ActionEvent event) {
-      sceneManager.setPendingCustomer(null); // Clear pending 
-      sceneManager.switchScene(
-            "/fxml/AdminSearch.fxml",
-            cancelMakeAdminButton
-        );
+
+      if (parentController != null) {
+          parentController.updateFieldVisibility();
+      }
+      cancelMakeAdminButton.getScene().getWindow().hide();
+      // sceneManager.switchScene(
+      //       "/fxml/AdminSearch.fxml",
+      //       cancelMakeAdminButton
+      //   );
     }
 
     @FXML
     private void handleConfirmMakeAdmin(ActionEvent event) {
-      customer.setAdmin(true);
-      sceneManager.setPendingCustomer(null); // Clear pending customer after action
-      sceneManager.switchScene(
-            "/fxml/AdminSearch.fxml",
-            confirmMakeAdminButton
-        );
+      if (selectedCustomer != null) {
+        selectedCustomer.setAdmin(true);
+        sceneManager.setSelectedCustomer(selectedCustomer); 
+      
+        if (parentController != null) {
+          parentController.updateAdminButtons(true);
+        }
+      }
+      
+      confirmMakeAdminButton.getScene().getWindow().hide();
+      // sceneManager.switchScene(
+      //       "/fxml/AdminSearch.fxml",
+      //       confirmMakeAdminButton
+      //   );
     }
 }
