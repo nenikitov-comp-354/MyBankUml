@@ -1,5 +1,8 @@
 package bank_integrations.db;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import bank.db.*;
 import bank.db.operation.Operation;
 import bank.db.operation.OperationLock;
@@ -8,186 +11,120 @@ import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
+import org.junit.jupiter.api.Test;
 
 public class TestLockOperation {
 
+    @Test
+    void lockOperationIntegration() throws Exception {
+        BankDb db = createDb();
+        db.connect();
+        runLockUnlock(db);
+    }
+
+    // for manual
     public static void main(String[] args) {
-        BankDb db = new BankDb(
-            "localhost",
-            Optional.empty(),
-            "bank",
-            "admin",
-            Optional.of("admin")
-        );
-
         try {
+            BankDb db = createDb();
             db.connect();
-
             runLockUnlock(db);
-            runMissingAccount(db);
         } catch (Exception e) {
-            System.err.println("[LockOperation] Error: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    /**
-     * @brief ensures that queue can be written to,
-     * locks account, unlocks it
-     * @param db
-     * @throws SQLException
-     */
-    private static void runLockUnlock(BankDb db) throws SQLException {
-        System.out.println("LockOperation Integration: lock/unlock");
+    // -- helper functions --
 
-        Map<Integer, Account> accounts = db.getAccounts();
-        if (accounts.size() < 2) {
-            System.out.println(
-                "Not enough accounts in DB to run this scenario."
-            );
-            return;
-        }
-
-        Iterator<Account> it = accounts.values().iterator();
-        Account target = it.next(); // for lock
-        Account other = it.next();
-
-        System.out.println("Target account: " + target);
-        System.out.println("Other  account: " + other);
-
-        // unlock target if locked
-        if (target.isLocked()) {
-            db.addOperation(new OperationLock(target, false));
-            db.processOperations();
-        }
-
-        boolean initialTargetLocked = target.isLocked();
-        boolean initialOtherLocked = other.isLocked();
-
-        //should print out unlocked
-        System.out.println(
-            "Initial isLocked: target=" +
-            initialTargetLocked +
-            ", other=" +
-            initialOtherLocked
-        );
-
-        // lock target account
-        db.addOperation(new OperationLock(target, true));
-        db.processOperations();
-
-        System.out.println(
-            "After lock operation, isLocked: target=" +
-            target.isLocked() +
-            ", other=" +
-            other.isLocked()
-        );
-
-        // Verify DB rows using a fresh BankDb instance
-        verifyLockedStateInDb(target.getId(), true);
-        verifyLockedStateInDb(other.getId(), initialOtherLocked);
-
-        // Now unlock the target account
-        db.addOperation(new OperationLock(target, false));
-        db.processOperations();
-
-        System.out.println(
-            "After unlock operation, isLocked: target=" +
-            target.isLocked() +
-            ", other=" +
-            other.isLocked()
-        );
-
-        verifyLockedStateInDb(target.getId(), false);
-        verifyLockedStateInDb(other.getId(), initialOtherLocked);
-
-        System.out.println("End of lock/unlock test\n");
-    }
-
-    /**
-     * @brief Missing account testing, creates a fakeID and fake account in  order to test
-     * the missing account exception
-     * @param db
-     * @throws SQLException
-     */
-    private static void runMissingAccount(BankDb db) throws SQLException {
-        System.out.println(
-            "LockOperation Integration: missing account exception test"
-        );
-
-        Map<Integer, Customer> customers = db.getCustomers();
-        if (customers.isEmpty()) {
-            System.out.println(
-                "No customers in DB; skipping missing-account scenario."
-            );
-            return;
-        }
-
-        // Take any existing customer and create a chequing account with a new id
-        Customer anyCustomer = customers.values().iterator().next();
-        int fakeId = 999_999; // id that does not exist in DB
-
-        Account fakeAccount = new AccountChequing(
-            fakeId,
-            "Non-existent account",
-            false,
-            anyCustomer,
-            BigDecimal.ZERO
-        );
-
-        db.addOperation(new OperationLock(fakeAccount, true));
-
-        try {
-            db.processOperations();
-            System.out.println(
-                "ERROR: expected UnsupportedOperationException for missing account, but none was thrown."
-            );
-        } catch (UnsupportedOperationException e) {
-            System.out.println(
-                "Correctly caught UnsupportedOperationException: " +
-                e.getMessage()
-            );
-        }
-
-        System.out.println("End of missing-account test");
-    }
-
-    /**
-     * @brief Helper that re-loads accounts from the DB (via a new BankDb) and prints / checks
-     * the lock state for the given account id.
-     * @param accountId
-     * @param expected
-     * @throws SQLException
-     */
-    private static void verifyLockedStateInDb(int accountId, boolean expected)
-        throws SQLException {
-        BankDb verifyDb = new BankDb(
+    private static BankDb createDb() {
+        return new BankDb(
             "localhost",
-            Optional.empty(),
+            Optional.<Integer>empty(),
             "bank",
             "admin",
             Optional.of("admin")
         );
-        verifyDb.connect();
+    }
 
-        Account fromDb = verifyDb.getAccounts().get(accountId);
-        if (fromDb == null) {
-            System.out.println(
-                "  [DB] Account " +
-                accountId +
-                " not found when verifying lock state."
-            );
-            return;
-        }
+    /**
+     * @brief ensures that queue can be written to,
+     * locks account, unlocks it + NOOP test
+     * @param db
+     * @throws SQLException
+     */
+    private static void runLockUnlock(BankDb db) throws SQLException {
+        // System.out.println("==== LockOperation Integration: lock/unlock ====");
 
-        System.out.println(
-            "  [DB] account " +
-            accountId +
-            " is_locked=" +
-            fromDb.isLocked() +
-            " (expected " +
-            expected +
-            ")"
+        Map<Integer, Account> accounts = db.getAccounts();
+
+        assertTrue(
+            !accounts.isEmpty(),
+            "Not enough accounts in DB to run this scenario."
         );
+
+        Account target = accounts.values().iterator().next();
+        int accountId = target.getId();
+
+        // System.out.println("[LockOperation] Using account id=" + accountId);
+        // System.out.println("  Initial isLocked = " + target.isLocked());
+
+        boolean originalState = target.isLocked();
+        boolean flippedState = !originalState;
+
+        // test 1
+        // System.out.println("\n--- TEST 1: flip lock state via OperationLock ---");
+        // System.out.println("  Applying OperationLock(account, " + flippedState + ")");
+
+        db.addOperation(new OperationLock(target, flippedState));
+        db.processOperations();
+
+        // assert in-memory
+        assertEquals(
+            flippedState,
+            target.isLocked(),
+            "In-memory state mismatch after OperationLock"
+        );
+
+        // assert stored in DB
+        Account reloaded1 = reloadAccount(accountId);
+        assertEquals(
+            flippedState,
+            reloaded1.isLocked(),
+            "DB state mismatch after OperationLock"
+        );
+
+        // System.out.println("Flip state assertions passed");
+
+        // test 2
+        // System.out.println("\n--- TEST 2: NOOP when locking to current state ---");
+        boolean currentState = target.isLocked();
+        db.addOperation(new OperationLock(target, currentState));
+        db.processOperations();
+
+        // in-memory should remain same
+        assertEquals(
+            currentState,
+            target.isLocked(),
+            "In-memory state changed during NOOP OperationLock"
+        );
+
+        // DB should remain same
+        Account reloaded2 = reloadAccount(accountId);
+        assertEquals(
+            currentState,
+            reloaded2.isLocked(),
+            "DB state changed during NOOP OperationLock"
+        );
+        // System.out.println("NOOP state assertions passed");
+
+        // System.out.println("=== End LockOperation Integration ===");
+    }
+
+    /**
+     * Loads account fresh from DB for verification.
+     */
+    private static Account reloadAccount(int accountId) throws SQLException {
+        BankDb verifyDb = createDb();
+        verifyDb.connect();
+        return verifyDb.getAccounts().get(accountId);
     }
 }

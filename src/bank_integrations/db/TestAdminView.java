@@ -1,137 +1,134 @@
 package bank_integrations.db;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import bank.db.*;
 import bank.db.operation.OperationLock;
 import java.sql.SQLException;
 import java.util.*;
+import org.junit.jupiter.api.Test;
 
 public class TestAdminView {
-    private final BankDb db;
-    private final Scanner scanner;
 
-    public TestAdminView(BankDb db) {
-        this.db = db;
-        this.scanner = new Scanner(System.in);
+    @Test
+    void adminViewIntegration() throws Exception {
+        BankDb db = createDb();
+        db.connect();
+        run(db);
     }
 
-    /**
-     * @brief handles the Admin console (View)
-     * @throws SQLException
-     */
-    public void run() throws SQLException {
-        while (true) {
-            System.out.println("\n=== ADMIN VIEW INTEGRATION TEST ===");
-            System.out.println("1) Search customers");
-            System.out.println("2) Lock account");
-            System.out.println("3) Unlock account");
-            System.out.println("0) Exit");
-            System.out.print("Choose an option: ");
-
-            String choice = scanner.nextLine().trim();
-            switch (choice) {
-                case "1":
-                    handleSearchCustomers();
-                    break;
-                case "2":
-                    handleLockUnlock(true);
-                    break;
-                case "3":
-                    handleLockUnlock(false);
-                    break;
-                case "0":
-                    {
-                        System.out.println("Exiting admin integration view.");
-                        return;
-                    }
-                default:
-                    System.out.println("Invalid choice, try again.");
-            }
-        }
+    //for optional console run
+    public static void main(String[] args) throws Exception {
+        BankDb db = createDb();
+        db.connect();
+        run(db);
     }
 
-    /**
-     *
-     * @throws SQLException
-     */
-    private void handleSearchCustomers() throws SQLException {
-        System.out.println("Enter search keywords (space separated): ");
-        String line = scanner.nextLine().trim();
+    // --- helper functions for test ---
 
-        if (line.isEmpty()) {
-            System.out.println("No keywords entered.");
-            return;
-        }
-
-        String[] queries = line.split("\\s+");
-        List<Customer> results = db.getCustomersSearch(queries);
-
-        if (results.isEmpty()) {
-            System.out.println(
-                "No Customer has been found using the keywords."
-            );
-            return;
-        }
-
-        System.out.println("\nMatching Customers found: ");
-        for (Customer c : results) {
-            System.out.printf(
-                "ID=%d | %s %s | email=%s | bank=%s%n",
-                c.getId(),
-                c.getFirstName(),
-                c.getLastName(),
-                c.getEmail(),
-                c.getBranch().getBank().getName()
-            );
-        }
-    }
-
-    /**
-     * @brief will handle all lock operation for admins
-     * @param lock
-     * @throws SQLException
-     */
-    private void handleLockUnlock(boolean lock) throws SQLException {
-        System.out.print(
-            "Enter account ID to " + (lock ? "lock" : "unlock") + ": "
-        );
-        String input = scanner.nextLine().trim();
-
-        int accountId;
-        try {
-            accountId = Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid account id.");
-            return;
-        }
-
-        Account account = db.getAccounts().get(accountId);
-        if (account == null) {
-            System.out.println("No account found with id " + accountId);
-            return;
-        }
-
-        db.addOperation(new OperationLock(account, lock));
-        db.processOperations();
-
-        System.out.printf(
-            "Account %d is now %s%n",
-            accountId,
-            account.isLocked() ? "LOCKED" : "UNLOCKED"
-        );
-    }
-
-    public static void main(String[] args) throws SQLException {
-        BankDb db = new BankDb(
+    private static BankDb createDb() {
+        return new BankDb(
             "localhost",
             Optional.empty(),
             "bank",
             "admin",
             Optional.of("admin")
         );
+    }
 
-        db.connect();
+    /**
+     * @brief handles the Admin console (View)
+     * @throws SQLException
+     */
+    public static void run(BankDb db) throws SQLException {
+        // System.out.println("\n=== ADMIN VIEW INTEGRATION TEST ===");
+        // Login as an admin user
+        Optional<Customer> maybeAdmin = db.customerLogin(
+            "harry.styles@email.com",
+            "harry"
+        );
 
-        TestAdminView view = new TestAdminView(db);
-        view.run();
+        assertTrue(
+            maybeAdmin.isPresent(),
+            "[AdminView] Admin login failed for harry.styles@email.com"
+        );
+
+        Customer admin = maybeAdmin.get();
+        // System.out.println("[AdminView] Logged in as admin: " + admin);
+        // System.out.println("  isAdmin = " + admin.isAdmin());
+
+        assertTrue(
+            admin.isAdmin(),
+            "[AdminView] Logged-in user is not marked as admin"
+        );
+        // Show what an admin view
+
+        // System.out.println("\n--- Banks ---");
+        Map<Integer, Bank> banks = db.getBanks();
+        // for (Bank bank : banks.values()) {
+        //     System.out.println("  " + bank);
+        // }
+        assertTrue(
+            !banks.isEmpty(),
+            "[AdminView] Expected at least one bank in the system"
+        );
+
+        // System.out.println("\n--- Branches ---");
+        Map<Integer, Branch> branches = db.getBranches();
+        // for (Branch branch : branches.values()) {
+        //     System.out.println("  " + branch);
+        // }
+        assertTrue(
+            !branches.isEmpty(),
+            "[AdminView] Expected at least one branch in the system"
+        );
+
+        // System.out.println("\n--- Customers ---");
+        Map<Integer, Customer> customers = db.getCustomers();
+        // for (Customer customer : customers.values()) {
+        //     System.out.println("  " + customer);
+        // }
+        assertTrue(
+            !customers.isEmpty(),
+            "[AdminView] Expected at least one customer in the system"
+        );
+
+        // System.out.println("\n--- Accounts ---");
+        Map<Integer, Account> accounts = db.getAccounts();
+        // for (Account acc : accounts.values()) {
+        //     System.out.println("  " + acc);
+        // }
+        assertTrue(
+            !accounts.isEmpty(),
+            "[AdminView] Expected at least one account in the system"
+        );
+
+        // Demonstrate an admin operation: lock the first account
+
+        Account target = accounts.values().iterator().next();
+        // System.out.println(
+        //     "\n[AdminView] Locking account id=" + target.getId()
+        // );
+        boolean before = target.isLocked();
+
+        db.addOperation(new OperationLock(target, true));
+        db.processOperations();
+
+        assertTrue(
+            target.isLocked(),
+            "[AdminView] Account was not locked after OperationLock(true)"
+        );
+
+        // If it was already locked, the state should stay true anyway
+        if (before) {
+            assertEquals(
+                before,
+                target.isLocked(),
+                "[AdminView] Locking an already-locked account changed state unexpectedly"
+            );
+        }
+        // System.out.println("=== End AdminView Integration ===");
+
     }
 }
