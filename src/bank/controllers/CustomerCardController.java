@@ -216,4 +216,28 @@ public class CustomerCardController {
             confirmMakeAdminButton
         );
     }
+
+    public void setConfirmRevokeAdminTxt() {
+        confirmRevokeAdminTxt.setText(
+            "Are you sure you want to revoke " +
+            customer.getFirstName() +
+            "'s admin priviledge?"
+        );
+    }
+
+    @FXML
+    private void handleCancelRevokeAdmin(ActionEvent event) {
+        sceneManager.switchScene(
+            "fxml/AdminSearch.fxml",
+            cancelRevokeAdminButton
+        );
+    }
+
+    @FXML
+    private void handleConfirmRevokeAdmin(ActionEvent event) {
+        sceneManager.switchScene(
+            "fxml/AdminSearch.fxml",
+            confirmRevokeAdminButton
+        );
+    }
 }
