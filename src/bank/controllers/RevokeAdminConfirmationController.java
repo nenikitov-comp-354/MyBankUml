@@ -14,6 +14,9 @@ public class RevokeAdminConfirmationController {
     @FXML
     private Button cancelRevokeAdminButton;
 
+    @FXML
+    private Button confirmRevokeAdminButton;
+
     private final SceneManager sceneManager = SceneManager.getInstance();
     private Customer customer;
 
@@ -26,15 +29,19 @@ public class RevokeAdminConfirmationController {
         confirmRevokeAdminTxt.setText(
             "Are you sure you want to revoke " +
             customer.getFirstName() +
-            "'s' admin priviledge?"
+            "'s admin priviledge?"
         );
     }
 
     @FXML
     private void handleCancelRevokeAdmin(ActionEvent event) {
-        sceneManager.switchScene(
-            "/fxml/AdminSearch.fxml",
-            cancelRevokeAdminButton
+        sceneManager.switchScene("fxml/AdminSearch.fxml", cancelRevokeAdminButton
+        );
+    }
+
+    @FXML
+    private void handleConfirmRevokeAdmin(ActionEvent event) {
+        sceneManager.switchScene("fxml/AdminSearch.fxml", confirmRevokeAdminButton
         );
     }
 }

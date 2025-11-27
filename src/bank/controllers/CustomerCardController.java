@@ -103,6 +103,7 @@ public class CustomerCardController {
 
         System.out.println(customer.getFirstName() + " is now an admin.");
 
+        System.out.println(getClass().getResource("/fxml/MakeAdminConfirmation.fxml"));
         sceneManager.switchScene(
             "/fxml/MakeAdminConfirmation.fxml",
             makeAdminButton
@@ -119,6 +120,8 @@ public class CustomerCardController {
 
         System.out.println(customer.getFirstName() + " is no longer an admin.");
 
+
+        System.out.println(getClass().getResource("/fxml/RevokeAdminConfirmation.fxml"));
         sceneManager.switchScene(
             "/fxml/RevokeAdminConfirmation.fxml",
             revokeAdminButton
