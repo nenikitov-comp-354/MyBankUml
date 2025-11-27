@@ -35,13 +35,17 @@ public class RevokeAdminConfirmationController {
 
     @FXML
     private void handleCancelRevokeAdmin(ActionEvent event) {
-        sceneManager.switchScene("fxml/AdminSearch.fxml", cancelRevokeAdminButton
+        sceneManager.switchScene(
+            "fxml/AdminSearch.fxml",
+            cancelRevokeAdminButton
         );
     }
 
     @FXML
     private void handleConfirmRevokeAdmin(ActionEvent event) {
-        sceneManager.switchScene("fxml/AdminSearch.fxml", confirmRevokeAdminButton
+        sceneManager.switchScene(
+            "fxml/AdminSearch.fxml",
+            confirmRevokeAdminButton
         );
     }
 }

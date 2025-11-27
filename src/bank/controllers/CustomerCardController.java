@@ -61,28 +61,28 @@ public class CustomerCardController {
     }
 
     public void updateFieldVisibility() {
-    // Only show detailed fields if the logged-in user is an admin
-    boolean currentUserIsAdmin = sceneManager.getCustomer().isAdmin();
+        // Only show detailed fields if the logged-in user is an admin
+        boolean currentUserIsAdmin = sceneManager.getCustomer().isAdmin();
 
-    customerDOBText.setVisible(currentUserIsAdmin);
-    customerDOBText.setManaged(currentUserIsAdmin);
+        customerDOBText.setVisible(currentUserIsAdmin);
+        customerDOBText.setManaged(currentUserIsAdmin);
 
-    customerEmailText.setVisible(currentUserIsAdmin);
-    customerEmailText.setManaged(currentUserIsAdmin);
+        customerEmailText.setVisible(currentUserIsAdmin);
+        customerEmailText.setManaged(currentUserIsAdmin);
 
-    customerPhoneText.setVisible(currentUserIsAdmin);
-    customerPhoneText.setManaged(currentUserIsAdmin);
+        customerPhoneText.setVisible(currentUserIsAdmin);
+        customerPhoneText.setManaged(currentUserIsAdmin);
 
-    customerIdText.setVisible(currentUserIsAdmin);
-    customerIdText.setManaged(currentUserIsAdmin);
+        customerIdText.setVisible(currentUserIsAdmin);
+        customerIdText.setManaged(currentUserIsAdmin);
 
-    // hide the admin buttons if not an admin
-    makeAdminButton.setVisible(currentUserIsAdmin);
-    makeAdminButton.setManaged(currentUserIsAdmin);
+        // hide the admin buttons if not an admin
+        makeAdminButton.setVisible(currentUserIsAdmin);
+        makeAdminButton.setManaged(currentUserIsAdmin);
 
-    revokeAdminButton.setVisible(currentUserIsAdmin && customer.isAdmin());
-    revokeAdminButton.setManaged(currentUserIsAdmin && customer.isAdmin());
-}
+        revokeAdminButton.setVisible(currentUserIsAdmin && customer.isAdmin());
+        revokeAdminButton.setManaged(currentUserIsAdmin && customer.isAdmin());
+    }
 
     public void setCustomerName(String name) {
         customerNameText.setText(name);

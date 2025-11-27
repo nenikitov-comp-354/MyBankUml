@@ -35,11 +35,17 @@ public class MakeAdminConfirmationController {
 
     @FXML
     private void handleCancelMakeAdmin(ActionEvent event) {
-        sceneManager.switchScene("/fxml/AdminSearch.fxml", cancelMakeAdminButton);
+        sceneManager.switchScene(
+            "/fxml/AdminSearch.fxml",
+            cancelMakeAdminButton
+        );
     }
 
     @FXML
     private void handleConfirmMakeAdmin(ActionEvent event) {
-        sceneManager.switchScene("/fxml/AdminSearch.fxml", confirmMakeAdminButton);
+        sceneManager.switchScene(
+            "/fxml/AdminSearch.fxml",
+            confirmMakeAdminButton
+        );
     }
 }

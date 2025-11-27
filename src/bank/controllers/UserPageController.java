@@ -57,9 +57,20 @@ public class UserPageController {
             phoneNumberText.setText(
                 "Phone Number: " + currentCustomer.getPhone()
             );
-            sinText.setText(
-                "SIN: " + currentCustomer.getSocialInsuranceNumber()
-            );
+
+            String sin = currentCustomer.getSocialInsuranceNumber();
+            if (sin != null && sin.length() >= 3) {
+                String maskedSin =
+                    "*".repeat(sin.length() - 3) +
+                    sin.substring(sin.length() - 3);
+                sinText.setText("SIN: " + maskedSin);
+            } else {
+                sinText.setText("SIN: " + sin); // fallback
+            }
+
+            // sinText.setText(
+            //     "SIN: " + currentCustomer.getSocialInsuranceNumber()
+            // );
             dobText.setText(
                 "DOB: " + currentCustomer.getDateOfBirth().toString()
             );
