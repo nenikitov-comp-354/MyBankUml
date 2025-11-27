@@ -6,6 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import java.sql.Connection;;
+import java.sql.SQLException;
+import bank.db.operation.OperationMakeAdmin;
 
 public class MakeAdminConfirmationController {
     @FXML
@@ -40,15 +43,10 @@ public class MakeAdminConfirmationController {
 
     @FXML
     private void handleCancelMakeAdmin(ActionEvent event) {
-
-      if (parentController != null) {
-          parentController.updateFieldVisibility();
-      }
+      // if (parentController != null) {
+      //     parentController.updateFieldVisibility();
+      // }
       cancelMakeAdminButton.getScene().getWindow().hide();
-      // sceneManager.switchScene(
-      //       "/fxml/AdminSearch.fxml",
-      //       cancelMakeAdminButton
-      //   );
     }
 
     @FXML
@@ -63,9 +61,5 @@ public class MakeAdminConfirmationController {
       }
       
       confirmMakeAdminButton.getScene().getWindow().hide();
-      // sceneManager.switchScene(
-      //       "/fxml/AdminSearch.fxml",
-      //       confirmMakeAdminButton
-      //   );
     }
 }

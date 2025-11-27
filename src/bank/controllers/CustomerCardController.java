@@ -120,17 +120,17 @@ public class CustomerCardController {
         setIsAdmin(isAdmin);
 
         // only show certain fields for admins
-        customerEmailText.setVisible(isAdmin);
-        customerEmailText.setManaged(isAdmin);
+        // customerEmailText.setVisible(isAdmin);
+        // customerEmailText.setManaged(isAdmin);
 
-        customerPhoneText.setVisible(isAdmin);
-        customerPhoneText.setManaged(isAdmin);
+        // customerPhoneText.setVisible(isAdmin);
+        // customerPhoneText.setManaged(isAdmin);
 
-        customerDOBText.setVisible(isAdmin);
-        customerDOBText.setManaged(isAdmin);
+        // customerDOBText.setVisible(isAdmin);
+        // customerDOBText.setManaged(isAdmin);
 
-        customerIdText.setVisible(isAdmin);
-        customerIdText.setManaged(isAdmin);
+        // customerIdText.setVisible(isAdmin);
+        // customerIdText.setManaged(isAdmin);
     }
 
     @FXML

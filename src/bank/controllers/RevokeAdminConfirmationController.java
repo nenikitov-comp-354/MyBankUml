@@ -6,6 +6,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import java.sql.Connection;;
+import java.sql.SQLException;
+import bank.db.operation.OperationMakeAdmin;
 
 public class RevokeAdminConfirmationController {
     @FXML
@@ -40,13 +43,10 @@ public class RevokeAdminConfirmationController {
 
     @FXML
     private void handleCancelRevokeAdmin(ActionEvent event) {
-      if (parentController != null) {
-        parentController.updateFieldVisibility();
-      }
-      // sceneManager.switchScene(
-      //       "fxml/AdminSearch.fxml",
-      //       cancelRevokeAdminButton
-      //   );
+      // if (parentController != null) {
+      //   parentController.updateFieldVisibility();
+      // }
+
       cancelRevokeAdminButton.getScene().getWindow().hide();
     }
 
@@ -61,10 +61,6 @@ public class RevokeAdminConfirmationController {
         }
       }
       
-      // sceneManager.switchScene(
-      //       "/fxml/AdminSearch.fxml",
-      //       confirmMakeAdminButton
-      //   );
       confirmRevokeAdminButton.getScene().getWindow().hide();
     }
 }
