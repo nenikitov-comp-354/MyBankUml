@@ -2,8 +2,6 @@ package bank;
 
 import bank.db.*;
 import bank.db.operation.*;
-import bank.db.operation.OperationLock;
-import bank.db.operation.OperationTransaction;
 import bank.util.SceneManager;
 import java.io.IOException;
 import java.math.BigDecimal;

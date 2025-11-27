@@ -10,11 +10,11 @@ public class OperationMakeAdmin implements Operation {
     private final Customer customer;
     private final boolean isAdmin;
 
-    public OperationMakeAdmin(Customer customer, boolean isLocked) {
+    public OperationMakeAdmin(Customer customer, boolean isAdmin) {
         TypeValidator.validateNotNull("Customer", customer);
         this.customer = customer;
 
-        this.isAdmin = isLocked;
+        this.isAdmin = isAdmin;
     }
 
     @Override
