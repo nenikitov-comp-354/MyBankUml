@@ -22,7 +22,7 @@
       </ScrollPane>
       <VBox layoutY="268.0" prefHeight="327.0" prefWidth="286.0" spacing="15.0">
          <children>
-            <Button fx:id="searchCustomerButton" mnemonicParsing="false" onAction="#loadSearchPage" prefHeight="90.0" prefWidth="245.0" styleClass="button-primary" text="Search Customer">
+            <Button fx:id="searchCustomerButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#loadSearchPage" prefHeight="90.0" prefWidth="245.0" styleClass="button-primary" text="Search Customer">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>

@@ -239,5 +239,11 @@ public class CustomerCardController {
             "fxml/AdminSearch.fxml",
             confirmRevokeAdminButton
         );
+    public void setIsAdmin(boolean isAdmin) {
+        if (isAdmin) {
+            isAdminText.setText("Admin");
+        } else {
+            isAdminText.setText("Not Admin");
+        }
     }
 }
