@@ -99,7 +99,7 @@ public class TypeValidator {
 
         if (money.signum() < 0) {
             throw new IllegalArgumentException(
-                description + " `" + money + "` is not positive or zero"
+                description + " `" + money + "` cannot be negative"
             );
         }
     }

@@ -94,7 +94,7 @@ final class TestTransactionInfo {
             "'account1', NULL,       '10.15',  true,  'Destination is null'",
             "'account1', 'account1', '10.15',  true,  'Source and destination accounts cannot be the same'",
             "'account1', 'account1', NULL,     true,  'Amount is null'",
-            "'account1', 'account1', '-17.65', false, 'Amount `-17.65` is not positive or zero'",
+            "'account1', 'account1', '-17.65', false, 'Amount `-17.65` cannot be negative'",
         },
         nullValues = "NULL"
     )

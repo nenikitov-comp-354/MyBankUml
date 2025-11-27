@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="391.0" prefWidth="619.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bank.controllers.LoginController">
+   <children>
+      <Text layoutX="215.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login Page" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <Text layoutX="14.0" layoutY="53.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="heading" text="MyBank">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Text>
+      <TextField fx:id="emailField" layoutX="52.0" layoutY="153.0" prefHeight="26.0" prefWidth="496.0" promptText="Email" styleClass="input" stylesheets="@../stylesheets/login.css" />
+      <PasswordField fx:id="passwordField" layoutX="52.0" layoutY="196.0" prefHeight="26.0" prefWidth="496.0" promptText="Password" styleClass="input" stylesheets="@../stylesheets/login.css" />
+      <Button fx:id="signUpButton" layoutX="120.0" layoutY="261.0" mnemonicParsing="false" onAction="#loadSignUp" prefHeight="81.0" prefWidth="159.0" stylesheets="@../stylesheets/login.css" text="SIGN UP" textAlignment="CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Button fx:id="loginButton" layoutX="344.0" layoutY="261.0" mnemonicParsing="false" onAction="#connectToDB" prefHeight="81.0" prefWidth="159.0" stylesheets="@../stylesheets/login.css" text="LOG IN" textAlignment="CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Button>
+      <Hyperlink layoutX="52.0" layoutY="237.0" styleClass="link" stylesheets="@../stylesheets/login.css" text="Forgot Password?" textFill="#1b26fc" underline="true">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+      </Hyperlink>
+      <Text fx:id="errorText" fill="RED" layoutX="296.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" />
+   </children>
+</AnchorPane>
