@@ -16,6 +16,6 @@ jobs:
         distribution: 'microsoft'
         cache: maven
     - name: start db
-      run: docker compose up
+      run: docker compose up -d
     - name: test
-      run: mvn integration-test -d
+      run: mvn integration-test
