@@ -5,7 +5,7 @@ import bank.db.Customer;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class UserLogin {
+public class TestUserLogin {
 
     public static void main(String[] args) {
         BankDb db = new BankDb(
@@ -136,11 +136,11 @@ public class UserLogin {
             "\n[Invalid] Trying login (" + description + "): " + email
         );
 
-        Optional<Customer> maybeCustomer = db.customerLogin(email, password);
+        Optional<Customer> Customer = db.customerLogin(email, password);
 
-        if (maybeCustomer.isPresent()) {
+        if (Customer.isPresent()) {
             System.out.println(
-                "  ERROR: expected failed login but got: " + maybeCustomer.get()
+                "  ERROR: expected failed login but got: " + Customer.get()
             );
         } else {
             System.out.println("  Correctly failed to login (Optional.empty()).");

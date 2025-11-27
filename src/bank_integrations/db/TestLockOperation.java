@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
-public class LockOperation {
+public class TestLockOperation {
 
     public static void main(String[] args) {
         BankDb db = new BankDb(

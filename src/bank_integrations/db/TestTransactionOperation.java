@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class TransactionOperation {
+public class TestTransactionOperation {
 
     public static void main(String[] args) {
         BankDb db = new BankDb(
@@ -40,7 +40,7 @@ public class TransactionOperation {
      */
     private static void runValid(BankDb db) throws SQLException {
         System.out.println(
-            "=== TransactionOperation Integration: valid transfer ==="
+            "TransactionOperation Integration: valid transfer"
         );
 
         Map<Integer, Account> accounts = db.getAccounts();

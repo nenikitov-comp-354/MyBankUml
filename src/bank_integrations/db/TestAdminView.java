@@ -5,7 +5,7 @@ import bank.db.operation.OperationLock;
 import java.sql.SQLException;
 import java.util.*;
 
-public class AdminView {
+public class TestAdminView {
     private final BankDb db;
     private final Scanner scanner;
 

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 
-public class OperationQueue {
+public class TestOperationQueue {
 
     public static void main(String[] args) throws Exception {
         BankDb db = new BankDb(
