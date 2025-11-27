@@ -46,6 +46,7 @@ public class AdminSearchController {
                 cc.setCustomerDOB(c.getDateOfBirth().toString());
                 cc.setCustomerEmail(c.getEmail());
                 cc.setCustomerPhone(c.getPhone());
+                cc.setIsAdmin(c.isAdmin());
                 customersHolderVBox.getChildren().add(card);
                 VBox.setMargin(card, new javafx.geometry.Insets(15));
             } catch (IOException e) {

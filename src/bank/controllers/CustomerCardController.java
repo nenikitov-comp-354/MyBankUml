@@ -107,4 +107,11 @@ public class CustomerCardController {
             cancelMakeAdminButton
         );
     }
+    public void setIsAdmin(boolean isAdmin) {
+    if (isAdmin) {
+        isAdminText.setText("Admin");
+    } else {
+        isAdminText.setText("Not Admin");
+    }
+}
 }
