@@ -33,6 +33,7 @@ public class Customer {
     private List<Account> accounts;
 
     @Getter
+    @Setter
     private boolean isAdmin;
 
     public Customer(

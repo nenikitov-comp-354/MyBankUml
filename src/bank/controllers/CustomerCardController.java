@@ -1,5 +1,6 @@
 package bank.controllers;
 
+import bank.db.Customer;
 import bank.util.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,7 +29,34 @@ public class CustomerCardController {
     @FXML
     private Button cancelMakeAdminButton;
 
+    @FXML
+    private Text isAdminText;
+
+    private Customer customer;
+
     private SceneManager sceneManager = SceneManager.getInstance();
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        setCustomerName(customer.getFirstName() + " " + customer.getLastName());
+        setCustomerId(customer.getId());
+        setCustomerDOB(customer.getDateOfBirth().toString());
+        setCustomerEmail(customer.getEmail());
+        setCustomerPhone(customer.getPhone());
+        updateAdminStatus();
+    }
+
+    public void updateAdminStatus() {
+        if (customer.isAdmin()) {
+            isAdminText.setText("Admin");
+            isAdminText.setVisible(true);
+            makeAdminButton.setDisable(true); // already admin
+        } else {
+            isAdminText.setText("");
+            isAdminText.setVisible(false);
+            makeAdminButton.setDisable(false);
+        }
+    }
 
     public void setCustomerName(String name) {
         customerNameText.setText(name);
@@ -49,13 +77,29 @@ public class CustomerCardController {
     public void setCustomerPhone(String phone) {
         customerPhoneText.setText("Phone: " + phone);
     }
+
     @FXML
-    private void loadAdminConfirmation(ActionEvent event) {
+    public void handleAdmin(ActionEvent event) {
+        if (customer != null && !customer.isAdmin()) {
+            customer.setAdmin(true);
+            updateAdminStatus();
+
+            System.out.println(
+                "Customer " +
+                customer.getFirstName() +
+                " " +
+                customer.getLastName() +
+                " is now an admin."
+            );
+        }
+
+        // load confirmation scene
         sceneManager.switchScene(
             "/fxml/MakeAdminConfirmation.fxml",
             makeAdminButton
         );
     }
+
     @FXML
     private void handleCancelMakeAdmin(ActionEvent event) {
         sceneManager.switchScene(
