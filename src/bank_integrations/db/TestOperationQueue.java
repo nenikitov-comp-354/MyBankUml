@@ -4,6 +4,7 @@ import bank.db.*;
 import bank.db.operation.Operation;
 import bank.db.operation.OperationLock;
 import bank.db.operation.OperationTransaction;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
