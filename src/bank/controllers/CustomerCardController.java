@@ -32,6 +32,16 @@ public class CustomerCardController {
     @FXML
     private Text isAdminText;
 
+    // make admin confirmation
+    @FXML
+    private Text confirmMakeAdminTxt;
+
+    @FXML
+    private Button cancelMakeAdminButton;
+
+    @FXML
+    private Button confirmMakeAdminButton;
+
     private Customer customer;
 
     private final SceneManager sceneManager = SceneManager.getInstance();
