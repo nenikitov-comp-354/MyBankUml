@@ -41,12 +41,13 @@ public class AdminSearchController {
                 );
                 Parent card = loader.load();
                 CustomerCardController cc = loader.getController();
-                cc.setCustomerName(c.getFirstName() + " " + c.getLastName());
-                cc.setCustomerId(c.getId());
-                cc.setCustomerDOB(c.getDateOfBirth().toString());
-                cc.setCustomerEmail(c.getEmail());
-                cc.setCustomerPhone(c.getPhone());
-                cc.setIsAdmin(c.isAdmin());
+                // cc.setCustomerName(c.getFirstName() + " " + c.getLastName());
+                // cc.setCustomerId(c.getId());
+                // cc.setCustomerDOB(c.getDateOfBirth().toString());
+                // cc.setCustomerEmail(c.getEmail());
+                // cc.setCustomerPhone(c.getPhone());
+                // cc.setIsAdmin(c.isAdmin());
+                cc.setCustomer(c);
                 customersHolderVBox.getChildren().add(card);
                 VBox.setMargin(card, new javafx.geometry.Insets(15));
             } catch (IOException e) {

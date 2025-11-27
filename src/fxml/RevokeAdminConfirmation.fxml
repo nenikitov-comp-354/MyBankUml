@@ -10,7 +10,7 @@
 
 <AnchorPane prefHeight="128.0" prefWidth="398.0" stylesheets="@../stylesheets/userPage.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bank.controllers.CustomerCardController">
    <children>
-      <Text fx:id="confirmMakeAdminTxt" layoutX="8.0" layoutY="33.0" text="">
+      <Text fx:id="confirmRevokeAdminTxt" layoutX="8.0" layoutY="33.0" text="">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>

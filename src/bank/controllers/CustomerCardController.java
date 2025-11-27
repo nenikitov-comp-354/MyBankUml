@@ -27,35 +27,36 @@ public class CustomerCardController {
     private Button makeAdminButton;
 
     @FXML
-    private Button cancelMakeAdminButton;
+    private Button revokeAdminButton;
 
     @FXML
     private Text isAdminText;
 
     private Customer customer;
 
-    private SceneManager sceneManager = SceneManager.getInstance();
+    private final SceneManager sceneManager = SceneManager.getInstance();
+
+    // initalizing
+    @FXML
+    public void initialize() {
+        updateAdminButtons(false);
+    }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-        setCustomerName(customer.getFirstName() + " " + customer.getLastName());
-        setCustomerId(customer.getId());
-        setCustomerDOB(customer.getDateOfBirth().toString());
-        setCustomerEmail(customer.getEmail());
-        setCustomerPhone(customer.getPhone());
-        updateAdminStatus();
+        populateCustomerInfo();
+        updateAdminButtons(customer.isAdmin());
     }
 
-    public void updateAdminStatus() {
-        if (customer.isAdmin()) {
-            isAdminText.setText("Admin");
-            isAdminText.setVisible(true);
-            makeAdminButton.setDisable(true); // already admin
-        } else {
-            isAdminText.setText("");
-            isAdminText.setVisible(false);
-            makeAdminButton.setDisable(false);
-        }
+    private void populateCustomerInfo() {
+        customerNameText.setText(
+            customer.getFirstName() + " " + customer.getLastName()
+        );
+        customerIdText.setText("ID: " + customer.getId());
+        customerDOBText.setText("DoB: " + customer.getDateOfBirth());
+        customerEmailText.setText("Email: " + customer.getEmail());
+        customerPhoneText.setText("Phone: " + customer.getPhone());
+        setIsAdmin(customer.isAdmin());
     }
 
     public void setCustomerName(String name) {
@@ -78,22 +79,30 @@ public class CustomerCardController {
         customerPhoneText.setText("Phone: " + phone);
     }
 
+    public void setIsAdmin(boolean isAdmin) {
+        isAdminText.setText(isAdmin ? "Admin" : "");
+    }
+
+    public void updateAdminButtons(boolean isAdmin) {
+        revokeAdminButton.setVisible(isAdmin);
+        revokeAdminButton.setManaged(isAdmin);
+
+        makeAdminButton.setVisible(!isAdmin);
+        makeAdminButton.setManaged(!isAdmin);
+
+        setIsAdmin(isAdmin);
+    }
+
     @FXML
-    public void handleAdmin(ActionEvent event) {
-        if (customer != null && !customer.isAdmin()) {
-            customer.setAdmin(true);
-            updateAdminStatus();
+    private void handleMakeAdmin() {
+        if (customer == null) return;
 
-            System.out.println(
-                "Customer " +
-                customer.getFirstName() +
-                " " +
-                customer.getLastName() +
-                " is now an admin."
-            );
-        }
+        customer.setAdmin(true);
+        sceneManager.setCustomer(customer);
+        updateAdminButtons(true);
 
-        // load confirmation scene
+        System.out.println(customer.getFirstName() + " is now an admin.");
+
         sceneManager.switchScene(
             "/fxml/MakeAdminConfirmation.fxml",
             makeAdminButton
@@ -101,17 +110,18 @@ public class CustomerCardController {
     }
 
     @FXML
-    private void handleCancelMakeAdmin(ActionEvent event) {
+    public void handleRevokeAdmin() {
+        if (customer == null) return;
+
+        customer.setAdmin(false);
+        sceneManager.setCustomer(customer); // Write to DB
+        updateAdminButtons(false);
+
+        System.out.println(customer.getFirstName() + " is no longer an admin.");
+
         sceneManager.switchScene(
-            "/fxml/AdminSearch.fxml",
-            cancelMakeAdminButton
+            "/fxml/RevokeAdminConfirmation.fxml",
+            revokeAdminButton
         );
     }
-    public void setIsAdmin(boolean isAdmin) {
-    if (isAdmin) {
-        isAdminText.setText("Admin");
-    } else {
-        isAdminText.setText("Not Admin");
-    }
-}
 }
