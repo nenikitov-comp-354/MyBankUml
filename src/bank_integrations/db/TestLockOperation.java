@@ -6,7 +6,7 @@ import bank.db.operation.OperationLock;
 import bank.db.operation.OperationTransaction;
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class TestLockOperation {
@@ -37,7 +37,7 @@ public class TestLockOperation {
      * @param db
      * @throws SQLException
      */
-    private static void runLockUnlockScenario(BankDb db) throws SQLException {
+    private static void runLockUnlock(BankDb db) throws SQLException {
         System.out.println("LockOperation Integration: lock/unlock");
 
         Map<Integer, Account> accounts = db.getAccounts();
@@ -110,8 +110,7 @@ public class TestLockOperation {
      * @param db
      * @throws SQLException
      */
-    private static void runMissingAccountScenario(BankDb db)
-        throws SQLException {
+    private static void runMissingAccount(BankDb db) throws SQLException {
         System.out.println(
             "LockOperation Integration: missing account exception test"
         );

@@ -21,7 +21,6 @@ public class TestUserLogin {
 
             runValidLogin(db);
             runInvalidLogin(db);
-
         } catch (Exception e) {
             System.err.println("[UserLogin] Error: " + e.getMessage());
             e.printStackTrace();
@@ -35,20 +34,10 @@ public class TestUserLogin {
         System.out.println("UserLogin Integration: valid logins");
 
         // Admin user: Harry Styles (id=1, is_admin = true, password 'harry')
-        testSuccessfulLogin(
-            db,
-            "harry.styles@email.com",
-            "harry",
-            true
-        );
+        testSuccessfulLogin(db, "harry.styles@email.com", "harry", true);
 
         // Non-admin user: Sabrina Carpenter (id=2, is_admin = false, password 'my')
-        testSuccessfulLogin(
-            db,
-            "sabrina.carpenter@email.com",
-            "my",
-            false
-        );
+        testSuccessfulLogin(db, "sabrina.carpenter@email.com", "my", false);
 
         System.out.println("End of valid login scenarios\n");
     }
@@ -81,7 +70,7 @@ public class TestUserLogin {
     // helper methods for login check
 
     /**
-     * 
+     *
      * @param db
      * @param email
      * @param password
@@ -93,13 +82,16 @@ public class TestUserLogin {
         String email,
         String password,
         boolean expectedAdmin
-    ) throws SQLException {
+    )
+        throws SQLException {
         System.out.println("\n[Valid] Trying login for: " + email);
 
         Optional<Customer> Customer1 = db.customerLogin(email, password);
 
-        if (maybeCustomer.isEmpty()) {
-            System.out.println(" ERROR: expected successful login, got Optional.empty()");
+        if (Customer1.isEmpty()) {
+            System.out.println(
+                " ERROR: expected successful login, got Optional.empty()"
+            );
             return;
         }
 
@@ -119,7 +111,7 @@ public class TestUserLogin {
     }
 
     /**
-     * 
+     *
      * @param db
      * @param email
      * @param password
@@ -131,7 +123,8 @@ public class TestUserLogin {
         String email,
         String password,
         String description
-    ) throws SQLException {
+    )
+        throws SQLException {
         System.out.println(
             "\n[Invalid] Trying login (" + description + "): " + email
         );
@@ -143,7 +136,9 @@ public class TestUserLogin {
                 "  ERROR: expected failed login but got: " + Customer.get()
             );
         } else {
-            System.out.println("  Correctly failed to login (Optional.empty()).");
+            System.out.println(
+                "  Correctly failed to login (Optional.empty())."
+            );
         }
     }
 }

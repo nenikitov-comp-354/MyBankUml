@@ -9,7 +9,7 @@ public class TestAdminView {
     private final BankDb db;
     private final Scanner scanner;
 
-    public AdminView(BankDb db) {
+    public TestAdminView(BankDb db) {
         this.db = db;
         this.scanner = new Scanner(System.in);
     }
@@ -131,7 +131,7 @@ public class TestAdminView {
 
         db.connect();
 
-        AdminView view = new AdminView(db);
+        TestAdminView view = new TestAdminView(db);
         view.run();
     }
 }

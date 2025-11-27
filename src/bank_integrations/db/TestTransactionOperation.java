@@ -39,9 +39,7 @@ public class TestTransactionOperation {
      * @throws SQLException
      */
     private static void runValid(BankDb db) throws SQLException {
-        System.out.println(
-            "TransactionOperation Integration: valid transfer"
-        );
+        System.out.println("TransactionOperation Integration: valid transfer");
 
         Map<Integer, Account> accounts = db.getAccounts();
         if (accounts.size() < 2) {
