@@ -18,4 +18,4 @@ jobs:
     - name: start db
       run: docker compose up
     - name: test
-      run: mvn integration-test
+      run: mvn integration-test -d
