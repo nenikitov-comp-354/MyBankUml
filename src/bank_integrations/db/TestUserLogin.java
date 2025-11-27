@@ -4,6 +4,7 @@ import bank.db.BankDb;
 import bank.db.Customer;
 import java.sql.SQLException;
 import java.util.Optional;
+import org.junit.jupiter.api.Test;
 
 public class TestUserLogin {
 
@@ -25,6 +26,26 @@ public class TestUserLogin {
             System.err.println("[UserLogin] Error: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    @Test
+    void userLoginIntegration() throws Exception {
+        runIntegration();
+    }
+
+    private static void runIntegration() throws SQLException {
+        BankDb db = new BankDb(
+            "localhost",
+            Optional.empty(),
+            "bank",
+            "admin",
+            Optional.of("admin")
+        );
+
+        db.connect();
+
+        runValidLogin(db);
+        runInvalidLogin(db);
     }
 
     /**
