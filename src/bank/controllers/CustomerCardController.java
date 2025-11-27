@@ -32,6 +32,26 @@ public class CustomerCardController {
     @FXML
     private Text isAdminText;
 
+    // make admin confirmation
+    @FXML
+    private Text confirmMakeAdminTxt;
+
+    @FXML
+    private Button cancelMakeAdminButton;
+
+    @FXML
+    private Button confirmMakeAdminButton;
+
+    // revoke admin confirmation
+    @FXML
+    private Text confirmRevokeAdminTxt;
+
+    @FXML
+    private Button cancelRevokeAdminButton;
+
+    @FXML
+    private Button confirmRevokeAdminButton;
+
     private Customer customer;
 
     private final SceneManager sceneManager = SceneManager.getInstance();
@@ -170,6 +190,54 @@ public class CustomerCardController {
         sceneManager.switchScene(
             "/fxml/RevokeAdminConfirmation.fxml",
             revokeAdminButton
+        );
+    }
+
+    public void setConfirmMakeAdminTxt() {
+        confirmMakeAdminTxt.setText(
+            "Are you sure you want to make " +
+            customer.getFirstName() +
+            " an admin?"
+        );
+    }
+
+    @FXML
+    private void handleCancelMakeAdmin(ActionEvent event) {
+        sceneManager.switchScene(
+            "/fxml/AdminSearch.fxml",
+            cancelMakeAdminButton
+        );
+    }
+
+    @FXML
+    private void handleConfirmMakeAdmin(ActionEvent event) {
+        sceneManager.switchScene(
+            "/fxml/AdminSearch.fxml",
+            confirmMakeAdminButton
+        );
+    }
+
+    public void setConfirmRevokeAdminTxt() {
+        confirmRevokeAdminTxt.setText(
+            "Are you sure you want to revoke " +
+            customer.getFirstName() +
+            "'s admin priviledge?"
+        );
+    }
+
+    @FXML
+    private void handleCancelRevokeAdmin(ActionEvent event) {
+        sceneManager.switchScene(
+            "fxml/AdminSearch.fxml",
+            cancelRevokeAdminButton
+        );
+    }
+
+    @FXML
+    private void handleConfirmRevokeAdmin(ActionEvent event) {
+        sceneManager.switchScene(
+            "fxml/AdminSearch.fxml",
+            confirmRevokeAdminButton
         );
     }
 }
