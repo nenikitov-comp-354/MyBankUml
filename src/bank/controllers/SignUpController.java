@@ -4,7 +4,6 @@ import bank.db.Branch;
 import bank.db.operation.OperationNewCustomer;
 import bank.util.SceneManager;
 import bank.util.TypeValidator;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,8 +92,14 @@ public class SignUpController {
             errorText.setText("Password is not the same");
         } else {
             try {
-                TypeValidator.validateSocialInsuranceNumber("SIN", sinField.getText());
-                TypeValidator.validatePhone("Phone Number", phoneNumberField.getText());
+                TypeValidator.validateSocialInsuranceNumber(
+                    "SIN",
+                    sinField.getText()
+                );
+                TypeValidator.validatePhone(
+                    "Phone Number",
+                    phoneNumberField.getText()
+                );
                 TypeValidator.validateEmail("Email", emailField.getText());
 
                 OperationNewCustomer onc = new OperationNewCustomer(

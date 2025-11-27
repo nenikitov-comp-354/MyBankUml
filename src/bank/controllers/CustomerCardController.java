@@ -52,6 +52,7 @@ public class CustomerCardController {
     public void setCustomerPhone(String phone) {
         customerPhoneText.setText("Phone: " + phone);
     }
+
     @FXML
     private void loadAdminConfirmation(ActionEvent event) {
         sceneManager.switchScene(
@@ -59,6 +60,7 @@ public class CustomerCardController {
             makeAdminButton
         );
     }
+
     @FXML
     private void handleCancelMakeAdmin(ActionEvent event) {
         sceneManager.switchScene(
@@ -66,11 +68,12 @@ public class CustomerCardController {
             cancelMakeAdminButton
         );
     }
+
     public void setIsAdmin(boolean isAdmin) {
-    if (isAdmin) {
-        isAdminText.setText("Admin");
-    } else {
-        isAdminText.setText("Not Admin");
+        if (isAdmin) {
+            isAdminText.setText("Admin");
+        } else {
+            isAdminText.setText("Not Admin");
+        }
     }
-}
 }
