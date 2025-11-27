@@ -47,7 +47,6 @@ public class OperationTransaction implements Operation {
                 );
 
                 int id = rs.getInt(1);
-                System.out.println("ID " + id);
 
                 Transaction transaction = new Transaction(id, this.info);
 
