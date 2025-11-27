@@ -247,6 +247,11 @@ public class BankDb {
         this.transactions.put(transaction.getId(), transaction);
     }
 
+    public void addCustomer(Customer customer) {
+        TypeValidator.validateNotNull("Customer", customer);
+        this.customers.put(customer.getId(), customer);
+    }
+
     // changed visibility from private to protected so tests can override
     protected Map<Integer, Bank> fetchBanks() throws SQLException {
         ensureConnection();

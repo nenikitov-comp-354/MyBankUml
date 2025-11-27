@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../stylesheets/transferOperation.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bank.controllers.TransferPageController">
+   <children>
+      <Text layoutX="178.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Transfer Funds">
+         <font>
+            <Font name="System Bold" size="32.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="fromAccountComboBox" layoutX="53.0" layoutY="93.0" prefHeight="26.0" prefWidth="511.0" promptText="Account" styleClass="input" />
+      <ComboBox fx:id="toAccountComboBox" layoutX="53.0" layoutY="161.0" prefHeight="26.0" prefWidth="511.0" promptText="Account" styleClass="input" />
+      <Text layoutX="53.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Account to Transfer From:" textAlignment="CENTER" underline="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <Text layoutX="53.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Account to Transfer To:" textAlignment="CENTER" underline="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <TextField fx:id="amountTextField" layoutX="53.0" layoutY="272.0" prefHeight="26.0" prefWidth="511.0" promptText="Enter Amount:" styleClass="input" />
+      <Text layoutX="53.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount:" textAlignment="CENTER" underline="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <Text fx:id="amountAvailableText" layoutX="53.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select an account to see amount available." underline="true">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <Button fx:id="proceedButton" layoutX="130.0" layoutY="336.0" mnemonicParsing="false" onAction="#proceedToTransaction" prefHeight="50.0" prefWidth="135.0" styleClass="button-primary" text="Proceed">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Button>
+      <Text fx:id="errorText" fill="RED" layoutX="53.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="511.0" />
+      <Button fx:id="cancelTransferButton" layoutX="318.0" layoutY="336.0" mnemonicParsing="false" onAction="#cancelTransfer" prefHeight="50.0" prefWidth="135.0" styleClass="button-primary" text="Cancel">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane fx:id="cardGridPane" prefHeight="162.0" prefWidth="445.0" styleClass="card" stylesheets="@../stylesheets/userPage.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bank.controllers.AccountCreditController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <Text fx:id="accountNameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Credit">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="30.0" left="15.0" />
+         </GridPane.margin>
+      </Text>
+      <Text fx:id="amountText" strokeType="OUTSIDE" strokeWidth="0.0" text="XX.XX">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <GridPane.margin>
+            <Insets left="15.0" top="10.0" />
+         </GridPane.margin>
+      </Text>
+      <Text fx:id="cardTypeName" fill="#338aee" strokeType="OUTSIDE" strokeWidth="0.0" text="CREDIT" textAlignment="CENTER" GridPane.rowIndex="2">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+         <GridPane.margin>
+            <Insets left="15.0" />
+         </GridPane.margin>
+      </Text>
+      <Button fx:id="lockCardButton" onAction="#lockCard" mnemonicParsing="false" prefHeight="25.0" prefWidth="95.0" text="Lock Card" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="115.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Text fx:id="creditLimitText" strokeType="OUTSIDE" strokeWidth="0.0" text="Credit Limit: XX.XX" textAlignment="CENTER" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <GridPane.margin>
+            <Insets bottom="30.0" left="15.0" />
+         </GridPane.margin>
+      </Text>
+      <Text fx:id="gracePeriodText" strokeType="OUTSIDE" strokeWidth="0.0" text="Grace Period: X days" textAlignment="CENTER" GridPane.rowIndex="1">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <GridPane.margin>
+            <Insets left="15.0" top="5.0" />
+         </GridPane.margin>
+      </Text>
+   </children>
+</GridPane>
