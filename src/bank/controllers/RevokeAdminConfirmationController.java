@@ -21,7 +21,7 @@ public class RevokeAdminConfirmationController {
     private Customer customer;
 
     public void initialize() {
-        customer = sceneManager.getCustomer();
+        customer = sceneManager.getPendingCustomer();
         setConfirmRevokeAdminTxt();
     }
 
@@ -35,7 +35,8 @@ public class RevokeAdminConfirmationController {
 
     @FXML
     private void handleCancelRevokeAdmin(ActionEvent event) {
-        sceneManager.switchScene(
+      sceneManager.setPendingCustomer(null); // Clear pending  
+      sceneManager.switchScene(
             "fxml/AdminSearch.fxml",
             cancelRevokeAdminButton
         );
@@ -43,7 +44,9 @@ public class RevokeAdminConfirmationController {
 
     @FXML
     private void handleConfirmRevokeAdmin(ActionEvent event) {
-        sceneManager.switchScene(
+      customer.setAdmin(false);
+      sceneManager.setPendingCustomer(null); // Clear pending  
+      sceneManager.switchScene(
             "fxml/AdminSearch.fxml",
             confirmRevokeAdminButton
         );

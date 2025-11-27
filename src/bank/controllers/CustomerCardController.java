@@ -10,50 +10,25 @@ import javafx.scene.text.Text;
 public class CustomerCardController {
     @FXML
     private Text customerNameText;
-
     @FXML
     private Text customerIdText;
-
     @FXML
     private Text customerDOBText;
-
     @FXML
     private Text customerEmailText;
-
     @FXML
     private Text customerPhoneText;
-
-    @FXML
-    private Button makeAdminButton;
-
-    @FXML
-    private Button revokeAdminButton;
-
     @FXML
     private Text isAdminText;
 
-    // make admin confirmation
-    @FXML
-    private Text confirmMakeAdminTxt;
 
     @FXML
-    private Button cancelMakeAdminButton;
-
+    private Button makeAdminButton;
     @FXML
-    private Button confirmMakeAdminButton;
+    private Button revokeAdminButton;
 
-    // revoke admin confirmation
-    @FXML
-    private Text confirmRevokeAdminTxt;
-
-    @FXML
-    private Button cancelRevokeAdminButton;
-
-    @FXML
-    private Button confirmRevokeAdminButton;
 
     private Customer customer;
-
     private final SceneManager sceneManager = SceneManager.getInstance();
 
     // initalizing
@@ -64,6 +39,7 @@ public class CustomerCardController {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+
         populateCustomerInfo();
         updateAdminButtons(customer.isAdmin());
         updateFieldVisibility();
@@ -156,11 +132,11 @@ public class CustomerCardController {
         if (customer == null) return;
 
         customer.setAdmin(true);
-        sceneManager.setCustomer(customer);
+        sceneManager.setPendingCustomer(customer);
+
         updateAdminButtons(true);
 
         System.out.println(customer.getFirstName() + " is now an admin.");
-
         handleMakeAdminPopup(new ActionEvent());
     }
 
@@ -169,11 +145,11 @@ public class CustomerCardController {
         if (customer == null) return;
 
         customer.setAdmin(false);
-        sceneManager.setCustomer(customer); // Write to DB
+        sceneManager.setPendingCustomer(customer);
+        
         updateAdminButtons(false);
 
         System.out.println(customer.getFirstName() + " is no longer an admin.");
-
         handleRevokePopup(new ActionEvent());
     }
 
@@ -193,57 +169,4 @@ public class CustomerCardController {
         );
     }
 
-    public void setConfirmMakeAdminTxt() {
-        confirmMakeAdminTxt.setText(
-            "Are you sure you want to make " +
-            customer.getFirstName() +
-            " an admin?"
-        );
-    }
-
-    @FXML
-    private void handleCancelMakeAdmin(ActionEvent event) {
-        sceneManager.switchScene(
-            "/fxml/AdminSearch.fxml",
-            cancelMakeAdminButton
-        );
-    }
-
-    @FXML
-    private void handleConfirmMakeAdmin(ActionEvent event) {
-        sceneManager.switchScene(
-            "/fxml/AdminSearch.fxml",
-            confirmMakeAdminButton
-        );
-    }
-
-    public void setConfirmRevokeAdminTxt() {
-        confirmRevokeAdminTxt.setText(
-            "Are you sure you want to revoke " +
-            customer.getFirstName() +
-            "'s admin priviledge?"
-        );
-    }
-
-    @FXML
-    private void handleCancelRevokeAdmin(ActionEvent event) {
-        sceneManager.switchScene(
-            "fxml/AdminSearch.fxml",
-            cancelRevokeAdminButton
-        );
-    }
-
-    @FXML
-    private void handleConfirmRevokeAdmin(ActionEvent event) {
-        sceneManager.switchScene(
-            "fxml/AdminSearch.fxml",
-            confirmRevokeAdminButton
-        );
-    public void setIsAdmin(boolean isAdmin) {
-        if (isAdmin) {
-            isAdminText.setText("Admin");
-        } else {
-            isAdminText.setText("Not Admin");
-        }
-    }
 }

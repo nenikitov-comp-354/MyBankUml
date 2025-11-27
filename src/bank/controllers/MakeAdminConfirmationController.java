@@ -21,7 +21,7 @@ public class MakeAdminConfirmationController {
     private Customer customer;
 
     public void initialize() {
-        customer = sceneManager.getCustomer();
+        customer = sceneManager.getPendingCustomer();
         setConfirmMakeAdminTxt();
     }
 
@@ -35,7 +35,8 @@ public class MakeAdminConfirmationController {
 
     @FXML
     private void handleCancelMakeAdmin(ActionEvent event) {
-        sceneManager.switchScene(
+      sceneManager.setPendingCustomer(null); // Clear pending 
+      sceneManager.switchScene(
             "/fxml/AdminSearch.fxml",
             cancelMakeAdminButton
         );
@@ -43,7 +44,9 @@ public class MakeAdminConfirmationController {
 
     @FXML
     private void handleConfirmMakeAdmin(ActionEvent event) {
-        sceneManager.switchScene(
+      customer.setAdmin(true);
+      sceneManager.setPendingCustomer(null); // Clear pending customer after action
+      sceneManager.switchScene(
             "/fxml/AdminSearch.fxml",
             confirmMakeAdminButton
         );

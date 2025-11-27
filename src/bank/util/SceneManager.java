@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 public class SceneManager {
     private BankDb db;
     private Customer c;
+    private Customer pendingCustomer;
     private static final SceneManager instance = new SceneManager();
 
     public void setDb(BankDb db) {
@@ -31,6 +32,14 @@ public class SceneManager {
 
     public Customer getCustomer() {
         return c;
+    }
+
+    public void setPendingCustomer(Customer c) {
+        this.pendingCustomer = c;
+    }
+
+    public Customer getPendingCustomer() {
+        return pendingCustomer;
     }
 
     /**
