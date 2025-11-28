@@ -51,6 +51,7 @@ public class OperationTransaction implements Operation {
                 Transaction transaction = new Transaction(id, this.info);
 
                 this.info.getSource().addTransaction(transaction);
+                this.info.getDestination().addTransaction(transaction);
                 bankDb.addTransaction(transaction);
             }
         }
