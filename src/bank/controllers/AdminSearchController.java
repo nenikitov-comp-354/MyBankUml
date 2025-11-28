@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class AdminSearchController {
@@ -26,10 +27,41 @@ public class AdminSearchController {
     private SceneManager sceneManager = SceneManager.getInstance();
 
     public void initialize() {
-        Map<Integer, Customer> customersMap = sceneManager
-            .getDb()
-            .getCustomers();
-        loadCustomers(customersMap.values().stream().toList());
+        Customer loggedIn = sceneManager.getCustomer();
+
+        if (loggedIn == null || !loggedIn.isAdmin()) {
+            customersHolderVBox.getChildren().clear();
+
+            // hide search bar since they can't search admins
+            searchInput.setVisible(false);
+            searchInput.setManaged(false);
+
+            // Also disable search bar since they shouldn't search customers
+            searchInput.setDisable(true);
+
+            Label message = new Label(
+                "You must be an admin to access this page."
+            );
+            message.setStyle("-fx-font-size: 18px; -fx-text-fill: red;");
+
+            customersHolderVBox.getChildren().add(message);
+
+            return;
+        } else {
+            customersHolderVBox.setVisible(true);
+            customersHolderVBox.setManaged(true);
+
+            // show search bar
+            searchInput.setVisible(true);
+            searchInput.setManaged(true);
+            // enable search bar
+            searchInput.setDisable(false);
+
+            Map<Integer, Customer> customersMap = sceneManager
+                .getDb()
+                .getCustomers();
+            loadCustomers(customersMap.values().stream().toList());
+        }
     }
 
     private void loadCustomers(List<Customer> customers) {
@@ -41,12 +73,7 @@ public class AdminSearchController {
                 );
                 Parent card = loader.load();
                 CustomerCardController cc = loader.getController();
-                cc.setCustomerName(c.getFirstName() + " " + c.getLastName());
-                cc.setCustomerId(c.getId());
-                cc.setCustomerDOB(c.getDateOfBirth().toString());
-                cc.setCustomerEmail(c.getEmail());
-                cc.setCustomerPhone(c.getPhone());
-                cc.setIsAdmin(c.isAdmin());
+                cc.setCustomer(c);
                 customersHolderVBox.getChildren().add(card);
                 VBox.setMargin(card, new javafx.geometry.Insets(15));
             } catch (IOException e) {
@@ -57,6 +84,12 @@ public class AdminSearchController {
 
     @FXML
     private void handleSearch() {
+        Customer loggedIn = sceneManager.getCustomer();
+
+        if (loggedIn == null || !loggedIn.isAdmin()) {
+            return;
+        }
+
         String query = searchInput.getText().trim().toLowerCase();
         try {
             List<Customer> results = sceneManager

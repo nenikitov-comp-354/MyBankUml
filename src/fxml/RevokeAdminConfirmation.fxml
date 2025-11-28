@@ -8,9 +8,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="128.0" prefWidth="398.0" stylesheets="@../stylesheets/userPage.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bank.controllers.MakeAdminConfirmationController">
+<AnchorPane prefHeight="128.0" prefWidth="398.0" stylesheets="@../stylesheets/userPage.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bank.controllers.RevokeAdminConfirmationController">
    <children>
-      <Text fx:id="confirmMakeAdminTxt" layoutX="8.0" layoutY="33.0" text="">
+      <Text fx:id="confirmRevokeAdminTxt" layoutX="8.0" layoutY="33.0" text="">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
@@ -28,10 +28,10 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="cancelMakeAdminButton" onAction="#handleCancelMakeAdmin" styleClass="button" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Button fx:id="cancelRevokeAdminButton" onAction="#handleCancelRevokeAdmin" styleClass="button" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
             <font><Font name="System Bold" size="12.0" /></font>
                 </Button>
-            <Button fx:id="confirmMakeAdminButton" onAction="#handleConfirmMakeAdmin" mnemonicParsing="false" styleClass="button" prefHeight="25.0" prefWidth="85.0" text="Confirm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Button fx:id="confirmRevokeAdminButton" onAction="#handleConfirmRevokeAdmin" mnemonicParsing="false" styleClass="button" prefHeight="25.0" prefWidth="85.0" text="Confirm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1">
             <font><Font name="System Bold" size="12.0" /></font>
                 </Button>
          </children>
