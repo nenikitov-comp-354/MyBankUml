@@ -43,6 +43,29 @@
                 </configuration>
             </plugin>
 
+
+            <!--BUILD HELPER PLUGIN -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.6.0</version>
+                <executions>
+                    <execution>
+                        <id>add-integration-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/bank_integrations/db</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
             <!-- Test -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -52,6 +75,22 @@
                         <include>bank_unit/**/Test*.java</include>
                     </includes>
                 </configuration>
+
+                <!-- Extra execution integration-test phase -->
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>bank_integrations/**/Test*.java</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- Build an executable JAR -->
