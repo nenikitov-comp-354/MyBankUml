@@ -2,37 +2,41 @@ package bank.controllers;
 
 import bank.db.Customer;
 import bank.util.SceneManager;
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import java.io.IOException;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class CustomerCardController {
     @FXML
     private Text customerNameText;
+
     @FXML
     private Text customerIdText;
+
     @FXML
     private Text customerDOBText;
+
     @FXML
     private Text customerEmailText;
+
     @FXML
     private Text customerPhoneText;
+
     @FXML
     private Text isAdminText;
 
-
     @FXML
     private Button makeAdminButton;
+
     @FXML
     private Button revokeAdminButton;
-
 
     private Customer customer;
     private final SceneManager sceneManager = SceneManager.getInstance();
@@ -118,7 +122,6 @@ public class CustomerCardController {
         makeAdminButton.setManaged(!isAdmin);
 
         setIsAdmin(isAdmin);
-
         // only show certain fields for admins
         // customerEmailText.setVisible(isAdmin);
         // customerEmailText.setManaged(isAdmin);
@@ -212,5 +215,4 @@ public class CustomerCardController {
             e.printStackTrace();
         }
     }
-
 }

@@ -1,14 +1,15 @@
 package bank.controllers;
 
+import bank.db.BankDb;
 import bank.db.Customer;
+import bank.db.operation.OperationMakeAdmin;
 import bank.util.SceneManager;
+import java.sql.Connection;
+import java.sql.SQLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import java.sql.Connection;;
-import java.sql.SQLException;
-import bank.db.operation.OperationMakeAdmin;
 
 public class RevokeAdminConfirmationController {
     @FXML
@@ -38,29 +39,49 @@ public class RevokeAdminConfirmationController {
     }
 
     public void setParentController(CustomerCardController controller) {
-      this.parentController = controller;
+        this.parentController = controller;
     }
 
     @FXML
     private void handleCancelRevokeAdmin(ActionEvent event) {
-      // if (parentController != null) {
-      //   parentController.updateFieldVisibility();
-      // }
-
-      cancelRevokeAdminButton.getScene().getWindow().hide();
+        cancelRevokeAdminButton.getScene().getWindow().hide();
     }
 
     @FXML
     private void handleConfirmRevokeAdmin(ActionEvent event) {
-      if (selectedCustomer != null) {
-        selectedCustomer.setAdmin(false);
-        sceneManager.setSelectedCustomer(selectedCustomer); 
-      
-        if (parentController != null) {
-          parentController.updateAdminButtons(false);
+        if (selectedCustomer != null) {
+            selectedCustomer.setAdmin(false);
+            sceneManager.setSelectedCustomer(selectedCustomer);
+            OperationMakeAdmin oma;
+
+            if (selectedCustomer.isAdmin()) {
+                oma = new OperationMakeAdmin(selectedCustomer, true);
+            } else {
+                oma = new OperationMakeAdmin(selectedCustomer, false);
+            }
+
+            if (parentController != null) {
+                parentController.updateAdminButtons(false);
+            }
+
+            try {
+                sceneManager.getDb().addOperation(oma);
+                sceneManager.getDb().processOperations();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            // try {
+            //   BankDb db = sceneManager.getDb();
+            //   OperationMakeAdmin op = new OperationMakeAdmin(selectedCustomer, false);
+            //   op.process(db.getConnection(), db);
+            //   // db.addOperation(op);
+            //   // db.processOperations();
+            // } catch (SQLException e) {
+            //   e.printStackTrace();
+            //   return;
+            // }
         }
-      }
-      
-      confirmRevokeAdminButton.getScene().getWindow().hide();
+
+        confirmRevokeAdminButton.getScene().getWindow().hide();
     }
 }

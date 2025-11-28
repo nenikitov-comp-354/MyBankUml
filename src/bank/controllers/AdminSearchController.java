@@ -11,8 +11,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 
 public class AdminSearchController {
     @FXML
@@ -29,7 +29,7 @@ public class AdminSearchController {
     public void initialize() {
         Customer loggedIn = sceneManager.getCustomer();
 
-         if (loggedIn == null || !loggedIn.isAdmin()) {
+        if (loggedIn == null || !loggedIn.isAdmin()) {
             customersHolderVBox.getChildren().clear();
 
             // hide search bar since they can't search admins
@@ -39,14 +39,15 @@ public class AdminSearchController {
             // Also disable search bar since they shouldn't search customers
             searchInput.setDisable(true);
 
-            Label message = new Label("You must be an admin to access this page.");
+            Label message = new Label(
+                "You must be an admin to access this page."
+            );
             message.setStyle("-fx-font-size: 18px; -fx-text-fill: red;");
 
             customersHolderVBox.getChildren().add(message);
 
             return;
-        }
-        else {
+        } else {
             customersHolderVBox.setVisible(true);
             customersHolderVBox.setManaged(true);
 
@@ -57,8 +58,8 @@ public class AdminSearchController {
             searchInput.setDisable(false);
 
             Map<Integer, Customer> customersMap = sceneManager
-            .getDb()
-            .getCustomers();
+                .getDb()
+                .getCustomers();
             loadCustomers(customersMap.values().stream().toList());
         }
     }
@@ -85,7 +86,7 @@ public class AdminSearchController {
     private void handleSearch() {
         Customer loggedIn = sceneManager.getCustomer();
 
-         if (loggedIn == null || !loggedIn.isAdmin()) {
+        if (loggedIn == null || !loggedIn.isAdmin()) {
             return;
         }
 

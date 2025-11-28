@@ -1,14 +1,15 @@
 package bank.controllers;
 
+import bank.db.BankDb;
 import bank.db.Customer;
+import bank.db.operation.OperationMakeAdmin;
 import bank.util.SceneManager;
+import java.sql.Connection;
+import java.sql.SQLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
-import java.sql.Connection;;
-import java.sql.SQLException;
-import bank.db.operation.OperationMakeAdmin;
 
 public class MakeAdminConfirmationController {
     @FXML
@@ -20,7 +21,7 @@ public class MakeAdminConfirmationController {
     @FXML
     private Button confirmMakeAdminButton;
 
-    private CustomerCardController parentController;;
+    private CustomerCardController parentController;
     private final SceneManager sceneManager = SceneManager.getInstance();
     private Customer selectedCustomer;
 
@@ -37,29 +38,49 @@ public class MakeAdminConfirmationController {
         );
     }
 
-   public void setParentController(CustomerCardController controller) {
+    public void setParentController(CustomerCardController controller) {
         this.parentController = controller;
-  }
+    }
 
     @FXML
     private void handleCancelMakeAdmin(ActionEvent event) {
-      // if (parentController != null) {
-      //     parentController.updateFieldVisibility();
-      // }
-      cancelMakeAdminButton.getScene().getWindow().hide();
+        cancelMakeAdminButton.getScene().getWindow().hide();
     }
 
     @FXML
     private void handleConfirmMakeAdmin(ActionEvent event) {
-      if (selectedCustomer != null) {
-        selectedCustomer.setAdmin(true);
-        sceneManager.setSelectedCustomer(selectedCustomer); 
-      
-        if (parentController != null) {
-          parentController.updateAdminButtons(true);
+        if (selectedCustomer != null) {
+            selectedCustomer.setAdmin(true);
+            sceneManager.setSelectedCustomer(selectedCustomer);
+            OperationMakeAdmin oma;
+
+            if (selectedCustomer.isAdmin()) {
+                oma = new OperationMakeAdmin(selectedCustomer, true);
+            } else {
+                oma = new OperationMakeAdmin(selectedCustomer, false);
+            }
+
+            if (parentController != null) {
+                parentController.updateAdminButtons(true);
+            }
+
+            try {
+                sceneManager.getDb().addOperation(oma);
+                sceneManager.getDb().processOperations();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            // try {
+            //   // BankDb db = sceneManager.getDb();
+            //   // db.process(selectedCustomer, true);
+            //     BankDb db = sceneManager.getDb();
+            //     OperationMakeAdmin op = new OperationMakeAdmin(selectedCustomer, true);
+            //     op.process(db.getConnection(), db);
+            //   } catch (Exception e) {
+            //       e.printStackTrace();
+            // }
         }
-      }
-      
-      confirmMakeAdminButton.getScene().getWindow().hide();
+
+        confirmMakeAdminButton.getScene().getWindow().hide();
     }
 }
