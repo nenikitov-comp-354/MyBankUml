@@ -70,16 +70,6 @@ public class RevokeAdminConfirmationController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            // try {
-            //   BankDb db = sceneManager.getDb();
-            //   OperationMakeAdmin op = new OperationMakeAdmin(selectedCustomer, false);
-            //   op.process(db.getConnection(), db);
-            //   // db.addOperation(op);
-            //   // db.processOperations();
-            // } catch (SQLException e) {
-            //   e.printStackTrace();
-            //   return;
-            // }
         }
 
         confirmRevokeAdminButton.getScene().getWindow().hide();

@@ -70,15 +70,6 @@ public class MakeAdminConfirmationController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            // try {
-            //   // BankDb db = sceneManager.getDb();
-            //   // db.process(selectedCustomer, true);
-            //     BankDb db = sceneManager.getDb();
-            //     OperationMakeAdmin op = new OperationMakeAdmin(selectedCustomer, true);
-            //     op.process(db.getConnection(), db);
-            //   } catch (Exception e) {
-            //       e.printStackTrace();
-            // }
         }
 
         confirmMakeAdminButton.getScene().getWindow().hide();
